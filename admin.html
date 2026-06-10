@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Bolilla Mundial 2026</title>
+<style>
+  :root {
+    --green: #2f7a3a;
+    --green-light: #d4ecd6;
+    --green-dark: #1d4e25;
+    --bg: #f5f5f1;
+    --card: #ffffff;
+    --border: #d8d8d2;
+    --text: #1a1a1a;
+    --muted: #6a6a64;
+    --warn: #c0392b;
+    --ok: #2f7a3a;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); line-height: 1.4; }
+  header { background: var(--green-dark); color: white; padding: 14px 20px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  header h1 { margin: 0 0 6px 0; font-size: 20px; }
+  header .sub { font-size: 13px; opacity: 0.85; }
+  nav { background: rgba(0,0,0,0.15); padding: 6px 0; display: flex; gap: 0; margin-top: 8px; }
+  nav a { color: white; text-decoration: none; padding: 6px 14px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
+  nav a.active { opacity: 1; border-color: white; }
+  nav a:hover { opacity: 1; }
+  main { max-width: 1200px; margin: 0 auto; padding: 18px; }
+  .warning-banner { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; color: #5a4a00; }
+  .controls { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  button { padding: 9px 14px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
+  button:hover { background: var(--green-light); }
+  button.primary { background: var(--green); color: white; border-color: var(--green); }
+  button.primary:hover { background: var(--green-dark); }
+  button.danger { color: var(--warn); }
+  button.danger:hover { background: #fde7e4; }
+  .extras-bar { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+  .extras-bar h3 { margin: 0; font-size: 14px; color: var(--green-dark); }
+  .extras-bar .pair { display: flex; flex-direction: column; gap: 2px; }
+  .extras-bar label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; }
+  .extras-bar input { padding: 5px 8px; border: 1px solid var(--border); border-radius: 5px; font-size: 13px; min-width: 140px; }
+  .participants-table { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: var(--green-light); }
+  th { padding: 10px 12px; text-align: left; font-weight: 700; color: var(--green-dark); border-bottom: 1px solid var(--border); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: #fafaf6; }
+  td.center { text-align: center; }
+  .status-ok { color: var(--ok); font-weight: 700; }
+  .status-bad { color: var(--warn); font-weight: 700; }
+  .empty { padding: 30px; text-align: center; color: var(--muted); font-style: italic; }
+  /* Modal */
+  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 100; }
+  .modal-bg.open { display: flex; }
+  .modal { background: var(--card); border-radius: 10px; max-width: 1100px; width: 100%; padding: 18px; }
+  .modal h2 { margin: 0 0 12px 0; color: var(--green-dark); }
+  .field { margin-bottom: 10px; }
+  .field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 3px; color: var(--muted); text-transform: uppercase; }
+  .field input { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
+  .fields-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .form-summary { background: #fafaf6; padding: 8px 12px; border-radius: 6px; display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+  .summary-item { padding: 4px 10px; border-radius: 16px; background: white; border: 1px solid var(--border); }
+  .summary-item.warn { background: var(--warn); color: white; border-color: var(--warn); }
+  .summary-item.ok { background: var(--green); color: white; border-color: var(--green); }
+  .groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .group { background: #fafaf6; border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
+  .group h3 { margin: 0 0 4px 0; font-size: 14px; color: var(--green-dark); display: flex; justify-content: space-between; align-items: baseline; }
+  .group .gc { font-size: 12px; color: var(--muted); font-weight: 700; }
+  .group .gc.full { color: var(--green); }
+  .group .gc.over { color: var(--warn); }
+  .team { display: flex; align-items: center; padding: 4px 4px; border-radius: 4px; cursor: pointer; user-select: none; font-size: 13px; }
+  .team:hover { background: var(--green-light); }
+  .team input { margin-right: 8px; }
+  .team-name { flex: 1; }
+  .team-price { font-weight: 700; color: var(--green-dark); margin-left: 8px; min-width: 32px; text-align: right; }
+  .team.disabled { opacity: 0.4; cursor: not-allowed; }
+  .team.disabled:hover { background: transparent; }
+  .team.selected { background: var(--green-light); }
+  .modal-actions { margin-top: 14px; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .helper { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  details.json-paste { background: #fafaf6; border: 1px dashed var(--border); border-radius: 6px; padding: 8px 12px; margin-top: 10px; }
+  details.json-paste summary { font-size: 12px; cursor: pointer; color: var(--muted); }
+  details.json-paste textarea { width: 100%; height: 120px; font-family: monospace; font-size: 11px; margin-top: 8px; padding: 6px; border: 1px solid var(--border); border-radius: 4px; }
+  .badge { display: inline-block; background: var(--green-light); color: var(--green-dark); padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-right: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Admin · Bolilla Mundial 2026</h1>
+  <div class="sub">Panel del organizador: introduce las inscripciones y gestiona los extras del torneo</div>
+  <nav>
+    <a href="index.html">Selector público</a>
+    <a href="admin.html" class="active">Admin</a>
+    <a href="leaderboard.html">Clasificación</a>
+  </nav>
+</header>
+
+<main>
+  <div class="warning-banner">
+    <strong>⚠️ Privado:</strong> esta página es para el organizador. Los cambios se guardan en tu navegador (localStorage). Para publicarlos en el ranking común tienes que <strong>Exportar participants.json</strong> y subirlo al repo de GitHub (commit + push).
+  </div>
+
+  <div class="extras-bar">
+    <h3>Extras oficiales del torneo</h3>
+    <div class="pair">
+      <label for="extraPichichi">Pichichi</label>
+      <input type="text" id="extraPichichi" placeholder="—">
+    </div>
+    <div class="pair">
+      <label for="extraMVP">MVP del torneo</label>
+      <input type="text" id="extraMVP" placeholder="—">
+    </div>
+    <div class="pair">
+      <label for="extraGK">Mejor portero</label>
+      <input type="text" id="extraGK" placeholder="—">
+    </div>
+    <div class="helper" style="margin-left:auto;">Déjalos vacíos hasta que la FIFA los anuncie. Solo entonces los 30 pts cuentan.</div>
+  </div>
+
+  <div class="controls">
+    <button class="primary" id="btnAdd">+ Nueva inscripción</button>
+    <button id="btnImport">Importar participants.json</button>
+    <input type="file" id="fileImport" accept=".json" style="display:none">
+    <button id="btnExport">Exportar participants.json</button>
+    <button id="btnFetchRepo">Cargar del repo</button>
+    <button class="danger" id="btnClearAll">Borrar todo (local)</button>
+  </div>
+
+  <div class="participants-table">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th class="center">Equipos</th>
+          <th class="center">Presupuesto</th>
+          <th>Pichichi</th>
+          <th>MVP</th>
+          <th>Portero</th>
+          <th class="center">Estado</th>
+          <th class="center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="participantsBody">
+        <tr><td colspan="9" class="empty">Sin inscripciones todavía. Pulsa "+ Nueva inscripción" para añadir el primer papel.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Modal de edición -->
+<div class="modal-bg" id="editorBg">
+  <div class="modal">
+    <h2 id="editorTitle">Nueva inscripción</h2>
+
+    <div class="fields-row">
+      <div class="field">
+        <label for="pName">Nombre y apellidos</label>
+        <input type="text" id="pName" placeholder="Ej. Juan García">
+      </div>
+      <div class="field">
+        <label for="pPichichi">Pichichi</label>
+        <input type="text" id="pPichichi">
+      </div>
+      <div class="field">
+        <label for="pMVP">MVP</label>
+        <input type="text" id="pMVP">
+      </div>
+      <div class="field">
+        <label for="pGK">Mejor portero</label>
+        <input type="text" id="pGK">
+      </div>
+      <div class="field">
+        <label for="pPaid">Pagado</label>
+        <select id="pPaid" style="width:100%; padding:8px; border:1px solid var(--border); border-radius:6px;">
+          <option value="true">Sí</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-summary">
+      <div class="summary-item" id="fBudget">Presupuesto: 0 / 1050</div>
+      <div class="summary-item" id="fCount">Equipos: 0 / 20</div>
+      <div class="summary-item" id="fValid">Validando...</div>
+    </div>
+
+    <div class="groups" id="editorGroups"></div>
+
+    <details class="json-paste">
+      <summary>Pegar JSON exportado desde el selector (alternativa a marcar a mano)</summary>
+      <textarea id="pasteJson" placeholder='{"name":"...","selections":{"A":[...],...},"pichichi":"...","mvp":"...","gk":"..."}'></textarea>
+      <button id="btnApplyPaste" style="margin-top:6px;">Aplicar pegado</button>
+    </details>
+
+    <div class="modal-actions">
+      <button id="btnCancelEdit">Cancelar</button>
+      <button class="primary" id="btnSaveEdit">Guardar inscripción</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = "bolilla2026_admin";
+let TEAMS_DATA = null;       // loaded from data/teams.json
+let editingIndex = -1;       // -1 = new, otherwise index in participants
+const editorState = { selected: {}, paid: true };
+
+const REPO_TEAMS_URL = "data/teams.json";
+const REPO_PARTICIPANTS_URL = "data/participants.json";
+
+// ---------- Persistence ----------
+function loadStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultStore();
+    const obj = JSON.parse(raw);
+    if (!obj.participants) obj.participants = [];
+    if (!obj.tournament_extras) obj.tournament_extras = { pichichi: null, mvp: null, best_gk: null };
+    return obj;
+  } catch {
+    return defaultStore();
+  }
+}
+function defaultStore() { return { tournament_extras: { pichichi: null, mvp: null, best_gk: null }, participants: [] }; }
+function saveStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
+let store = loadStorage();
+
+// ---------- Loading teams catalog ----------
+async function loadTeams() {
+  try {
+    const r = await fetch(REPO_TEAMS_URL + "?t=" + Date.now());
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    TEAMS_DATA = await r.json();
+  } catch (err) {
+    alert("No se pudo cargar data/teams.json (" + err.message + "). Asegúrate de abrir la página desde el servidor (no file://).");
+    TEAMS_DATA = null;
+  }
+}
+
+function teamsByGroup(groupKey) {
+  if (!TEAMS_DATA) return [];
+  return TEAMS_DATA.teams.filter(t => t.group === groupKey);
+}
+function findTeam(name) {
+  if (!TEAMS_DATA) return null;
+  return TEAMS_DATA.teams.find(t => t.name === name) || null;
+}
+
+// ---------- Validation ----------
+function totalCost(selections) {
+  let c = 0;
+  for (const arr of Object.values(selections)) {
+    for (const n of arr) {
+      const t = findTeam(n);
+      if (t) c += t.price;
+    }
+  }
+  return c;
+}
+function totalCount(selections) {
+  return Object.values(selections).reduce((a, arr) => a + arr.length, 0);
+}
+function validateSelections(selections) {
+  if (!TEAMS_DATA) return ["teams.json no cargado"];
+  const errors = [];
+  const quotas = TEAMS_DATA.group_quotas;
+  for (const [g, need] of Object.entries(quotas)) {
+    const have = (selections[g] || []).length;
+    if (have < need) errors.push(`Faltan ${need - have} en grupo ${g}`);
+    if (have > need) errors.push(`Sobran ${have - need} en grupo ${g}`);
+  }
+  const c = totalCost(selections);
+  if (c > TEAMS_DATA.budget) errors.push(`Presupuesto excedido en ${c - TEAMS_DATA.budget}`);
+  return errors;
+}
+
+// ---------- Main table render ----------
+function renderTable() {
+  const tbody = document.getElementById("participantsBody");
+  if (store.participants.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" class="empty">Sin inscripciones todavía. Pulsa "+ Nueva inscripción" para añadir el primer papel.</td></tr>`;
+    return;
+  }
+  let html = "";
+  store.participants.forEach((p, i) => {
+    const c = totalCost(p.selections);
+    const n = totalCount(p.selections);
+    const errs = validateSelections(p.selections);
+    const validHtml = errs.length === 0
+      ? `<span class="status-ok">✓ válido</span>`
+      : `<span class="status-bad" title="${errs.join('; ')}">⚠ ${errs.length} err</span>`;
+    html += `<tr>
+      <td>${i + 1}</td>
+      <td><strong>${escapeHtml(p.name || "(sin nombre)")}</strong> ${p.paid === false ? '<span class="badge" style="background:#fde7e4;color:#c0392b">SIN PAGAR</span>' : ''}</td>
+      <td class="center">${n}/20</td>
+      <td class="center">${c}/${TEAMS_DATA ? TEAMS_DATA.budget : 1050}</td>
+      <td>${escapeHtml(p.pichichi || "—")}</td>
+      <td>${escapeHtml(p.mvp || "—")}</td>
+      <td>${escapeHtml(p.gk || "—")}</td>
+      <td class="center">${validHtml}</td>
+      <td class="center">
+        <button onclick="editParticipant(${i})">Editar</button>
+        <button class="danger" onclick="deleteParticipant(${i})">×</button>
+      </td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function escapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
+
+// ---------- Editor modal ----------
+function openEditor(idx) {
+  editingIndex = idx;
+  const groupKeys = TEAMS_DATA ? Object.keys(TEAMS_DATA.group_quotas) : [];
+  editorState.selected = {};
+  groupKeys.forEach(g => editorState.selected[g] = new Set());
+  if (idx >= 0) {
+    const p = store.participants[idx];
+    document.getElementById("editorTitle").textContent = "Editar inscripción";
+    document.getElementById("pName").value = p.name || "";
+    document.getElementById("pPichichi").value = p.pichichi || "";
+    document.getElementById("pMVP").value = p.mvp || "";
+    document.getElementById("pGK").value = p.gk || "";
+    document.getElementById("pPaid").value = p.paid === false ? "false" : "true";
+    for (const [g, arr] of Object.entries(p.selections || {})) {
+      if (editorState.selected[g]) arr.forEach(t => editorState.selected[g].add(t));
+    }
+  } else {
+    document.getElementById("editorTitle").textContent = "Nueva inscripción";
+    document.getElementById("pName").value = "";
+    document.getElementById("pPichichi").value = "";
+    document.getElementById("pMVP").value = "";
+    document.getElementById("pGK").value = "";
+    document.getElementById("pPaid").value = "true";
+  }
+  renderEditor();
+  document.getElementById("editorBg").classList.add("open");
+}
+function closeEditor() { document.getElementById("editorBg").classList.remove("open"); }
+
+function renderEditor() {
+  const container = document.getElementById("editorGroups");
+  if (!TEAMS_DATA) { container.innerHTML = "<em>teams.json no cargado</em>"; return; }
+  const quotas = TEAMS_DATA.group_quotas;
+  container.innerHTML = "";
+  for (const [g, need] of Object.entries(quotas)) {
+    const selSet = editorState.selected[g];
+    const card = document.createElement("div");
+    card.className = "group";
+    const isFull = selSet.size === need;
+    const isOver = selSet.size > need;
+    const gcClass = isOver ? "over" : (isFull ? "full" : "");
+    card.innerHTML = `<h3><span>GRUPO ${g}</span><span class="gc ${gcClass}">${selSet.size}/${need}</span></h3>`;
+    teamsByGroup(g).forEach(team => {
+      const isSel = selSet.has(team.name);
+      const disabled = !isSel && selSet.size >= need;
+      const lbl = document.createElement("label");
+      lbl.className = "team" + (isSel ? " selected" : "") + (disabled ? " disabled" : "");
+      lbl.innerHTML = `
+        <input type="checkbox" ${isSel ? "checked" : ""} ${disabled ? "disabled" : ""} data-g="${g}" data-t="${team.name}">
+        <span class="team-name">${team.name}</span>
+        <span class="team-price">${team.price}</span>
+      `;
+      card.appendChild(lbl);
+    });
+    container.appendChild(card);
+  }
+  container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener("change", e => {
+      const g = e.target.dataset.g, t = e.target.dataset.t;
+      if (e.target.checked) editorState.selected[g].add(t);
+      else editorState.selected[g].delete(t);
+      renderEditor();
+    });
+  });
+
+  // editor summary
+  const selectionsObj = Object.fromEntries(Object.entries(editorState.selected).map(([g, s]) => [g, [...s]]));
+  const c = totalCost(selectionsObj);
+  const n = totalCount(selectionsObj);
+  const errs = validateSelections(selectionsObj);
+  const fB = document.getElementById("fBudget");
+  fB.textContent = `Presupuesto: ${c} / ${TEAMS_DATA.budget}`;
+  fB.className = "summary-item " + (c > TEAMS_DATA.budget ? "warn" : (n === 20 ? "ok" : ""));
+  const fC = document.getElementById("fCount");
+  fC.textContent = `Equipos: ${n} / 20`;
+  fC.className = "summary-item " + (n === 20 ? "ok" : (n > 20 ? "warn" : ""));
+  const fV = document.getElementById("fValid");
+  if (errs.length === 0) { fV.textContent = "Plantilla válida"; fV.className = "summary-item ok"; }
+  else { fV.textContent = errs[0]; fV.className = "summary-item warn"; }
+}
+
+window.editParticipant = (i) => openEditor(i);
+window.deleteParticipant = (i) => {
+  if (!confirm(`¿Borrar a "${store.participants[i].name}"?`)) return;
+  store.participants.splice(i, 1);
+  saveStorage();
+  renderTable();
+};
+
+// ---------- Buttons ----------
+document.getElementById("btnAdd").addEventListener("click", () => openEditor(-1));
+document.getElementById("btnCancelEdit").addEventListener("click", closeEditor);
+document.getElementById("btnSaveEdit").addEventListener("click", () => {
+  const name = document.getElementById("pName").value.trim();
+  if (!name) { alert("Pon el nombre."); return; }
+  const selections = Object.fromEntries(Object.entries(editorState.selected).map(([g, s]) => [g, [...s]]));
+  const errs = validateSelections(selections);
+  if (errs.length > 0) {
+    if (!confirm("La plantilla tiene errores:\n- " + errs.join("\n- ") + "\n\n¿Guardar igualmente?")) return;
+  }
+  const record = {
+    name,
+    selections,
+    pichichi: document.getElementById("pPichichi").value.trim() || null,
+    mvp: document.getElementById("pMVP").value.trim() || null,
+    gk: document.getElementById("pGK").value.trim() || null,
+    paid: document.getElementById("pPaid").value === "true",
+  };
+  if (editingIndex === -1) store.participants.push(record);
+  else store.participants[editingIndex] = record;
+  saveStorage();
+  renderTable();
+  closeEditor();
+});
+
+document.getElementById("btnApplyPaste").addEventListener("click", () => {
+  const raw = document.getElementById("pasteJson").value.trim();
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (data.name) document.getElementById("pName").value = data.name;
+    if (data.pichichi) document.getElementById("pPichichi").value = data.pichichi;
+    if (data.mvp) document.getElementById("pMVP").value = data.mvp;
+    if (data.gk) document.getElementById("pGK").value = data.gk;
+    if (data.selections) {
+      for (const g of Object.keys(editorState.selected)) editorState.selected[g] = new Set();
+      for (const [g, arr] of Object.entries(data.selections)) {
+        if (editorState.selected[g]) arr.forEach(t => editorState.selected[g].add(t));
+      }
+    }
+    renderEditor();
+  } catch (e) { alert("JSON inválido: " + e.message); }
+});
+
+document.getElementById("btnExport").addEventListener("click", () => {
+  const data = {
+    tournament_extras: {
+      pichichi: document.getElementById("extraPichichi").value.trim() || null,
+      mvp: document.getElementById("extraMVP").value.trim() || null,
+      best_gk: document.getElementById("extraGK").value.trim() || null,
+    },
+    participants: store.participants,
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "participants.json"; a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("btnImport").addEventListener("click", () => document.getElementById("fileImport").click());
+document.getElementById("fileImport").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      mergeImported(data);
+    } catch (err) { alert("Archivo inválido: " + err.message); }
+  };
+  reader.readAsText(f);
+});
+
+document.getElementById("btnFetchRepo").addEventListener("click", async () => {
+  if (!confirm("¿Cargar participants.json del repo? Sobrescribirá tus cambios locales.")) return;
+  try {
+    const r = await fetch(REPO_PARTICIPANTS_URL + "?t=" + Date.now());
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    mergeImported(data);
+  } catch (err) { alert("Error: " + err.message); }
+});
+
+function mergeImported(data) {
+  if (data.participants) store.participants = data.participants;
+  if (data.tournament_extras) {
+    store.tournament_extras = data.tournament_extras;
+    document.getElementById("extraPichichi").value = data.tournament_extras.pichichi || "";
+    document.getElementById("extraMVP").value = data.tournament_extras.mvp || "";
+    document.getElementById("extraGK").value = data.tournament_extras.best_gk || "";
+  }
+  saveStorage();
+  renderTable();
+}
+
+document.getElementById("btnClearAll").addEventListener("click", () => {
+  if (!confirm("¿Seguro? Esto borra TODAS las inscripciones de tu navegador. (No afecta al repo.)")) return;
+  store = defaultStore();
+  saveStorage();
+  document.getElementById("extraPichichi").value = "";
+  document.getElementById("extraMVP").value = "";
+  document.getElementById("extraGK").value = "";
+  renderTable();
+});
+
+// Extras inputs auto-save
+["extraPichichi", "extraMVP", "extraGK"].forEach(id => {
+  document.getElementById(id).addEventListener("input", e => {
+    const map = { extraPichichi: "pichichi", extraMVP: "mvp", extraGK: "best_gk" };
+    store.tournament_extras[map[id]] = e.target.value.trim() || null;
+    saveStorage();
+  });
+});
+
+// Init
+(async function init() {
+  await loadTeams();
+  // Restore extras into inputs
+  document.getElementById("extraPichichi").value = store.tournament_extras.pichichi || "";
+  document.getElementById("extraMVP").value = store.tournament_extras.mvp || "";
+  document.getElementById("extraGK").value = store.tournament_extras.best_gk || "";
+  renderTable();
+})();
+</script>
+</body>
+</html>
