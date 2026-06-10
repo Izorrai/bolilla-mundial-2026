@@ -31,6 +31,6 @@ App fantasy para una porra (bolilla) del Mundial 2026.
 
 ## Cómo se usa
 
-Abrir [bolilla.html](bolilla.html) en el navegador. Marcar equipos, rellenar datos personales, imprimir o exportar a PDF para entregar la hoja con los 5€.
+Abrir [index.html](index.html) en el navegador (o usar la versión online en https://izorrai.github.io/bolilla-mundial-2026/). Marcar equipos, rellenar datos personales, imprimir o exportar a PDF para entregar la hoja con los 5€.
 
 Funciona offline. Guarda automáticamente la selección en el localStorage del navegador.
