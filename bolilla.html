@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolilla Mundial 2026</title>
+<style>
+  :root {
+    --green: #2f7a3a;
+    --green-light: #d4ecd6;
+    --green-dark: #1d4e25;
+    --bg: #f5f5f1;
+    --card: #ffffff;
+    --border: #d8d8d2;
+    --text: #1a1a1a;
+    --muted: #6a6a64;
+    --warn: #c0392b;
+    --ok: #2f7a3a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.4;
+  }
+  header {
+    background: var(--green);
+    color: white;
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  header h1 {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+  }
+  .summary {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 14px;
+  }
+  .summary-item {
+    background: rgba(255,255,255,0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .summary-item.warn {
+    background: var(--warn);
+  }
+  .summary-item.ok {
+    background: var(--green-dark);
+  }
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  button {
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  button:hover { background: var(--green-light); }
+  button.primary {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+  }
+  button.primary:hover { background: var(--green-dark); }
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .group h2 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    color: var(--green-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .group-counter {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .group-counter.full {
+    color: var(--green);
+  }
+  .group-counter.over {
+    color: var(--warn);
+  }
+  .team {
+    display: flex;
+    align-items: center;
+    padding: 6px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .team:hover { background: var(--green-light); }
+  .team input { margin-right: 10px; transform: scale(1.2); }
+  .team-name {
+    flex: 1;
+    font-size: 14px;
+  }
+  .team-price {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--green-dark);
+    min-width: 40px;
+    text-align: right;
+  }
+  .team.disabled { opacity: 0.4; cursor: not-allowed; }
+  .team.disabled:hover { background: transparent; }
+  .team.selected {
+    background: var(--green-light);
+  }
+  .extras {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 20px;
+  }
+  .extras h2 {
+    margin: 0 0 12px 0;
+    color: var(--green-dark);
+  }
+  .field {
+    margin-bottom: 12px;
+  }
+  .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--muted);
+  }
+  .field input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .selection-summary {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 20px;
+  }
+  .selection-summary h2 {
+    margin: 0 0 12px 0;
+    color: var(--green-dark);
+  }
+  .selection-summary ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    columns: 2;
+  }
+  .selection-summary li {
+    padding: 3px 0;
+    font-size: 14px;
+    break-inside: avoid;
+  }
+  .selection-summary li .price {
+    color: var(--green-dark);
+    font-weight: 600;
+    margin-left: 8px;
+  }
+  .scoring-help {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    padding: 10px 14px;
+    background: #fafaf6;
+    border-left: 3px solid var(--green);
+    border-radius: 4px;
+  }
+  @media print {
+    header { position: static; background: white; color: black; }
+    .controls { display: none; }
+    .team.disabled, .team:not(.selected) { display: none; }
+    .group { break-inside: avoid; border: none; padding: 0; }
+    .groups { display: block; }
+    button { display: none; }
+  }
+  @media (max-width: 600px) {
+    .selection-summary ul { columns: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BOLILLA MUNDIAL 2026</h1>
+  <div class="summary">
+    <div class="summary-item" id="budgetSummary">Presupuesto: 0 / 1050</div>
+    <div class="summary-item" id="countSummary">Equipos: 0 / 20</div>
+    <div class="summary-item" id="validSummary">Validando...</div>
+  </div>
+</header>
+
+<main>
+  <div class="controls">
+    <button class="primary" id="btnOptimize">Optimizar plantilla</button>
+    <button id="btnClear">Limpiar</button>
+    <button id="btnPrint">Imprimir / Guardar PDF</button>
+    <button id="btnExport">Exportar JSON</button>
+    <button id="btnImport">Importar JSON</button>
+    <input type="file" id="fileImport" accept=".json" style="display:none">
+  </div>
+
+  <div class="scoring-help">
+    <strong>Reglas:</strong> 1.050 pts de presupuesto · 20 equipos (3A + 3B + 4C + 4D + 2E + 4F) · Solo cuentan goles/resultados de los 90 min (sin pr&oacute;rroga).
+    Por gol 0,5 · V 3 · E 1 · D 0 · 16avos 5 · Octavos 7 · Cuartos 10 · Semis 15 · Final 25 · Camp&eacute;on 50 · Pichichi/MVP/Portero 30 c/u.
+  </div>
+
+  <div class="groups" id="groupsContainer"></div>
+
+  <div class="extras">
+    <h2>Datos personales y extras</h2>
+    <div class="field">
+      <label for="fName">Nombre y apellidos</label>
+      <input type="text" id="fName" placeholder="Tu nombre completo">
+    </div>
+    <div class="field">
+      <label for="fPichichi">Pichichi seleccionado</label>
+      <input type="text" id="fPichichi" placeholder="Ej. Lamine Yamal">
+    </div>
+    <div class="field">
+      <label for="fMVP">MVP torneo seleccionado</label>
+      <input type="text" id="fMVP" placeholder="Ej. Pedri">
+    </div>
+    <div class="field">
+      <label for="fGK">Mejor portero seleccionado</label>
+      <input type="text" id="fGK" placeholder="Ej. Unai Sim&oacute;n">
+    </div>
+  </div>
+
+  <div class="selection-summary">
+    <h2>Resumen de tu plantilla</h2>
+    <ul id="selectionList"><li><em>Sin selecciones todav&iacute;a</em></li></ul>
+  </div>
+</main>
+
+<script>
+const BUDGET = 1050;
+
+const GROUPS = {
+  A: { required: 3, teams: [
+    { name: "España", price: 200 },
+    { name: "Francia", price: 180 },
+    { name: "Inglaterra", price: 160 },
+    { name: "Argentina", price: 130 },
+    { name: "Brasil", price: 120 },
+    { name: "Portugal", price: 110 },
+    { name: "Alemania", price: 100 },
+  ]},
+  B: { required: 3, teams: [
+    { name: "Holanda", price: 70 },
+    { name: "Noruega", price: 65 },
+    { name: "Bélgica", price: 60 },
+    { name: "Colombia", price: 60 },
+    { name: "EEUU", price: 55 },
+    { name: "Japón", price: 55 },
+    { name: "Suiza", price: 55 },
+  ]},
+  C: { required: 4, teams: [
+    { name: "Uruguay", price: 50 },
+    { name: "Marruecos", price: 50 },
+    { name: "México", price: 50 },
+    { name: "Suecia", price: 45 },
+    { name: "Croacia", price: 45 },
+    { name: "Costa de Marfil", price: 45 },
+    { name: "Turquía", price: 45 },
+    { name: "Ecuador", price: 40 },
+    { name: "Senegal", price: 40 },
+    { name: "Austria", price: 40 },
+  ]},
+  D: { required: 4, teams: [
+    { name: "Canadá", price: 35 },
+    { name: "Paraguay", price: 35 },
+    { name: "Escocia", price: 35 },
+    { name: "Chequia", price: 30 },
+    { name: "Bosnia", price: 30 },
+    { name: "Ghana", price: 30 },
+    { name: "Egipto", price: 30 },
+    { name: "Corea del Sur", price: 25 },
+    { name: "Argelia", price: 25 },
+  ]},
+  E: { required: 2, teams: [
+    { name: "Sudáfrica", price: 20 },
+    { name: "Australia", price: 20 },
+    { name: "Túnez", price: 20 },
+    { name: "Irán", price: 20 },
+    { name: "Congo", price: 15 },
+  ]},
+  F: { required: 4, teams: [
+    { name: "Catar", price: 10 },
+    { name: "Nueva Zelanda", price: 10 },
+    { name: "Arabia Saudí", price: 10 },
+    { name: "Irak", price: 10 },
+    { name: "Cabo Verde", price: 10 },
+    { name: "Panamá", price: 10 },
+    { name: "Uzbekistán", price: 10 },
+    { name: "Haití", price: 10 },
+    { name: "Curazao", price: 10 },
+    { name: "Jordania", price: 5 },
+  ]},
+};
+
+// expected points used by optimizer; default = price (the organizer's implicit ranking)
+function expectedPoints(team) { return team.price; }
+
+const state = {
+  selected: {} // groupKey -> Set of team names
+};
+
+for (const g of Object.keys(GROUPS)) state.selected[g] = new Set();
+
+function totalSelectedCount() {
+  return Object.values(state.selected).reduce((a, s) => a + s.size, 0);
+}
+
+function totalCost() {
+  let c = 0;
+  for (const [g, set] of Object.entries(state.selected)) {
+    for (const tn of set) {
+      const t = GROUPS[g].teams.find(x => x.name === tn);
+      if (t) c += t.price;
+    }
+  }
+  return c;
+}
+
+function render() {
+  const container = document.getElementById("groupsContainer");
+  container.innerHTML = "";
+  for (const [gKey, gData] of Object.entries(GROUPS)) {
+    const selected = state.selected[gKey];
+    const card = document.createElement("div");
+    card.className = "group";
+
+    const isFull = selected.size === gData.required;
+    const isOver = selected.size > gData.required;
+    const counterClass = isOver ? "over" : (isFull ? "full" : "");
+
+    card.innerHTML = `
+      <h2>
+        <span>GRUPO ${gKey}</span>
+        <span class="group-counter ${counterClass}">${selected.size}/${gData.required}</span>
+      </h2>
+    `;
+    for (const team of gData.teams) {
+      const isSelected = selected.has(team.name);
+      const disabled = !isSelected && selected.size >= gData.required;
+      const div = document.createElement("label");
+      div.className = "team" + (isSelected ? " selected" : "") + (disabled ? " disabled" : "");
+      div.innerHTML = `
+        <input type="checkbox" ${isSelected ? "checked" : ""} ${disabled ? "disabled" : ""} data-group="${gKey}" data-team="${team.name}">
+        <span class="team-name">${team.name}</span>
+        <span class="team-price">${team.price}</span>
+      `;
+      card.appendChild(div);
+    }
+    container.appendChild(card);
+  }
+
+  // attach listeners
+  container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener("change", e => {
+      const g = e.target.dataset.group;
+      const t = e.target.dataset.team;
+      if (e.target.checked) state.selected[g].add(t);
+      else state.selected[g].delete(t);
+      render();
+    });
+  });
+
+  // summary
+  const cost = totalCost();
+  const count = totalSelectedCount();
+  const budgetEl = document.getElementById("budgetSummary");
+  budgetEl.textContent = `Presupuesto: ${cost} / ${BUDGET}`;
+  budgetEl.classList.toggle("warn", cost > BUDGET);
+  budgetEl.classList.toggle("ok", cost <= BUDGET && count === 20);
+
+  const countEl = document.getElementById("countSummary");
+  countEl.textContent = `Equipos: ${count} / 20`;
+  countEl.classList.toggle("ok", count === 20);
+  countEl.classList.toggle("warn", count > 20);
+
+  const validEl = document.getElementById("validSummary");
+  const errors = validate();
+  if (errors.length === 0) {
+    validEl.textContent = "Plantilla válida";
+    validEl.classList.add("ok");
+    validEl.classList.remove("warn");
+  } else {
+    validEl.textContent = errors[0];
+    validEl.classList.add("warn");
+    validEl.classList.remove("ok");
+  }
+
+  // selection list
+  const list = document.getElementById("selectionList");
+  if (count === 0) {
+    list.innerHTML = "<li><em>Sin selecciones todavía</em></li>";
+  } else {
+    let html = "";
+    for (const [gKey, gData] of Object.entries(GROUPS)) {
+      for (const tn of state.selected[gKey]) {
+        const t = gData.teams.find(x => x.name === tn);
+        html += `<li><strong>${gKey}</strong> ${tn} <span class="price">${t.price} pts</span></li>`;
+      }
+    }
+    list.innerHTML = html;
+  }
+}
+
+function validate() {
+  const errors = [];
+  for (const [gKey, gData] of Object.entries(GROUPS)) {
+    const s = state.selected[gKey].size;
+    if (s < gData.required) errors.push(`Faltan ${gData.required - s} equipos en Grupo ${gKey}`);
+    if (s > gData.required) errors.push(`Sobran ${s - gData.required} equipos en Grupo ${gKey}`);
+  }
+  const cost = totalCost();
+  if (cost > BUDGET) errors.push(`Presupuesto excedido en ${cost - BUDGET} pts`);
+  return errors;
+}
+
+// ---------- OPTIMIZER ----------
+// For each group, enumerate all C(n, required) combinations as { cost, ep, teams }.
+// Then a multi-choice knapsack across groups maximizes total ep subject to total cost <= BUDGET.
+
+function combinations(arr, k) {
+  const result = [];
+  const rec = (start, combo) => {
+    if (combo.length === k) { result.push(combo.slice()); return; }
+    for (let i = start; i < arr.length; i++) {
+      combo.push(arr[i]);
+      rec(i + 1, combo);
+      combo.pop();
+    }
+  };
+  rec(0, []);
+  return result;
+}
+
+function groupCombinations(groupKey) {
+  const g = GROUPS[groupKey];
+  const combos = combinations(g.teams, g.required);
+  return combos.map(teams => ({
+    teams,
+    cost: teams.reduce((a, t) => a + t.price, 0),
+    ep: teams.reduce((a, t) => a + expectedPoints(t), 0),
+  }));
+}
+
+function optimize() {
+  const groupKeys = Object.keys(GROUPS);
+  const allCombos = groupKeys.map(k => groupCombinations(k));
+
+  // DP: dp[i][cost] = { ep, picks }
+  // i = group index, cost = total cost so far
+  let dp = new Map();
+  dp.set(0, { ep: 0, picks: [] });
+
+  for (let i = 0; i < groupKeys.length; i++) {
+    const next = new Map();
+    for (const [costSoFar, state] of dp.entries()) {
+      for (const combo of allCombos[i]) {
+        const newCost = costSoFar + combo.cost;
+        if (newCost > BUDGET) continue;
+        const newEp = state.ep + combo.ep;
+        const existing = next.get(newCost);
+        if (!existing || existing.ep < newEp) {
+          next.set(newCost, { ep: newEp, picks: [...state.picks, combo] });
+        }
+      }
+    }
+    dp = next;
+  }
+
+  // find max ep
+  let best = null;
+  for (const [cost, st] of dp.entries()) {
+    if (!best || st.ep > best.ep || (st.ep === best.ep && cost < best.cost)) {
+      best = { ep: st.ep, cost, picks: st.picks };
+    }
+  }
+  return best;
+}
+
+document.getElementById("btnOptimize").addEventListener("click", () => {
+  const result = optimize();
+  if (!result) { alert("No se ha encontrado plantilla válida."); return; }
+  // apply
+  const groupKeys = Object.keys(GROUPS);
+  for (const g of groupKeys) state.selected[g] = new Set();
+  result.picks.forEach((combo, idx) => {
+    const gKey = groupKeys[idx];
+    combo.teams.forEach(t => state.selected[gKey].add(t.name));
+  });
+  render();
+});
+
+document.getElementById("btnClear").addEventListener("click", () => {
+  if (!confirm("¿Seguro que quieres borrar la plantilla?")) return;
+  for (const g of Object.keys(GROUPS)) state.selected[g] = new Set();
+  document.getElementById("fName").value = "";
+  document.getElementById("fPichichi").value = "";
+  document.getElementById("fMVP").value = "";
+  document.getElementById("fGK").value = "";
+  render();
+});
+
+document.getElementById("btnPrint").addEventListener("click", () => window.print());
+
+document.getElementById("btnExport").addEventListener("click", () => {
+  const data = {
+    name: document.getElementById("fName").value,
+    pichichi: document.getElementById("fPichichi").value,
+    mvp: document.getElementById("fMVP").value,
+    gk: document.getElementById("fGK").value,
+    selections: {},
+  };
+  for (const [g, set] of Object.entries(state.selected)) {
+    data.selections[g] = [...set];
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const safeName = (data.name || "plantilla").replace(/[^a-z0-9_\-]/gi, "_");
+  a.href = url; a.download = `bolilla_${safeName}.json`; a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("btnImport").addEventListener("click", () => {
+  document.getElementById("fileImport").click();
+});
+document.getElementById("fileImport").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      if (data.name !== undefined) document.getElementById("fName").value = data.name;
+      if (data.pichichi !== undefined) document.getElementById("fPichichi").value = data.pichichi;
+      if (data.mvp !== undefined) document.getElementById("fMVP").value = data.mvp;
+      if (data.gk !== undefined) document.getElementById("fGK").value = data.gk;
+      for (const g of Object.keys(GROUPS)) state.selected[g] = new Set();
+      if (data.selections) {
+        for (const [g, arr] of Object.entries(data.selections)) {
+          if (state.selected[g]) arr.forEach(t => state.selected[g].add(t));
+        }
+      }
+      render();
+    } catch (err) {
+      alert("Archivo no válido: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+});
+
+// Auto-save in localStorage
+function autosave() {
+  const data = {
+    name: document.getElementById("fName").value,
+    pichichi: document.getElementById("fPichichi").value,
+    mvp: document.getElementById("fMVP").value,
+    gk: document.getElementById("fGK").value,
+    selections: {},
+  };
+  for (const [g, set] of Object.entries(state.selected)) data.selections[g] = [...set];
+  localStorage.setItem("bolilla2026", JSON.stringify(data));
+}
+function autoload() {
+  try {
+    const raw = localStorage.getItem("bolilla2026");
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data.name) document.getElementById("fName").value = data.name;
+    if (data.pichichi) document.getElementById("fPichichi").value = data.pichichi;
+    if (data.mvp) document.getElementById("fMVP").value = data.mvp;
+    if (data.gk) document.getElementById("fGK").value = data.gk;
+    if (data.selections) {
+      for (const [g, arr] of Object.entries(data.selections)) {
+        if (state.selected[g]) arr.forEach(t => state.selected[g].add(t));
+      }
+    }
+  } catch {}
+}
+
+document.addEventListener("input", autosave);
+window.addEventListener("beforeunload", autosave);
+
+autoload();
+render();
+</script>
+</body>
+</html>
