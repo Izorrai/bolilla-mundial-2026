@@ -171,6 +171,7 @@ const REPO_ROOMS_URL = "data/rooms.json";
 let TEAMS = null, PARTICIPANTS = null, SCOREBOARD = null;
 let ROOMS_DATA = null, CURRENT_ROOM = null;
 
+const LAST_ROOM_KEY = "bolilla2026_last_room";
 function readRoomFromUrl() {
   return new URL(location.href).searchParams.get("room");
 }
@@ -178,6 +179,10 @@ function setRoomInUrl(roomId) {
   const u = new URL(location.href);
   u.searchParams.set("room", roomId);
   history.replaceState({}, "", u.toString());
+  try { localStorage.setItem(LAST_ROOM_KEY, roomId); } catch {}
+}
+function lastVisitedRoom() {
+  try { return localStorage.getItem(LAST_ROOM_KEY); } catch { return null; }
 }
 
 async function fetchJson(url) {
@@ -348,7 +353,12 @@ async function loadRoomData(roomId) {
     const sel = document.getElementById("roomSelect");
     sel.innerHTML = ROOMS_DATA.rooms.map(r => `<option value="${r.id}">${escapeHtml(r.name)}</option>`).join("");
     sel.addEventListener("change", e => loadRoomData(e.target.value));
-    const initial = readRoomFromUrl() || ROOMS_DATA.default || (ROOMS_DATA.rooms[0] && ROOMS_DATA.rooms[0].id);
+    const validIds = ROOMS_DATA.rooms.map(r => r.id);
+    const fromUrl = readRoomFromUrl();
+    const fromStorage = lastVisitedRoom();
+    const initial = (fromUrl && validIds.includes(fromUrl)) ? fromUrl
+                  : (fromStorage && validIds.includes(fromStorage)) ? fromStorage
+                  : (ROOMS_DATA.default || ROOMS_DATA.rooms[0].id);
     await loadRoomData(initial);
   } catch (err) {
     document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Error cargando datos: ${escapeHtml(err.message)}</td></tr>`;

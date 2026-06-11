@@ -223,6 +223,7 @@ let editingIndex = -1;
 const editorState = { selected: {}, paid: true };
 
 // ---------- Room handling ----------
+const LAST_ROOM_KEY = "bolilla2026_last_room";
 function readRoomFromUrl() {
   const u = new URL(location.href);
   return u.searchParams.get("room");
@@ -231,6 +232,10 @@ function setRoomInUrl(roomId) {
   const u = new URL(location.href);
   u.searchParams.set("room", roomId);
   history.replaceState({}, "", u.toString());
+  try { localStorage.setItem(LAST_ROOM_KEY, roomId); } catch {}
+}
+function lastVisitedRoom() {
+  try { return localStorage.getItem(LAST_ROOM_KEY); } catch { return null; }
 }
 function storageKey() { return "bolilla2026_admin_" + (CURRENT_ROOM ? CURRENT_ROOM.id : "default"); }
 function repoParticipantsUrl() { return `data/rooms/${CURRENT_ROOM.id}/participants.json`; }
@@ -564,7 +569,12 @@ function selectRoom(roomId) {
   const sel = document.getElementById("roomSelect");
   sel.innerHTML = ROOMS_DATA.rooms.map(r => `<option value="${r.id}">${escapeHtml(r.name)}</option>`).join("");
   sel.addEventListener("change", e => selectRoom(e.target.value));
-  const initial = readRoomFromUrl() || ROOMS_DATA.default || (ROOMS_DATA.rooms[0] && ROOMS_DATA.rooms[0].id);
+  const validIds = ROOMS_DATA.rooms.map(r => r.id);
+  const fromUrl = readRoomFromUrl();
+  const fromStorage = lastVisitedRoom();
+  const initial = (fromUrl && validIds.includes(fromUrl)) ? fromUrl
+                : (fromStorage && validIds.includes(fromStorage)) ? fromStorage
+                : (ROOMS_DATA.default || ROOMS_DATA.rooms[0].id);
   selectRoom(initial);
 })();
 </script>
