@@ -2,7 +2,7 @@
   "_comment": "Configuracion de la porra del Mundial 2026. Inspirada en la Eurocopa 2024 entre amigos. Cada jugador rellena pronosticos en 4 categorias y al final el bote completo (jugadores x fee_eur) va al ganador.",
   "fee_eur": 10,
   "prize_distribution": "winner_takes_all",
-  "players": ["Ander", "Gorka", "Jon", "Mikel", "Julen"],
+  "players": ["Ander", "Gorka", "Jon", "Mikel", "Julen", "Pablo", "Eneko"],
   "predicted_selections": [
     "España",
     "Francia",
