@@ -1,77 +1,367 @@
 {
   "_comment": "Catálogo de las 51 selecciones de la bolilla. group y price los pone el organizador. fd_id se rellena ejecutando scripts/fetch_team_ids.py una vez. fd_name es el nombre que devuelve football-data.org y sirve para emparejar partidos.",
   "teams": [
-    { "name": "España",          "group": "A", "price": 200, "fd_name": "Spain",                  "fd_id": null },
-    { "name": "Francia",         "group": "A", "price": 180, "fd_name": "France",                 "fd_id": null },
-    { "name": "Inglaterra",      "group": "A", "price": 160, "fd_name": "England",                "fd_id": null },
-    { "name": "Argentina",       "group": "A", "price": 130, "fd_name": "Argentina",              "fd_id": null },
-    { "name": "Brasil",          "group": "A", "price": 120, "fd_name": "Brazil",                 "fd_id": null },
-    { "name": "Portugal",        "group": "A", "price": 110, "fd_name": "Portugal",               "fd_id": null },
-    { "name": "Alemania",        "group": "A", "price": 100, "fd_name": "Germany",                "fd_id": null },
-
-    { "name": "Holanda",         "group": "B", "price":  70, "fd_name": "Netherlands",            "fd_id": null },
-    { "name": "Noruega",         "group": "B", "price":  65, "fd_name": "Norway",                 "fd_id": null },
-    { "name": "Bélgica",         "group": "B", "price":  60, "fd_name": "Belgium",                "fd_id": null },
-    { "name": "Colombia",        "group": "B", "price":  60, "fd_name": "Colombia",               "fd_id": null },
-    { "name": "EEUU",            "group": "B", "price":  55, "fd_name": "United States",          "fd_id": null },
-    { "name": "Japón",           "group": "B", "price":  55, "fd_name": "Japan",                  "fd_id": null },
-    { "name": "Suiza",           "group": "B", "price":  55, "fd_name": "Switzerland",            "fd_id": null },
-
-    { "name": "Uruguay",         "group": "C", "price":  50, "fd_name": "Uruguay",                "fd_id": null },
-    { "name": "Marruecos",       "group": "C", "price":  50, "fd_name": "Morocco",                "fd_id": null },
-    { "name": "México",          "group": "C", "price":  50, "fd_name": "Mexico",                 "fd_id": null },
-    { "name": "Suecia",          "group": "C", "price":  45, "fd_name": "Sweden",                 "fd_id": null },
-    { "name": "Croacia",         "group": "C", "price":  45, "fd_name": "Croatia",                "fd_id": null },
-    { "name": "Costa de Marfil", "group": "C", "price":  45, "fd_name": "Ivory Coast",            "fd_id": null },
-    { "name": "Turquía",         "group": "C", "price":  45, "fd_name": "Turkey",                 "fd_id": null },
-    { "name": "Ecuador",         "group": "C", "price":  40, "fd_name": "Ecuador",                "fd_id": null },
-    { "name": "Senegal",         "group": "C", "price":  40, "fd_name": "Senegal",                "fd_id": null },
-    { "name": "Austria",         "group": "C", "price":  40, "fd_name": "Austria",                "fd_id": null },
-
-    { "name": "Canadá",          "group": "D", "price":  35, "fd_name": "Canada",                 "fd_id": null },
-    { "name": "Paraguay",        "group": "D", "price":  35, "fd_name": "Paraguay",               "fd_id": null },
-    { "name": "Escocia",         "group": "D", "price":  35, "fd_name": "Scotland",               "fd_id": null },
-    { "name": "Chequia",         "group": "D", "price":  30, "fd_name": "Czech Republic",         "fd_id": null },
-    { "name": "Bosnia",          "group": "D", "price":  30, "fd_name": "Bosnia and Herzegovina", "fd_id": null },
-    { "name": "Ghana",           "group": "D", "price":  30, "fd_name": "Ghana",                  "fd_id": null },
-    { "name": "Egipto",          "group": "D", "price":  30, "fd_name": "Egypt",                  "fd_id": null },
-    { "name": "Corea del Sur",   "group": "D", "price":  25, "fd_name": "South Korea",            "fd_id": null },
-    { "name": "Argelia",         "group": "D", "price":  25, "fd_name": "Algeria",                "fd_id": null },
-
-    { "name": "Sudáfrica",       "group": "E", "price":  20, "fd_name": "South Africa",           "fd_id": null },
-    { "name": "Australia",       "group": "E", "price":  20, "fd_name": "Australia",              "fd_id": null },
-    { "name": "Túnez",           "group": "E", "price":  20, "fd_name": "Tunisia",                "fd_id": null },
-    { "name": "Irán",            "group": "E", "price":  20, "fd_name": "Iran",                   "fd_id": null },
-    { "name": "Congo",           "group": "E", "price":  15, "fd_name": "DR Congo",               "fd_id": null },
-
-    { "name": "Catar",           "group": "F", "price":  10, "fd_name": "Qatar",                  "fd_id": null },
-    { "name": "Nueva Zelanda",   "group": "F", "price":  10, "fd_name": "New Zealand",            "fd_id": null },
-    { "name": "Arabia Saudí",    "group": "F", "price":  10, "fd_name": "Saudi Arabia",           "fd_id": null },
-    { "name": "Irak",            "group": "F", "price":  10, "fd_name": "Iraq",                   "fd_id": null },
-    { "name": "Cabo Verde",      "group": "F", "price":  10, "fd_name": "Cape Verde",             "fd_id": null },
-    { "name": "Panamá",          "group": "F", "price":  10, "fd_name": "Panama",                 "fd_id": null },
-    { "name": "Uzbekistán",      "group": "F", "price":  10, "fd_name": "Uzbekistan",             "fd_id": null },
-    { "name": "Haití",           "group": "F", "price":  10, "fd_name": "Haiti",                  "fd_id": null },
-    { "name": "Curazao",         "group": "F", "price":  10, "fd_name": "Curacao",                "fd_id": null },
-    { "name": "Jordania",        "group": "F", "price":   5, "fd_name": "Jordan",                 "fd_id": null }
+    {
+      "name": "España",
+      "group": "A",
+      "price": 200,
+      "fd_name": "Spain",
+      "fd_id": 760
+    },
+    {
+      "name": "Francia",
+      "group": "A",
+      "price": 180,
+      "fd_name": "France",
+      "fd_id": 773
+    },
+    {
+      "name": "Inglaterra",
+      "group": "A",
+      "price": 160,
+      "fd_name": "England",
+      "fd_id": 770
+    },
+    {
+      "name": "Argentina",
+      "group": "A",
+      "price": 130,
+      "fd_name": "Argentina",
+      "fd_id": 762
+    },
+    {
+      "name": "Brasil",
+      "group": "A",
+      "price": 120,
+      "fd_name": "Brazil",
+      "fd_id": 764
+    },
+    {
+      "name": "Portugal",
+      "group": "A",
+      "price": 110,
+      "fd_name": "Portugal",
+      "fd_id": 765
+    },
+    {
+      "name": "Alemania",
+      "group": "A",
+      "price": 100,
+      "fd_name": "Germany",
+      "fd_id": 759
+    },
+    {
+      "name": "Holanda",
+      "group": "B",
+      "price": 70,
+      "fd_name": "Netherlands",
+      "fd_id": 8601
+    },
+    {
+      "name": "Noruega",
+      "group": "B",
+      "price": 65,
+      "fd_name": "Norway",
+      "fd_id": 8872
+    },
+    {
+      "name": "Bélgica",
+      "group": "B",
+      "price": 60,
+      "fd_name": "Belgium",
+      "fd_id": 805
+    },
+    {
+      "name": "Colombia",
+      "group": "B",
+      "price": 60,
+      "fd_name": "Colombia",
+      "fd_id": 818
+    },
+    {
+      "name": "EEUU",
+      "group": "B",
+      "price": 55,
+      "fd_name": "United States",
+      "fd_id": 771
+    },
+    {
+      "name": "Japón",
+      "group": "B",
+      "price": 55,
+      "fd_name": "Japan",
+      "fd_id": 766
+    },
+    {
+      "name": "Suiza",
+      "group": "B",
+      "price": 55,
+      "fd_name": "Switzerland",
+      "fd_id": 788
+    },
+    {
+      "name": "Uruguay",
+      "group": "C",
+      "price": 50,
+      "fd_name": "Uruguay",
+      "fd_id": 758
+    },
+    {
+      "name": "Marruecos",
+      "group": "C",
+      "price": 50,
+      "fd_name": "Morocco",
+      "fd_id": 815
+    },
+    {
+      "name": "México",
+      "group": "C",
+      "price": 50,
+      "fd_name": "Mexico",
+      "fd_id": 769
+    },
+    {
+      "name": "Suecia",
+      "group": "C",
+      "price": 45,
+      "fd_name": "Sweden",
+      "fd_id": 792
+    },
+    {
+      "name": "Croacia",
+      "group": "C",
+      "price": 45,
+      "fd_name": "Croatia",
+      "fd_id": 799
+    },
+    {
+      "name": "Costa de Marfil",
+      "group": "C",
+      "price": 45,
+      "fd_name": "Ivory Coast",
+      "fd_id": 1935
+    },
+    {
+      "name": "Turquía",
+      "group": "C",
+      "price": 45,
+      "fd_name": "Turkey",
+      "fd_id": 803
+    },
+    {
+      "name": "Ecuador",
+      "group": "C",
+      "price": 40,
+      "fd_name": "Ecuador",
+      "fd_id": 791
+    },
+    {
+      "name": "Senegal",
+      "group": "C",
+      "price": 40,
+      "fd_name": "Senegal",
+      "fd_id": 804
+    },
+    {
+      "name": "Austria",
+      "group": "C",
+      "price": 40,
+      "fd_name": "Austria",
+      "fd_id": 816
+    },
+    {
+      "name": "Canadá",
+      "group": "D",
+      "price": 35,
+      "fd_name": "Canada",
+      "fd_id": 828
+    },
+    {
+      "name": "Paraguay",
+      "group": "D",
+      "price": 35,
+      "fd_name": "Paraguay",
+      "fd_id": 761
+    },
+    {
+      "name": "Escocia",
+      "group": "D",
+      "price": 35,
+      "fd_name": "Scotland",
+      "fd_id": 8873
+    },
+    {
+      "name": "Chequia",
+      "group": "D",
+      "price": 30,
+      "fd_name": "Czechia",
+      "fd_id": 798
+    },
+    {
+      "name": "Bosnia",
+      "group": "D",
+      "price": 30,
+      "fd_name": "Bosnia-Herzegovina",
+      "fd_id": 1060
+    },
+    {
+      "name": "Ghana",
+      "group": "D",
+      "price": 30,
+      "fd_name": "Ghana",
+      "fd_id": 763
+    },
+    {
+      "name": "Egipto",
+      "group": "D",
+      "price": 30,
+      "fd_name": "Egypt",
+      "fd_id": 825
+    },
+    {
+      "name": "Corea del Sur",
+      "group": "D",
+      "price": 25,
+      "fd_name": "South Korea",
+      "fd_id": 772
+    },
+    {
+      "name": "Argelia",
+      "group": "D",
+      "price": 25,
+      "fd_name": "Algeria",
+      "fd_id": 778
+    },
+    {
+      "name": "Sudáfrica",
+      "group": "E",
+      "price": 20,
+      "fd_name": "South Africa",
+      "fd_id": 774
+    },
+    {
+      "name": "Australia",
+      "group": "E",
+      "price": 20,
+      "fd_name": "Australia",
+      "fd_id": 779
+    },
+    {
+      "name": "Túnez",
+      "group": "E",
+      "price": 20,
+      "fd_name": "Tunisia",
+      "fd_id": 802
+    },
+    {
+      "name": "Irán",
+      "group": "E",
+      "price": 20,
+      "fd_name": "Iran",
+      "fd_id": 840
+    },
+    {
+      "name": "Congo",
+      "group": "E",
+      "price": 15,
+      "fd_name": "Congo DR",
+      "fd_id": 1934
+    },
+    {
+      "name": "Catar",
+      "group": "F",
+      "price": 10,
+      "fd_name": "Qatar",
+      "fd_id": 8030
+    },
+    {
+      "name": "Nueva Zelanda",
+      "group": "F",
+      "price": 10,
+      "fd_name": "New Zealand",
+      "fd_id": 783
+    },
+    {
+      "name": "Arabia Saudí",
+      "group": "F",
+      "price": 10,
+      "fd_name": "Saudi Arabia",
+      "fd_id": 801
+    },
+    {
+      "name": "Irak",
+      "group": "F",
+      "price": 10,
+      "fd_name": "Iraq",
+      "fd_id": 8062
+    },
+    {
+      "name": "Cabo Verde",
+      "group": "F",
+      "price": 10,
+      "fd_name": "Cape Verde Islands",
+      "fd_id": 1930
+    },
+    {
+      "name": "Panamá",
+      "group": "F",
+      "price": 10,
+      "fd_name": "Panama",
+      "fd_id": 1836
+    },
+    {
+      "name": "Uzbekistán",
+      "group": "F",
+      "price": 10,
+      "fd_name": "Uzbekistan",
+      "fd_id": 8070
+    },
+    {
+      "name": "Haití",
+      "group": "F",
+      "price": 10,
+      "fd_name": "Haiti",
+      "fd_id": 836
+    },
+    {
+      "name": "Curazao",
+      "group": "F",
+      "price": 10,
+      "fd_name": "Curaçao",
+      "fd_id": 9460
+    },
+    {
+      "name": "Jordania",
+      "group": "F",
+      "price": 5,
+      "fd_name": "Jordan",
+      "fd_id": 8049
+    }
   ],
   "scoring": {
-    "goal":             0.5,
-    "win":              3,
-    "draw":             1,
-    "loss":             0,
-    "round_of_32":      5,
-    "round_of_16":      7,
-    "quarterfinals":   10,
-    "semifinals":      15,
-    "final":           25,
-    "champion":        50,
-    "pichichi":        30,
-    "mvp":             30,
-    "best_gk":         30
+    "goal": 0.5,
+    "win": 3,
+    "draw": 1,
+    "loss": 0,
+    "round_of_32": 5,
+    "round_of_16": 7,
+    "quarterfinals": 10,
+    "semifinals": 15,
+    "final": 25,
+    "champion": 50,
+    "pichichi": 30,
+    "mvp": 30,
+    "best_gk": 30
   },
-  "budget":   1050,
-  "fee_eur":     5,
+  "budget": 1050,
+  "fee_eur": 5,
   "competition": "WC",
-  "group_quotas": { "A": 3, "B": 3, "C": 4, "D": 4, "E": 2, "F": 4 }
+  "group_quotas": {
+    "A": 3,
+    "B": 3,
+    "C": 4,
+    "D": 4,
+    "E": 2,
+    "F": 4
+  }
 }

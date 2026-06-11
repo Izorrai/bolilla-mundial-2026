@@ -1,5 +1,4 @@
 {
-  "_comment": "Caché de partidos del Mundial. Lo rellena scripts/update_scores.py llamando a football-data.org. No edites a mano.",
-  "last_updated": null,
+  "last_updated": "2026-06-11T06:47:52.355489+00:00",
   "matches": []
 }
