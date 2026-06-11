@@ -1,16 +1,16 @@
 {
   "_comment": "Salas de la bolilla. Cada sala tiene su propio participants.json y scoreboard.json bajo data/rooms/<id>/. Reglas y catalogo de equipos son compartidos (teams.json).",
-  "default": "amigos",
+  "default": "deustobarakaultimate",
   "rooms": [
     {
-      "id": "amigos",
-      "name": "Amigos",
-      "description": "Bolilla con la peña del barrio"
+      "id": "deustobarakaultimate",
+      "name": "DeustoBarakaUltimate",
+      "description": "Bolilla con la peña"
     },
     {
-      "id": "oficina",
-      "name": "Oficina",
-      "description": "Bolilla con los compañeros de trabajo"
+      "id": "grupoagaleus",
+      "name": "GrupoAgaleus",
+      "description": "Bolilla con el grupo de la oficina"
     }
   ]
 }
