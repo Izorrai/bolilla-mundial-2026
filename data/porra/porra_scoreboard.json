@@ -1,0 +1,127 @@
+{
+  "_comment": "Generado por scripts/update_porra.py. No editar a mano.",
+  "last_updated": "2026-06-11T12:51:17.957534+00:00",
+  "champion": null,
+  "ranking": [
+    {
+      "name": "Ander",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false
+    },
+    {
+      "name": "Gorka",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false
+    },
+    {
+      "name": "Jon",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false
+    },
+    {
+      "name": "Julen",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false
+    },
+    {
+      "name": "Mikel",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false
+    }
+  ]
+}

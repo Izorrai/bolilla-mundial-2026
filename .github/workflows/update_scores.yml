@@ -8,10 +8,15 @@ on:
   workflow_dispatch: {}   # permite lanzarlo a mano desde la pestana Actions
   push:
     paths:
-      - "data/rooms/**/participants.json"   # cuando una sala sube nuevas inscripciones, recalcula
-      - "data/rooms.json"                    # cuando se anade/quita una sala
-      - "data/teams.json"                    # cambios en catalogo o reglas
-      - "scripts/update_scores.py"           # cuando se cambia la logica de puntuacion
+      - "data/rooms/**/participants.json"   # bolilla: cuando una sala sube nuevas inscripciones
+      - "data/rooms.json"                    # bolilla: cuando se anade/quita una sala
+      - "data/teams.json"                    # bolilla: cambios en catalogo o reglas
+      - "data/porra/predictions.json"        # porra: cuando llegan nuevos pronosticos
+      - "data/porra/initial_results.json"    # porra: cuando se ponen resultados oficiales
+      - "data/porra/config.json"             # porra: cambios de reglas
+      - "scripts/update_scores.py"           # bolilla: cambio de logica
+      - "scripts/update_porra.py"            # porra: cambio de logica
+      - "scripts/fetch_fixtures.py"          # cambio del fetch del calendario
 
 permissions:
   contents: write   # necesario para commitear los JSONs actualizados
@@ -32,17 +37,27 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Run update_scores.py
+      - name: Run fetch_fixtures.py
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+        run: |
+          python scripts/fetch_fixtures.py
+
+      - name: Run update_scores.py (bolilla)
         env:
           FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
         run: |
           python scripts/update_scores.py
 
+      - name: Run update_porra.py
+        run: |
+          python scripts/update_porra.py
+
       - name: Commit and push if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/matches.json data/rooms/*/scoreboard.json
+          git add data/matches.json data/fixtures.json data/rooms/*/scoreboard.json data/porra/porra_scoreboard.json
           if git diff --cached --quiet; then
             echo "Sin cambios en JSONs"
             exit 0

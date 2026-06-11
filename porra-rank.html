@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clasificación Porra · Mundial 2026</title>
+<style>
+  :root {
+    --blue: #1a5490;
+    --blue-light: #d9e7f5;
+    --blue-dark: #0f3a66;
+    --green: #2f7a3a;
+    --green-light: #d4ecd6;
+    --bg: #f5f5f1;
+    --card: #ffffff;
+    --border: #d8d8d2;
+    --text: #1a1a1a;
+    --muted: #6a6a64;
+    --gold: #d4a017;
+    --silver: #8a8a82;
+    --bronze: #a06030;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+  header { background: var(--blue); color: white; padding: 14px 20px; }
+  header h1 { margin: 0; font-size: 21px; }
+  header .sub { font-size: 12px; opacity: 0.9; margin-top: 2px; }
+  nav { padding: 6px 0 0 0; display: flex; gap: 0; margin-top: 8px; }
+  nav a { color: white; text-decoration: none; padding: 6px 12px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
+  nav a.active { opacity: 1; border-color: white; }
+  main { max-width: 900px; margin: 0 auto; padding: 18px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead { background: var(--blue-light); }
+  th { padding: 12px 14px; text-align: left; font-weight: 700; color: var(--blue-dark); border-bottom: 1px solid var(--border); }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: #fafaf6; }
+  .pos { font-weight: 800; font-size: 16px; min-width: 32px; }
+  .pos.gold { color: var(--gold); }
+  .pos.silver { color: var(--silver); }
+  .pos.bronze { color: var(--bronze); }
+  .points { font-weight: 800; font-size: 16px; color: var(--blue-dark); text-align: right; }
+  .updated { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+  .empty { padding: 40px 20px; text-align: center; color: var(--muted); font-style: italic; }
+  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 100; }
+  .modal-bg.open { display: flex; }
+  .modal { background: var(--card); border-radius: 10px; max-width: 760px; width: 100%; padding: 22px; }
+  .modal h2 { margin: 0 0 10px 0; color: var(--blue-dark); display: flex; justify-content: space-between; align-items: baseline; }
+  .modal h2 .total { color: var(--blue); font-size: 22px; }
+  .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); position: absolute; top: 14px; right: 18px; }
+  .breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin: 10px 0 14px 0; }
+  .bk { background: #fafaf6; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; text-align: center; }
+  .bk .l { font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .bk .v { font-size: 18px; font-weight: 800; color: var(--blue-dark); }
+  .prize-bar { background: var(--green-light); padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 14px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏆 Clasificación Porra · Mundial 2026</h1>
+  <div class="sub" id="subline">Cargando…</div>
+  <nav>
+    <a href="porra.html">Pronósticos</a>
+    <a href="porra-rank.html" class="active">Clasificación</a>
+  </nav>
+</header>
+
+<main>
+  <div class="prize-bar" id="prizeBar">Bote pendiente</div>
+  <div class="updated" id="updated"></div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Jugador</th>
+          <th style="text-align:right;">Puntos</th>
+        </tr>
+      </thead>
+      <tbody id="rankBody">
+        <tr><td colspan="3" class="empty">Cargando…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<div class="modal-bg" id="detailBg">
+  <div class="modal" id="detailModal" style="position:relative;"></div>
+</div>
+
+<script>
+const REPO_CONFIG_URL = "data/porra/config.json";
+const REPO_SCORE_URL = "data/porra/porra_scoreboard.json";
+const REPO_PRED_URL = "data/porra/predictions.json";
+
+let CONFIG = null, SCOREBOARD = null, PREDICTIONS = null;
+
+function escapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
+function fmtPts(n) { if (typeof n !== "number") return "0"; return Number.isInteger(n) ? n.toString() : n.toFixed(1).replace(".", ","); }
+function fmtDate(iso) { if (!iso) return "—"; try { return new Date(iso).toLocaleString("es-ES", { day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit" }); } catch { return iso; } }
+
+async function fetchJson(url) {
+  const r = await fetch(url + "?t=" + Date.now());
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+
+function renderRank() {
+  const body = document.getElementById("rankBody");
+  let ranking = (SCOREBOARD && SCOREBOARD.ranking && SCOREBOARD.ranking.length > 0)
+    ? SCOREBOARD.ranking
+    : fallbackRank();
+  if (!ranking || ranking.length === 0) {
+    body.innerHTML = `<tr><td colspan="3" class="empty">Sin pronósticos todavía.</td></tr>`;
+    return;
+  }
+  let html = "";
+  ranking.forEach((p, i) => {
+    const pos = i + 1;
+    const cls = pos === 1 ? "gold" : pos === 2 ? "silver" : pos === 3 ? "bronze" : "";
+    html += `<tr onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
+      <td class="pos ${cls}">${pos}</td>
+      <td><strong>${escapeHtml(p.name)}</strong></td>
+      <td class="points">${fmtPts(p.total || 0)}</td>
+    </tr>`;
+  });
+  body.innerHTML = html;
+}
+
+function fallbackRank() {
+  if (!PREDICTIONS || !PREDICTIONS.predictions) return [];
+  return Object.keys(PREDICTIONS.predictions)
+    .map(name => ({ name, total: 0 }))
+    .sort((a, b) => a.name.localeCompare(b.name, "es"));
+}
+
+window.showDetail = name => {
+  const score = SCOREBOARD && SCOREBOARD.ranking ? SCOREBOARD.ranking.find(x => x.name === name) : null;
+  const total = score ? score.total : 0;
+  const bk = score && score.breakdown ? score.breakdown : { initial: 0, selections: 0, group_stage: 0, knockouts: 0 };
+  document.getElementById("detailModal").innerHTML = `
+    <button class="modal-close" onclick="document.getElementById('detailBg').classList.remove('open')">×</button>
+    <h2>${escapeHtml(name)} <span class="total">${fmtPts(total)} pts</span></h2>
+    <div class="breakdown">
+      <div class="bk"><div class="l">Iniciales</div><div class="v">${fmtPts(bk.initial || 0)}</div></div>
+      <div class="bk"><div class="l">Selecciones</div><div class="v">${fmtPts(bk.selections || 0)}</div></div>
+      <div class="bk"><div class="l">Grupos</div><div class="v">${fmtPts(bk.group_stage || 0)}</div></div>
+      <div class="bk"><div class="l">Eliminatorias</div><div class="v">${fmtPts(bk.knockouts || 0)}</div></div>
+    </div>
+  `;
+  document.getElementById("detailBg").classList.add("open");
+};
+
+document.getElementById("detailBg").addEventListener("click", e => {
+  if (e.target.id === "detailBg") e.target.classList.remove("open");
+});
+
+(async function init() {
+  try {
+    const results = await Promise.allSettled([
+      fetchJson(REPO_CONFIG_URL),
+      fetchJson(REPO_SCORE_URL),
+      fetchJson(REPO_PRED_URL),
+    ]);
+    CONFIG = results[0].status === "fulfilled" ? results[0].value : null;
+    SCOREBOARD = results[1].status === "fulfilled" ? results[1].value : null;
+    PREDICTIONS = results[2].status === "fulfilled" ? results[2].value : null;
+
+    const players = CONFIG ? CONFIG.players.length : 0;
+    const fee = CONFIG ? CONFIG.fee_eur : 0;
+    document.getElementById("prizeBar").textContent =
+      players && fee ? `💰 Bote: ${players * fee}€ · ${players} jugadores × ${fee}€` : "Bote pendiente";
+
+    const ts = SCOREBOARD && SCOREBOARD.last_updated ? SCOREBOARD.last_updated : null;
+    document.getElementById("updated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "Mundial aún no comenzado";
+    document.getElementById("subline").textContent = ts ? `Actualizado ${fmtDate(ts)}` : "Sin partidos jugados";
+
+    renderRank();
+  } catch (err) {
+    document.getElementById("rankBody").innerHTML = `<tr><td colspan="3" class="empty">Error: ${escapeHtml(err.message)}</td></tr>`;
+  }
+})();
+</script>
+</body>
+</html>

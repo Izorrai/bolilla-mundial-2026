@@ -1,0 +1,11 @@
+{
+  "_comment": "Resultados oficiales de las categorias iniciales. Los pones tu al final del torneo desde porra-admin.html.",
+  "final_standings": {
+    "first_place":  null,
+    "second_place": null,
+    "third_place":  null
+  },
+  "top_scorer":  null,
+  "best_player": null,
+  "best_keeper": null
+}

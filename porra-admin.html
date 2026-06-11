@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Porra · Mundial 2026</title>
+<style>
+  :root {
+    --blue: #1a5490;
+    --blue-light: #d9e7f5;
+    --blue-dark: #0f3a66;
+    --green: #2f7a3a;
+    --green-light: #d4ecd6;
+    --warn: #c0392b;
+    --bg: #f5f5f1;
+    --card: #ffffff;
+    --border: #d8d8d2;
+    --text: #1a1a1a;
+    --muted: #6a6a64;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+  header { background: var(--blue-dark); color: white; padding: 14px 20px; }
+  header h1 { margin: 0; font-size: 19px; }
+  header .sub { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+  nav { padding: 6px 0 0 0; display: flex; gap: 0; margin-top: 8px; }
+  nav a { color: white; text-decoration: none; padding: 6px 12px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
+  nav a.active { opacity: 1; border-color: white; }
+  main { max-width: 1100px; margin: 0 auto; padding: 18px; }
+  .warning-banner { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; color: #5a4a00; }
+  .controls { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  button { padding: 9px 14px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
+  button.primary { background: var(--blue); color: white; border-color: var(--blue); }
+  button.primary:hover { background: var(--blue-dark); }
+  button.danger { color: var(--warn); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
+  .card h2 { margin: 0 0 10px 0; font-size: 16px; color: var(--blue-dark); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--blue-light); padding: 9px 12px; text-align: left; font-weight: 700; color: var(--blue-dark); border-bottom: 1px solid var(--border); }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: #fafaf6; }
+  .center { text-align: center; }
+  .paste-area { width: 100%; min-height: 140px; padding: 10px; font-family: monospace; font-size: 11px; border: 1px solid var(--border); border-radius: 6px; }
+  .field { margin-bottom: 10px; }
+  .field label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+  .field input { width: 100%; padding: 8px 10px; font-size: 14px; border: 1px solid var(--border); border-radius: 6px; }
+  .fields-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+  .badge.ok { background: var(--green-light); color: var(--green); }
+  .badge.missing { background: #fde7e4; color: var(--warn); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🔒 Admin · Porra Mundial 2026</h1>
+  <div class="sub">Pega los JSON que te mandan los amigos, gestiona los resultados oficiales</div>
+  <nav>
+    <a href="porra.html">Pronósticos</a>
+    <a href="porra-admin.html" class="active">Admin</a>
+    <a href="porra-rank.html">Clasificación</a>
+  </nav>
+</header>
+
+<main>
+  <div class="warning-banner">
+    <strong>Para que se publique:</strong> después de añadir o cambiar algo aquí, pulsa <strong>Exportar predictions.json</strong> y súbelo al repo en
+    <code>data/porra/predictions.json</code> (commit + push). Igual con los resultados oficiales en <code>data/porra/initial_results.json</code>.
+  </div>
+
+  <div class="card">
+    <h2>1. Pegar pronósticos de un jugador</h2>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 8px 0;">
+      Pega aquí el JSON completo que te ha enviado un amigo por WhatsApp. Detecto el nombre del jugador automáticamente.
+    </p>
+    <textarea id="pasteArea" class="paste-area" placeholder='{"player":"Ander","initial":{...},"selections":{...},...}'></textarea>
+    <div style="margin-top:8px;">
+      <button class="primary" id="btnApplyPaste">Añadir o actualizar este jugador</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2. Jugadores con pronósticos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th class="center">Iniciales</th>
+          <th class="center">Selecciones</th>
+          <th class="center">Grupos</th>
+          <th class="center">KO</th>
+          <th>Enviado</th>
+          <th class="center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="playersBody">
+        <tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted);font-style:italic;">Sin pronósticos todavía.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>3. Resultados oficiales (los pones al final del torneo)</h2>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px 0;">
+      Estos campos deciden las puntuaciones de la categoría 1 (Iniciales). Déjalos vacíos hasta que la FIFA los anuncie.
+    </p>
+    <div class="fields-row">
+      <div class="field"><label>🥇 Campeón</label><input type="text" id="resFirst" placeholder="—"></div>
+      <div class="field"><label>🥈 Finalista</label><input type="text" id="resSecond" placeholder="—"></div>
+      <div class="field"><label>🥉 Tercer puesto</label><input type="text" id="resThird" placeholder="—"></div>
+    </div>
+    <div class="fields-row">
+      <div class="field"><label>⚽ Bota de oro</label><input type="text" id="resPichichi" placeholder="—"></div>
+      <div class="field"><label>🏅 Balón de oro</label><input type="text" id="resMVP" placeholder="—"></div>
+      <div class="field"><label>🧤 Guante de oro</label><input type="text" id="resGK" placeholder="—"></div>
+    </div>
+    <div style="margin-top:10px;">
+      <button id="btnExportResults">Exportar initial_results.json</button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="btnImport">Importar predictions.json</button>
+    <input type="file" id="fileImport" accept=".json" style="display:none">
+    <button class="primary" id="btnExport">Exportar predictions.json</button>
+    <button id="btnFetchRepo">Cargar del repo</button>
+    <button class="danger" id="btnClearLocal">Borrar todo (local)</button>
+  </div>
+</main>
+
+<script>
+const REPO_CONFIG_URL = "data/porra/config.json";
+const REPO_PRED_URL = "data/porra/predictions.json";
+const REPO_RESULTS_URL = "data/porra/initial_results.json";
+const STORAGE_KEY = "porra2026_admin";
+const STORAGE_RESULTS = "porra2026_admin_results";
+
+let CONFIG = null;
+let store = loadStore();
+let results = loadResults();
+
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return { predictions: {} };
+}
+function saveStore() { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
+function loadResults() {
+  try {
+    const raw = localStorage.getItem(STORAGE_RESULTS);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return { final_standings: { first_place: null, second_place: null, third_place: null }, top_scorer: null, best_player: null, best_keeper: null };
+}
+function saveResults() { localStorage.setItem(STORAGE_RESULTS, JSON.stringify(results)); }
+
+function escapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  try { return new Date(iso).toLocaleString("es-ES", { day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit" }); }
+  catch { return iso; }
+}
+
+function renderTable() {
+  const body = document.getElementById("playersBody");
+  const keys = Object.keys(store.predictions);
+  if (keys.length === 0) {
+    body.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted);font-style:italic;">Sin pronósticos todavía.</td></tr>`;
+    return;
+  }
+  let html = "";
+  for (const name of keys) {
+    const p = store.predictions[name];
+    const init = p.initial || {};
+    const initCount = [init.first, init.second, init.third, init.pichichi, init.mvp, init.gk].filter(Boolean).length;
+    const selCount = Object.values(p.selections || {}).filter(Boolean).length;
+    const gsCount = Object.values(p.group_stage || {}).filter(Boolean).length;
+    const koCount = Object.values(p.knockouts || {}).filter(k => k && k.home !== "" && k.home !== null && k.away !== "" && k.away !== null).length;
+    html += `<tr>
+      <td><strong>${escapeHtml(name)}</strong></td>
+      <td class="center">${initCount}/6</td>
+      <td class="center">${selCount}/${CONFIG ? CONFIG.predicted_selections.length : "?"}</td>
+      <td class="center">${gsCount}/72</td>
+      <td class="center">${koCount}/32</td>
+      <td>${fmtDate(p.submitted_at)}</td>
+      <td class="center">
+        <button class="danger" onclick="removePlayer('${escapeHtml(name).replace(/'/g, "&#39;")}')">×</button>
+      </td>
+    </tr>`;
+  }
+  body.innerHTML = html;
+}
+window.removePlayer = name => {
+  if (!confirm(`¿Borrar pronósticos de ${name}?`)) return;
+  delete store.predictions[name];
+  saveStore(); renderTable();
+};
+
+document.getElementById("btnApplyPaste").addEventListener("click", () => {
+  const raw = document.getElementById("pasteArea").value.trim();
+  if (!raw) { alert("Pega el JSON en el cuadro de arriba."); return; }
+  // Extract JSON from message (look for { ... })
+  const start = raw.indexOf("{");
+  const end = raw.lastIndexOf("}");
+  if (start < 0 || end <= start) { alert("No encuentro un JSON válido en el texto pegado."); return; }
+  try {
+    const data = JSON.parse(raw.slice(start, end + 1));
+    if (!data.player) { alert("El JSON no tiene campo 'player'. Pídele al amigo que vuelva a generarlo."); return; }
+    store.predictions[data.player] = data;
+    saveStore();
+    renderTable();
+    document.getElementById("pasteArea").value = "";
+    alert(`Pronósticos de ${data.player} guardados localmente. Recuerda exportar y subir al repo.`);
+  } catch (e) {
+    alert("JSON inválido: " + e.message);
+  }
+});
+
+document.getElementById("btnExport").addEventListener("click", () => {
+  const out = { _comment: "Pronosticos por jugador.", predictions: store.predictions };
+  const blob = new Blob([JSON.stringify(out, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "predictions.json"; a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("btnImport").addEventListener("click", () => document.getElementById("fileImport").click());
+document.getElementById("fileImport").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const data = JSON.parse(r.result);
+      if (data.predictions) store.predictions = data.predictions;
+      saveStore(); renderTable();
+    } catch (err) { alert("Archivo inválido: " + err.message); }
+  };
+  r.readAsText(f);
+});
+
+document.getElementById("btnFetchRepo").addEventListener("click", async () => {
+  if (!confirm("¿Cargar predictions.json del repo? Sobrescribirá lo local.")) return;
+  try {
+    const [predR, resR] = await Promise.allSettled([
+      fetch(REPO_PRED_URL + "?t=" + Date.now()),
+      fetch(REPO_RESULTS_URL + "?t=" + Date.now()),
+    ]);
+    if (predR.status === "fulfilled" && predR.value.ok) {
+      const data = await predR.value.json();
+      if (data.predictions) store.predictions = data.predictions;
+      saveStore(); renderTable();
+    }
+    if (resR.status === "fulfilled" && resR.value.ok) {
+      const data = await resR.value.json();
+      if (data) { results = data; saveResults(); applyResultsToInputs(); }
+    }
+  } catch (err) { alert("Error: " + err.message); }
+});
+
+document.getElementById("btnClearLocal").addEventListener("click", () => {
+  if (!confirm("Borrar TODO lo local? (No afecta al repo.)")) return;
+  store = { predictions: {} };
+  results = loadResults();
+  saveStore(); renderTable();
+});
+
+function applyResultsToInputs() {
+  document.getElementById("resFirst").value = (results.final_standings && results.final_standings.first_place) || "";
+  document.getElementById("resSecond").value = (results.final_standings && results.final_standings.second_place) || "";
+  document.getElementById("resThird").value = (results.final_standings && results.final_standings.third_place) || "";
+  document.getElementById("resPichichi").value = results.top_scorer || "";
+  document.getElementById("resMVP").value = results.best_player || "";
+  document.getElementById("resGK").value = results.best_keeper || "";
+}
+const resMap = { resFirst: ["final_standings","first_place"], resSecond: ["final_standings","second_place"], resThird: ["final_standings","third_place"], resPichichi: ["top_scorer"], resMVP: ["best_player"], resGK: ["best_keeper"] };
+for (const id of Object.keys(resMap)) {
+  document.getElementById(id).addEventListener("input", e => {
+    const v = e.target.value.trim() || null;
+    const path = resMap[id];
+    if (path.length === 1) results[path[0]] = v;
+    else { if (!results[path[0]]) results[path[0]] = {}; results[path[0]][path[1]] = v; }
+    saveResults();
+  });
+}
+document.getElementById("btnExportResults").addEventListener("click", () => {
+  const out = { _comment: "Resultados oficiales del torneo.", ...results };
+  const blob = new Blob([JSON.stringify(out, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "initial_results.json"; a.click();
+  URL.revokeObjectURL(url);
+});
+
+(async function init() {
+  try {
+    const r = await fetch(REPO_CONFIG_URL + "?t=" + Date.now());
+    CONFIG = r.ok ? await r.json() : null;
+  } catch {}
+  applyResultsToInputs();
+  renderTable();
+})();
+</script>
+</body>
+</html>
