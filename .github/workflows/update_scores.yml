@@ -63,15 +63,31 @@ jobs:
             exit 0
           fi
           git commit -m "chore(scores): refresh matches and scoreboard"
-          # Retry push hasta 3 veces con rebase para sobrevivir race conditions
-          # cuando empujamos a la vez que el organizador o que otro run del cron.
-          for i in 1 2 3; do
+          # Retry push hasta 5 veces con rebase. En conflicto, siempre nos quedamos
+          # con la version recien generada (-X theirs durante rebase = nuestros commits).
+          # Los JSONs son regenerables; lo "fresh" gana al "obsoleto".
+          for i in 1 2 3 4 5; do
             if git push; then
               echo "Push exitoso en intento $i"
               exit 0
             fi
-            echo "Push rechazado en intento $i, rebaseando contra remoto..."
-            git pull --rebase origin main || git rebase --abort
+            echo "Push rechazado en intento $i, rebaseando..."
+            git pull --rebase -X theirs origin main || {
+              echo "Rebase fallo; abortando y reintentando con reset"
+              git rebase --abort 2>/dev/null || true
+              # Plan B: hard reset al remoto y regenerar
+              git fetch origin main
+              git reset --hard origin/main
+              python scripts/fetch_fixtures.py
+              python scripts/update_scores.py
+              python scripts/update_porra.py
+              git add data/matches.json data/fixtures.json data/rooms/*/scoreboard.json data/porra/porra_scoreboard.json
+              if git diff --cached --quiet; then
+                echo "Sin cambios tras regenerar"
+                exit 0
+              fi
+              git commit -m "chore(scores): refresh matches and scoreboard"
+            }
           done
-          echo "Push fallo tras 3 intentos"
+          echo "Push fallo tras 5 intentos"
           exit 1
