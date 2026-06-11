@@ -21,8 +21,12 @@
   * { box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); line-height: 1.4; }
   header { background: var(--green); color: white; padding: 14px 20px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+  header .row1 { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; }
   header .sub { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+  .room-selector { background: rgba(255,255,255,0.18); padding: 5px 10px; border-radius: 6px; display: flex; align-items: center; gap: 6px; }
+  .room-selector label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; }
+  .room-selector select { background: white; color: var(--green-dark); border: none; padding: 5px 8px; border-radius: 4px; font-weight: 700; font-size: 13px; cursor: pointer; }
   nav { padding: 6px 0 0 0; display: flex; gap: 0; margin-top: 8px; }
   nav a { color: white; text-decoration: none; padding: 6px 14px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
   nav a.active { opacity: 1; border-color: white; }
@@ -50,7 +54,6 @@
   .badge { display: inline-block; background: var(--green-light); color: var(--green-dark); padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-left: 4px; }
   .badge.eliminated { background: #fde7e4; color: #c0392b; }
   .badge.champion { background: var(--gold); color: white; }
-  /* Detail modal */
   .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 100; }
   .modal-bg.open { display: flex; }
   .modal { background: var(--card); border-radius: 10px; max-width: 800px; width: 100%; padding: 22px; }
@@ -85,11 +88,19 @@
 <body>
 
 <header>
-  <h1>🏆 Clasificación · Bolilla Mundial 2026</h1>
-  <div class="sub" id="updatedAt">Cargando datos…</div>
+  <div class="row1">
+    <div>
+      <h1>🏆 Clasificación · Bolilla Mundial 2026</h1>
+      <div class="sub" id="roomSub">Cargando…</div>
+    </div>
+    <div class="room-selector" style="margin-left:auto;">
+      <label>Sala</label>
+      <select id="roomSelect"></select>
+    </div>
+  </div>
   <nav>
     <a href="index.html">Selector</a>
-    <a href="leaderboard.html" class="active">Clasificación</a>
+    <a id="navLeader" href="leaderboard.html" class="active">Clasificación</a>
   </nav>
 </header>
 
@@ -101,6 +112,7 @@
   </div>
 
   <div class="panel active" id="panel-ranking">
+    <div class="updated" id="rankUpdated"></div>
     <div class="ranking-table">
       <table>
         <thead>
@@ -129,71 +141,71 @@
       <table style="margin-top:8px;">
         <thead><tr><th>Concepto</th><th style="text-align:right;">Puntos</th></tr></thead>
         <tbody>
-          <tr><td>Cada gol marcado</td><td class="num" style="text-align:right;">0,5</td></tr>
-          <tr><td>Victoria</td><td class="num" style="text-align:right;">3</td></tr>
-          <tr><td>Empate</td><td class="num" style="text-align:right;">1</td></tr>
-          <tr><td>Derrota</td><td class="num" style="text-align:right;">0</td></tr>
-          <tr><td>Pasar a dieciseisavos</td><td class="num" style="text-align:right;">5</td></tr>
-          <tr><td>Pasar a octavos</td><td class="num" style="text-align:right;">7</td></tr>
-          <tr><td>Pasar a cuartos</td><td class="num" style="text-align:right;">10</td></tr>
-          <tr><td>Pasar a semifinales</td><td class="num" style="text-align:right;">15</td></tr>
-          <tr><td>Pasar a la final</td><td class="num" style="text-align:right;">25</td></tr>
-          <tr><td>Campeón</td><td class="num" style="text-align:right;">50</td></tr>
-          <tr><td>Acertar Pichichi</td><td class="num" style="text-align:right;">30</td></tr>
-          <tr><td>Acertar MVP</td><td class="num" style="text-align:right;">30</td></tr>
-          <tr><td>Acertar Mejor portero</td><td class="num" style="text-align:right;">30</td></tr>
+          <tr><td>Cada gol marcado</td><td style="text-align:right;">0,5</td></tr>
+          <tr><td>Victoria</td><td style="text-align:right;">3</td></tr>
+          <tr><td>Empate</td><td style="text-align:right;">1</td></tr>
+          <tr><td>Derrota</td><td style="text-align:right;">0</td></tr>
+          <tr><td>Pasar a dieciseisavos</td><td style="text-align:right;">5</td></tr>
+          <tr><td>Pasar a octavos</td><td style="text-align:right;">7</td></tr>
+          <tr><td>Pasar a cuartos</td><td style="text-align:right;">10</td></tr>
+          <tr><td>Pasar a semifinales</td><td style="text-align:right;">15</td></tr>
+          <tr><td>Pasar a la final</td><td style="text-align:right;">25</td></tr>
+          <tr><td>Campeón</td><td style="text-align:right;">50</td></tr>
+          <tr><td>Acertar Pichichi</td><td style="text-align:right;">30</td></tr>
+          <tr><td>Acertar MVP</td><td style="text-align:right;">30</td></tr>
+          <tr><td>Acertar Mejor portero</td><td style="text-align:right;">30</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </main>
 
-<!-- Detail modal -->
 <div class="modal-bg" id="detailBg">
   <div class="modal" id="detailModal"></div>
 </div>
 
 <script>
 const REPO_TEAMS_URL = "data/teams.json";
-const REPO_PARTICIPANTS_URL = "data/participants.json";
-const REPO_SCOREBOARD_URL = "data/scoreboard.json";
+const REPO_ROOMS_URL = "data/rooms.json";
 
 let TEAMS = null, PARTICIPANTS = null, SCOREBOARD = null;
+let ROOMS_DATA = null, CURRENT_ROOM = null;
+
+function readRoomFromUrl() {
+  return new URL(location.href).searchParams.get("room");
+}
+function setRoomInUrl(roomId) {
+  const u = new URL(location.href);
+  u.searchParams.set("room", roomId);
+  history.replaceState({}, "", u.toString());
+}
 
 async function fetchJson(url) {
   const r = await fetch(url + "?t=" + Date.now());
   if (!r.ok) throw new Error(url + " HTTP " + r.status);
   return r.json();
 }
-
 function escapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
-
 function fmtPts(n) {
   if (typeof n !== "number") return "0";
   return Number.isInteger(n) ? n.toString() : n.toFixed(1).replace(".", ",");
 }
-
 function fmtDate(iso) {
   if (!iso) return "—";
   try {
-    const d = new Date(iso);
-    return d.toLocaleString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+    return new Date(iso).toLocaleString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
   } catch { return iso; }
 }
-
 function getTeam(name) { return TEAMS ? TEAMS.teams.find(t => t.name === name) : null; }
 
 function renderRanking() {
   const tbody = document.getElementById("rankingBody");
   const ranking = (SCOREBOARD && SCOREBOARD.ranking && SCOREBOARD.ranking.length > 0)
-    ? SCOREBOARD.ranking
-    : buildFallbackRanking();
-
+    ? SCOREBOARD.ranking : buildFallbackRanking();
   if (!ranking || ranking.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="3" class="empty">Sin inscripciones todavía. El organizador aún no ha subido los participantes.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="3" class="empty">Sin inscripciones todavía en sala "${CURRENT_ROOM.name}".</td></tr>`;
     return;
   }
-
   let html = "";
   ranking.forEach((p, i) => {
     const pos = i + 1;
@@ -206,9 +218,7 @@ function renderRanking() {
   });
   tbody.innerHTML = html;
 }
-
 function buildFallbackRanking() {
-  // If no scoreboard yet, list participants alphabetically with 0 points
   if (!PARTICIPANTS || !PARTICIPANTS.participants) return [];
   return [...PARTICIPANTS.participants]
     .map(p => ({ name: p.name, total: 0 }))
@@ -225,7 +235,7 @@ function renderTeams() {
     const stage = s.stage_reached || "—";
     const stageBadge = stage === "ELIMINATED"
       ? '<span class="badge eliminated">Eliminado</span>'
-      : stage === "CHAMPION"
+      : stage === "CHAMPION" || stage === "WINNER"
         ? '<span class="badge champion">¡Campeón!</span>'
         : stage !== "—" ? `<span class="badge">${escapeHtml(stage)}</span>` : "";
     html += `<div class="team-card">
@@ -243,17 +253,12 @@ function renderTeams() {
 
 window.showDetail = (name) => {
   const p = SCOREBOARD && SCOREBOARD.ranking
-    ? SCOREBOARD.ranking.find(x => x.name === name)
-    : null;
+    ? SCOREBOARD.ranking.find(x => x.name === name) : null;
   const participant = PARTICIPANTS && PARTICIPANTS.participants
-    ? PARTICIPANTS.participants.find(x => x.name === name)
-    : null;
+    ? PARTICIPANTS.participants.find(x => x.name === name) : null;
   if (!participant) { alert("No se encuentra el participante."); return; }
-
   const total = p ? (p.total || 0) : 0;
   const bk = p && p.breakdown ? p.breakdown : { goals: 0, match_results: 0, round_bonuses: 0, extras: 0 };
-
-  // Build picks list
   let picksHtml = "";
   const teamPts = p && p.team_points ? Object.fromEntries(p.team_points.map(x => [x.name, x])) : {};
   for (const g of ["A", "B", "C", "D", "E", "F"]) {
@@ -269,30 +274,26 @@ window.showDetail = (name) => {
       </tr>`;
     }
   }
-
-  // Extras
   const extras = (PARTICIPANTS.tournament_extras) || { pichichi: null, mvp: null, best_gk: null };
-  const extraScore = { pichichi: 0, mvp: 0, gk: 0 };
-  if (extras.pichichi && participant.pichichi && participant.pichichi.toLowerCase().trim() === extras.pichichi.toLowerCase().trim()) extraScore.pichichi = 30;
-  if (extras.mvp && participant.mvp && participant.mvp.toLowerCase().trim() === extras.mvp.toLowerCase().trim()) extraScore.mvp = 30;
-  if (extras.best_gk && participant.gk && participant.gk.toLowerCase().trim() === extras.best_gk.toLowerCase().trim()) extraScore.gk = 30;
-
+  const eq = (a, b) => a && b && a.toLowerCase().trim() === b.toLowerCase().trim();
+  const extraScore = {
+    pichichi: eq(participant.pichichi, extras.pichichi) ? 30 : 0,
+    mvp: eq(participant.mvp, extras.mvp) ? 30 : 0,
+    gk: eq(participant.gk, extras.best_gk) ? 30 : 0,
+  };
   document.getElementById("detailModal").innerHTML = `
     <button class="modal-close" onclick="document.getElementById('detailBg').classList.remove('open')">×</button>
     <h2>${escapeHtml(name)} <span class="total">${fmtPts(total)} pts</span></h2>
-
     <div class="breakdown">
       <div class="bk"><div class="l">Goles</div><div class="v">${fmtPts(bk.goals || 0)}</div></div>
       <div class="bk"><div class="l">V/E/D</div><div class="v">${fmtPts(bk.match_results || 0)}</div></div>
       <div class="bk"><div class="l">Rondas</div><div class="v">${fmtPts(bk.round_bonuses || 0)}</div></div>
       <div class="bk"><div class="l">Extras</div><div class="v">${fmtPts(bk.extras || 0)}</div></div>
     </div>
-
     <table class="picks-table">
       <thead><tr><th>G</th><th>Selección</th><th class="num">Precio</th><th class="num">Pts</th></tr></thead>
       <tbody>${picksHtml || `<tr><td colspan="4" class="empty">Sin selecciones</td></tr>`}</tbody>
     </table>
-
     <div class="extras-section">
       <h3>Apuestas extras</h3>
       <div class="item"><span>Pichichi: <strong>${escapeHtml(participant.pichichi || "—")}</strong></span><span class="val">${extraScore.pichichi > 0 ? "+30 ✓" : ""}</span></div>
@@ -306,7 +307,6 @@ window.showDetail = (name) => {
 document.getElementById("detailBg").addEventListener("click", e => {
   if (e.target.id === "detailBg") e.target.classList.remove("open");
 });
-
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -316,25 +316,40 @@ document.querySelectorAll(".tab").forEach(tab => {
   });
 });
 
+async function loadRoomData(roomId) {
+  const room = ROOMS_DATA.rooms.find(r => r.id === roomId) || ROOMS_DATA.rooms[0];
+  CURRENT_ROOM = room;
+  setRoomInUrl(room.id);
+  document.getElementById("roomSelect").value = room.id;
+  document.getElementById("navLeader").href = `leaderboard.html?room=${room.id}`;
+  document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Cargando sala "${escapeHtml(room.name)}"…</td></tr>`;
+
+  const PART_URL = `data/rooms/${room.id}/participants.json`;
+  const SCORE_URL = `data/rooms/${room.id}/scoreboard.json`;
+  const results = await Promise.allSettled([fetchJson(PART_URL), fetchJson(SCORE_URL)]);
+  PARTICIPANTS = results[0].status === "fulfilled" ? results[0].value : { participants: [], tournament_extras: {} };
+  SCOREBOARD = results[1].status === "fulfilled" ? results[1].value : null;
+
+  const ts = (SCOREBOARD && SCOREBOARD.last_updated) || null;
+  document.getElementById("roomSub").textContent =
+    `Sala "${room.name}" · ` + (ts ? `actualizado ${fmtDate(ts)}` : "Mundial aún no comenzado");
+  document.getElementById("rankUpdated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "";
+  document.getElementById("teamsUpdated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "";
+
+  renderRanking();
+  renderTeams();
+}
+
 (async function init() {
   try {
-    const results = await Promise.allSettled([
-      fetchJson(REPO_TEAMS_URL),
-      fetchJson(REPO_PARTICIPANTS_URL),
-      fetchJson(REPO_SCOREBOARD_URL),
-    ]);
-    TEAMS = results[0].status === "fulfilled" ? results[0].value : null;
-    PARTICIPANTS = results[1].status === "fulfilled" ? results[1].value : null;
-    SCOREBOARD = results[2].status === "fulfilled" ? results[2].value : null;
-
-    const ts = (SCOREBOARD && SCOREBOARD.last_updated) || null;
-    document.getElementById("updatedAt").textContent = ts
-      ? `Actualizado: ${fmtDate(ts)}`
-      : "Mundial aún no comenzado · puntos en 0";
-    document.getElementById("teamsUpdated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "";
-
-    renderRanking();
-    renderTeams();
+    const [teams, rooms] = await Promise.all([fetchJson(REPO_TEAMS_URL), fetchJson(REPO_ROOMS_URL)]);
+    TEAMS = teams;
+    ROOMS_DATA = rooms;
+    const sel = document.getElementById("roomSelect");
+    sel.innerHTML = ROOMS_DATA.rooms.map(r => `<option value="${r.id}">${escapeHtml(r.name)}</option>`).join("");
+    sel.addEventListener("change", e => loadRoomData(e.target.value));
+    const initial = readRoomFromUrl() || ROOMS_DATA.default || (ROOMS_DATA.rooms[0] && ROOMS_DATA.rooms[0].id);
+    await loadRoomData(initial);
   } catch (err) {
     document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Error cargando datos: ${escapeHtml(err.message)}</td></tr>`;
   }

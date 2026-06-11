@@ -8,8 +8,10 @@ on:
   workflow_dispatch: {}   # permite lanzarlo a mano desde la pestana Actions
   push:
     paths:
-      - "data/participants.json"   # cuando el organizador sube nuevas inscripciones, recalcula
-      - "scripts/update_scores.py" # cuando se cambia la logica de puntuacion
+      - "data/rooms/**/participants.json"   # cuando una sala sube nuevas inscripciones, recalcula
+      - "data/rooms.json"                    # cuando se anade/quita una sala
+      - "data/teams.json"                    # cambios en catalogo o reglas
+      - "scripts/update_scores.py"           # cuando se cambia la logica de puntuacion
 
 permissions:
   contents: write   # necesario para commitear los JSONs actualizados
@@ -40,7 +42,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/matches.json data/scoreboard.json
+          git add data/matches.json data/rooms/*/scoreboard.json
           if git diff --cached --quiet; then
             echo "Sin cambios en JSONs"
           else

@@ -20,14 +20,19 @@
   * { box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); line-height: 1.4; }
   header { background: var(--green-dark); color: white; padding: 14px 20px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-  header h1 { margin: 0 0 6px 0; font-size: 20px; }
+  header .row1 { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 20px; }
   header .sub { font-size: 13px; opacity: 0.85; }
+  .room-selector { background: rgba(255,255,255,0.15); padding: 5px 10px; border-radius: 6px; display: flex; align-items: center; gap: 6px; }
+  .room-selector label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
+  .room-selector select { background: white; color: var(--green-dark); border: none; padding: 5px 8px; border-radius: 4px; font-weight: 700; font-size: 13px; cursor: pointer; }
   nav { background: rgba(0,0,0,0.15); padding: 6px 0; display: flex; gap: 0; margin-top: 8px; }
   nav a { color: white; text-decoration: none; padding: 6px 14px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
   nav a.active { opacity: 1; border-color: white; }
   nav a:hover { opacity: 1; }
   main { max-width: 1200px; margin: 0 auto; padding: 18px; }
   .warning-banner { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; color: #5a4a00; }
+  .warning-banner.room-banner { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
   .controls { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
   button { padding: 9px 14px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
   button:hover { background: var(--green-light); }
@@ -50,7 +55,6 @@
   .status-ok { color: var(--ok); font-weight: 700; }
   .status-bad { color: var(--warn); font-weight: 700; }
   .empty { padding: 30px; text-align: center; color: var(--muted); font-style: italic; }
-  /* Modal */
   .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 100; }
   .modal-bg.open { display: flex; }
   .modal { background: var(--card); border-radius: 10px; max-width: 1100px; width: 100%; padding: 18px; }
@@ -88,18 +92,26 @@
 <body>
 
 <header>
-  <h1>Admin · Bolilla Mundial 2026</h1>
-  <div class="sub">Panel del organizador: introduce las inscripciones y gestiona los extras del torneo</div>
+  <div class="row1">
+    <div>
+      <h1>Admin · Bolilla Mundial 2026</h1>
+      <div class="sub" id="roomDescription">—</div>
+    </div>
+    <div class="room-selector" style="margin-left:auto;">
+      <label>Sala</label>
+      <select id="roomSelect"></select>
+    </div>
+  </div>
   <nav>
     <a href="index.html">Selector público</a>
-    <a href="admin.html" class="active">Admin</a>
-    <a href="leaderboard.html">Clasificación</a>
+    <a id="navAdmin" href="admin.html" class="active">Admin</a>
+    <a id="navLeader" href="leaderboard.html">Clasificación</a>
   </nav>
 </header>
 
 <main>
-  <div class="warning-banner">
-    <strong>⚠️ Privado:</strong> esta página es para el organizador. Los cambios se guardan en tu navegador (localStorage). Para publicarlos en el ranking común tienes que <strong>Exportar participants.json</strong> y subirlo al repo de GitHub (commit + push).
+  <div class="warning-banner room-banner">
+    Estás administrando la sala <strong id="roomLabel">—</strong>. Los datos viven en tu navegador (localStorage) por sala. Para publicarlos en el ranking común, <strong>Exportar participants.json</strong> y subirlo al repo (commit + push del archivo <code id="repoPath">data/rooms/&lt;sala&gt;/participants.json</code>).
   </div>
 
   <div class="extras-bar">
@@ -116,7 +128,7 @@
       <label for="extraGK">Mejor portero</label>
       <input type="text" id="extraGK" placeholder="—">
     </div>
-    <div class="helper" style="margin-left:auto;">Déjalos vacíos hasta que la FIFA los anuncie. Solo entonces los 30 pts cuentan.</div>
+    <div class="helper" style="margin-left:auto;">Estos extras son específicos de la sala — déjalos vacíos hasta el final del torneo.</div>
   </div>
 
   <div class="controls">
@@ -150,11 +162,9 @@
   </div>
 </main>
 
-<!-- Modal de edición -->
 <div class="modal-bg" id="editorBg">
   <div class="modal">
     <h2 id="editorTitle">Nueva inscripción</h2>
-
     <div class="fields-row">
       <div class="field">
         <label for="pName">Nombre y apellidos</label>
@@ -203,18 +213,32 @@
 </div>
 
 <script>
-const STORAGE_KEY = "bolilla2026_admin";
-let TEAMS_DATA = null;       // loaded from data/teams.json
-let editingIndex = -1;       // -1 = new, otherwise index in participants
+const REPO_TEAMS_URL = "data/teams.json";
+const REPO_ROOMS_URL = "data/rooms.json";
+
+let TEAMS_DATA = null;
+let ROOMS_DATA = null;
+let CURRENT_ROOM = null;       // {id, name, description}
+let editingIndex = -1;
 const editorState = { selected: {}, paid: true };
 
-const REPO_TEAMS_URL = "data/teams.json";
-const REPO_PARTICIPANTS_URL = "data/participants.json";
+// ---------- Room handling ----------
+function readRoomFromUrl() {
+  const u = new URL(location.href);
+  return u.searchParams.get("room");
+}
+function setRoomInUrl(roomId) {
+  const u = new URL(location.href);
+  u.searchParams.set("room", roomId);
+  history.replaceState({}, "", u.toString());
+}
+function storageKey() { return "bolilla2026_admin_" + (CURRENT_ROOM ? CURRENT_ROOM.id : "default"); }
+function repoParticipantsUrl() { return `data/rooms/${CURRENT_ROOM.id}/participants.json`; }
 
 // ---------- Persistence ----------
 function loadStorage() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey());
     if (!raw) return defaultStore();
     const obj = JSON.parse(raw);
     if (!obj.participants) obj.participants = [];
@@ -225,10 +249,10 @@ function loadStorage() {
   }
 }
 function defaultStore() { return { tournament_extras: { pichichi: null, mvp: null, best_gk: null }, participants: [] }; }
-function saveStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
-let store = loadStorage();
+function saveStorage() { localStorage.setItem(storageKey(), JSON.stringify(store)); }
+let store = defaultStore();
 
-// ---------- Loading teams catalog ----------
+// ---------- Loading data ----------
 async function loadTeams() {
   try {
     const r = await fetch(REPO_TEAMS_URL + "?t=" + Date.now());
@@ -237,6 +261,16 @@ async function loadTeams() {
   } catch (err) {
     alert("No se pudo cargar data/teams.json (" + err.message + "). Asegúrate de abrir la página desde el servidor (no file://).");
     TEAMS_DATA = null;
+  }
+}
+async function loadRooms() {
+  try {
+    const r = await fetch(REPO_ROOMS_URL + "?t=" + Date.now());
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    ROOMS_DATA = await r.json();
+  } catch (err) {
+    alert("No se pudo cargar data/rooms.json (" + err.message + ")");
+    ROOMS_DATA = { rooms: [{ id: "default", name: "Default" }], default: "default" };
   }
 }
 
@@ -249,14 +283,10 @@ function findTeam(name) {
   return TEAMS_DATA.teams.find(t => t.name === name) || null;
 }
 
-// ---------- Validation ----------
 function totalCost(selections) {
   let c = 0;
   for (const arr of Object.values(selections)) {
-    for (const n of arr) {
-      const t = findTeam(n);
-      if (t) c += t.price;
-    }
+    for (const n of arr) { const t = findTeam(n); if (t) c += t.price; }
   }
   return c;
 }
@@ -277,11 +307,11 @@ function validateSelections(selections) {
   return errors;
 }
 
-// ---------- Main table render ----------
+// ---------- Render table ----------
 function renderTable() {
   const tbody = document.getElementById("participantsBody");
   if (store.participants.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="9" class="empty">Sin inscripciones todavía. Pulsa "+ Nueva inscripción" para añadir el primer papel.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="9" class="empty">Sin inscripciones todavía en sala "${CURRENT_ROOM.name}". Pulsa "+ Nueva inscripción".</td></tr>`;
     return;
   }
   let html = "";
@@ -309,10 +339,9 @@ function renderTable() {
   });
   tbody.innerHTML = html;
 }
-
 function escapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
 
-// ---------- Editor modal ----------
+// ---------- Editor ----------
 function openEditor(idx) {
   editingIndex = idx;
   const groupKeys = TEAMS_DATA ? Object.keys(TEAMS_DATA.group_quotas) : [];
@@ -320,7 +349,7 @@ function openEditor(idx) {
   groupKeys.forEach(g => editorState.selected[g] = new Set());
   if (idx >= 0) {
     const p = store.participants[idx];
-    document.getElementById("editorTitle").textContent = "Editar inscripción";
+    document.getElementById("editorTitle").textContent = "Editar inscripción · " + CURRENT_ROOM.name;
     document.getElementById("pName").value = p.name || "";
     document.getElementById("pPichichi").value = p.pichichi || "";
     document.getElementById("pMVP").value = p.mvp || "";
@@ -330,7 +359,7 @@ function openEditor(idx) {
       if (editorState.selected[g]) arr.forEach(t => editorState.selected[g].add(t));
     }
   } else {
-    document.getElementById("editorTitle").textContent = "Nueva inscripción";
+    document.getElementById("editorTitle").textContent = "Nueva inscripción · " + CURRENT_ROOM.name;
     document.getElementById("pName").value = "";
     document.getElementById("pPichichi").value = "";
     document.getElementById("pMVP").value = "";
@@ -377,8 +406,6 @@ function renderEditor() {
       renderEditor();
     });
   });
-
-  // editor summary
   const selectionsObj = Object.fromEntries(Object.entries(editorState.selected).map(([g, s]) => [g, [...s]]));
   const c = totalCost(selectionsObj);
   const n = totalCount(selectionsObj);
@@ -396,13 +423,13 @@ function renderEditor() {
 
 window.editParticipant = (i) => openEditor(i);
 window.deleteParticipant = (i) => {
-  if (!confirm(`¿Borrar a "${store.participants[i].name}"?`)) return;
+  if (!confirm(`¿Borrar a "${store.participants[i].name}" de sala ${CURRENT_ROOM.name}?`)) return;
   store.participants.splice(i, 1);
   saveStorage();
   renderTable();
 };
 
-// ---------- Buttons ----------
+// ---------- Button handlers ----------
 document.getElementById("btnAdd").addEventListener("click", () => openEditor(-1));
 document.getElementById("btnCancelEdit").addEventListener("click", closeEditor);
 document.getElementById("btnSaveEdit").addEventListener("click", () => {
@@ -459,7 +486,7 @@ document.getElementById("btnExport").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url; a.download = "participants.json"; a.click();
+  a.href = url; a.download = `participants_${CURRENT_ROOM.id}.json`; a.click();
   URL.revokeObjectURL(url);
 });
 
@@ -468,21 +495,18 @@ document.getElementById("fileImport").addEventListener("change", e => {
   const f = e.target.files[0]; if (!f) return;
   const reader = new FileReader();
   reader.onload = () => {
-    try {
-      const data = JSON.parse(reader.result);
-      mergeImported(data);
-    } catch (err) { alert("Archivo inválido: " + err.message); }
+    try { mergeImported(JSON.parse(reader.result)); }
+    catch (err) { alert("Archivo inválido: " + err.message); }
   };
   reader.readAsText(f);
 });
 
 document.getElementById("btnFetchRepo").addEventListener("click", async () => {
-  if (!confirm("¿Cargar participants.json del repo? Sobrescribirá tus cambios locales.")) return;
+  if (!confirm(`¿Cargar ${repoParticipantsUrl()} del repo? Sobrescribirá tus cambios locales de la sala "${CURRENT_ROOM.name}".`)) return;
   try {
-    const r = await fetch(REPO_PARTICIPANTS_URL + "?t=" + Date.now());
+    const r = await fetch(repoParticipantsUrl() + "?t=" + Date.now());
     if (!r.ok) throw new Error("HTTP " + r.status);
-    const data = await r.json();
-    mergeImported(data);
+    mergeImported(await r.json());
   } catch (err) { alert("Error: " + err.message); }
 });
 
@@ -499,7 +523,7 @@ function mergeImported(data) {
 }
 
 document.getElementById("btnClearAll").addEventListener("click", () => {
-  if (!confirm("¿Seguro? Esto borra TODAS las inscripciones de tu navegador. (No afecta al repo.)")) return;
+  if (!confirm(`¿Borrar TODAS las inscripciones locales de sala "${CURRENT_ROOM.name}"? (No afecta al repo.)`)) return;
   store = defaultStore();
   saveStorage();
   document.getElementById("extraPichichi").value = "";
@@ -508,7 +532,6 @@ document.getElementById("btnClearAll").addEventListener("click", () => {
   renderTable();
 });
 
-// Extras inputs auto-save
 ["extraPichichi", "extraMVP", "extraGK"].forEach(id => {
   document.getElementById(id).addEventListener("input", e => {
     const map = { extraPichichi: "pichichi", extraMVP: "mvp", extraGK: "best_gk" };
@@ -517,14 +540,32 @@ document.getElementById("btnClearAll").addEventListener("click", () => {
   });
 });
 
-// Init
-(async function init() {
-  await loadTeams();
-  // Restore extras into inputs
+// ---------- Switch room ----------
+function selectRoom(roomId) {
+  const room = ROOMS_DATA.rooms.find(r => r.id === roomId) || ROOMS_DATA.rooms[0];
+  CURRENT_ROOM = room;
+  setRoomInUrl(room.id);
+  document.getElementById("roomSelect").value = room.id;
+  document.getElementById("roomLabel").textContent = room.name;
+  document.getElementById("roomDescription").textContent = room.description || `Sala ${room.name}`;
+  document.getElementById("repoPath").textContent = `data/rooms/${room.id}/participants.json`;
+  document.getElementById("navAdmin").href = `admin.html?room=${room.id}`;
+  document.getElementById("navLeader").href = `leaderboard.html?room=${room.id}`;
+  store = loadStorage();
   document.getElementById("extraPichichi").value = store.tournament_extras.pichichi || "";
   document.getElementById("extraMVP").value = store.tournament_extras.mvp || "";
   document.getElementById("extraGK").value = store.tournament_extras.best_gk || "";
   renderTable();
+}
+
+// ---------- Init ----------
+(async function init() {
+  await Promise.all([loadTeams(), loadRooms()]);
+  const sel = document.getElementById("roomSelect");
+  sel.innerHTML = ROOMS_DATA.rooms.map(r => `<option value="${r.id}">${escapeHtml(r.name)}</option>`).join("");
+  sel.addEventListener("change", e => selectRoom(e.target.value));
+  const initial = readRoomFromUrl() || ROOMS_DATA.default || (ROOMS_DATA.rooms[0] && ROOMS_DATA.rooms[0].id);
+  selectRoom(initial);
 })();
 </script>
 </body>

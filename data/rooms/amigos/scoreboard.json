@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-11T08:44:43.621875+00:00",
+  "last_updated": "2026-06-11T11:53:18.592812+00:00",
   "ranking": [],
   "team_stats": {
     "España": {
@@ -627,5 +627,7 @@
       "points_generated": 0.0
     }
   },
-  "champion": null
+  "champion": null,
+  "room_id": "amigos",
+  "room_name": "Amigos"
 }
