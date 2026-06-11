@@ -239,6 +239,7 @@
 <main>
   <div class="controls">
     <button class="primary" id="btnOptimize">Optimizar plantilla</button>
+    <button class="primary" id="btnSend" style="background:#1a5490;border-color:#1a5490;">📤 Enviar al organizador</button>
     <button id="btnClear">Limpiar</button>
     <button id="btnPrint">Imprimir / Guardar PDF</button>
     <button id="btnExport">Exportar JSON</button>
@@ -571,6 +572,38 @@ document.getElementById("btnExport").addEventListener("click", () => {
   const safeName = (data.name || "plantilla").replace(/[^a-z0-9_\-]/gi, "_");
   a.href = url; a.download = `bolilla_${safeName}.json`; a.click();
   URL.revokeObjectURL(url);
+});
+
+document.getElementById("btnSend").addEventListener("click", async () => {
+  const name = document.getElementById("fName").value.trim();
+  const errors = validate();
+  if (!name) { alert("Pon tu nombre antes de enviar."); return; }
+  if (errors.length > 0) {
+    if (!confirm("Tu plantilla tiene errores:\n- " + errors.join("\n- ") + "\n\n¿Enviar igualmente?")) return;
+  }
+  const data = {
+    name,
+    pichichi: document.getElementById("fPichichi").value.trim() || null,
+    mvp: document.getElementById("fMVP").value.trim() || null,
+    gk: document.getElementById("fGK").value.trim() || null,
+    selections: {},
+  };
+  for (const [g, set] of Object.entries(state.selected)) {
+    data.selections[g] = [...set];
+  }
+  const cost = totalCost();
+  const text = `🏆 Bolilla Mundial 2026 — ${name}\n` +
+               `Presupuesto: ${cost}/1050 · 20 equipos · 5€\n\n` +
+               `--- COPIA TODO ESTO ABAJO ---\n${JSON.stringify(data)}\n--- FIN ---`;
+  if (navigator.share) {
+    try { await navigator.share({ title: `Bolilla ${name}`, text }); return; } catch {}
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("Pronósticos copiados al portapapeles. Pégaselos al organizador por WhatsApp.");
+  } catch {
+    prompt("Copia este texto y mándaselo al organizador:", text);
+  }
 });
 
 document.getElementById("btnImport").addEventListener("click", () => {
