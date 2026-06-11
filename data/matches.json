@@ -1,4 +1,18 @@
 {
-  "last_updated": "2026-06-11T22:01:22.871778+00:00",
-  "matches": []
+  "last_updated": "2026-06-11T23:59:51.940278+00:00",
+  "matches": [
+    {
+      "id": 537327,
+      "utcDate": "2026-06-11T19:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_A",
+      "matchday": 1,
+      "home_team": "Mexico",
+      "away_team": "South Africa",
+      "home_goals_90": 2,
+      "away_goals_90": 0,
+      "duration": "REGULAR",
+      "winner_overall": "HOME_TEAM"
+    }
+  ]
 }
