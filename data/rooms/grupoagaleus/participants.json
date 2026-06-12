@@ -1,9 +1,50 @@
 {
-  "_comment": "Inscripciones de la sala 'GrupoAgaleus'.",
   "tournament_extras": {
     "pichichi": null,
     "mvp": null,
     "best_gk": null
   },
-  "participants": []
+  "participants": [
+    {
+      "name": "ANtxon",
+      "selections": {
+        "A": [
+          "Francia",
+          "Inglaterra",
+          "Alemania"
+        ],
+        "B": [
+          "EEUU",
+          "Japón",
+          "Suiza"
+        ],
+        "C": [
+          "Ecuador",
+          "Senegal",
+          "México",
+          "Austria"
+        ],
+        "D": [
+          "Corea del Sur",
+          "Egipto",
+          "Ghana",
+          "Argelia"
+        ],
+        "E": [
+          "Irán",
+          "Congo"
+        ],
+        "F": [
+          "Haití",
+          "Curazao",
+          "Jordania",
+          "Uzbekistán"
+        ]
+      },
+      "pichichi": "MESSI",
+      "mvp": "MESSI",
+      "gk": "SIMON",
+      "paid": true
+    }
+  ]
 }
