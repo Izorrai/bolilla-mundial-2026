@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-12T18:22:57.927391+00:00",
+  "last_updated": "2026-06-12T21:13:23.411351+00:00",
   "matches": [
     {
       "id": 537327,
@@ -26,6 +26,19 @@
       "away_goals_90": 1,
       "duration": "REGULAR",
       "winner_overall": "HOME_TEAM"
+    },
+    {
+      "id": 537333,
+      "utcDate": "2026-06-12T19:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_B",
+      "matchday": 1,
+      "home_team": "Canada",
+      "away_team": "Bosnia-Herzegovina",
+      "home_goals_90": 1,
+      "away_goals_90": 1,
+      "duration": "REGULAR",
+      "winner_overall": "DRAW"
     }
   ]
 }

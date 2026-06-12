@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-12T18:22:57.927975+00:00",
+  "last_updated": "2026-06-12T21:13:23.411982+00:00",
   "ranking": [],
   "team_stats": {
     "España": {
@@ -315,17 +315,17 @@
       "points_generated": 0.0
     },
     "Canadá": {
-      "matches_played": 0,
-      "goals_for": 0,
-      "goals_against": 0,
+      "matches_played": 1,
+      "goals_for": 1,
+      "goals_against": 1,
       "wins": 0,
-      "draws": 0,
+      "draws": 1,
       "losses": 0,
-      "stage_reached": "—",
+      "stage_reached": "GROUP_STAGE",
       "round_bonuses": 0,
-      "goals_pts": 0.0,
-      "results_pts": 0,
-      "points_generated": 0.0
+      "goals_pts": 0.5,
+      "results_pts": 1,
+      "points_generated": 1.5
     },
     "Paraguay": {
       "matches_played": 0,
@@ -367,17 +367,17 @@
       "points_generated": 0.5
     },
     "Bosnia": {
-      "matches_played": 0,
-      "goals_for": 0,
-      "goals_against": 0,
+      "matches_played": 1,
+      "goals_for": 1,
+      "goals_against": 1,
       "wins": 0,
-      "draws": 0,
+      "draws": 1,
       "losses": 0,
-      "stage_reached": "—",
+      "stage_reached": "GROUP_STAGE",
       "round_bonuses": 0,
-      "goals_pts": 0.0,
-      "results_pts": 0,
-      "points_generated": 0.0
+      "goals_pts": 0.5,
+      "results_pts": 1,
+      "points_generated": 1.5
     },
     "Ghana": {
       "matches_played": 0,
