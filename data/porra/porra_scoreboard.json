@@ -1,8 +1,128 @@
 {
   "_comment": "Generado por scripts/update_porra.py. No editar a mano.",
-  "last_updated": "2026-06-12T18:04:59.834834+00:00",
+  "last_updated": "2026-06-12T18:11:23.425768+00:00",
   "champion": null,
   "ranking": [
+    {
+      "name": "Gorka",
+      "total": 16,
+      "breakdown": {
+        "initial": 0,
+        "selections": 15,
+        "group_stage": 1,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {
+          "España": {
+            "predicted": "Final",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Francia": {
+            "predicted": "Ganador",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Inglaterra": {
+            "predicted": "Grupos",
+            "actual": "Grupos",
+            "points": 5
+          },
+          "Argentina": {
+            "predicted": "Grupos",
+            "actual": "Grupos",
+            "points": 5
+          },
+          "Brasil": {
+            "predicted": "16avos",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Portugal": {
+            "predicted": "Grupos",
+            "actual": "Grupos",
+            "points": 5
+          },
+          "Alemania": {
+            "predicted": "Cuartos",
+            "actual": "Grupos",
+            "points": 0
+          }
+        },
+        "group_stage": {
+          "correct": 1,
+          "answered": 2
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": true
+    },
+    {
+      "name": "Jon",
+      "total": 7,
+      "breakdown": {
+        "initial": 0,
+        "selections": 5,
+        "group_stage": 2,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {
+          "España": {
+            "predicted": "Grupos",
+            "actual": "Grupos",
+            "points": 5
+          },
+          "Francia": {
+            "predicted": "Final",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Inglaterra": {
+            "predicted": "Semifinal",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Argentina": {
+            "predicted": "Semifinal",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Brasil": {
+            "predicted": "Final",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Portugal": {
+            "predicted": "Semifinal",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Alemania": {
+            "predicted": "Semifinal",
+            "actual": "Grupos",
+            "points": 0
+          }
+        },
+        "group_stage": {
+          "correct": 2,
+          "answered": 2
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": true
+    },
     {
       "name": "Ander",
       "total": 0,
@@ -29,54 +149,6 @@
     },
     {
       "name": "Eneko",
-      "total": 0,
-      "breakdown": {
-        "initial": 0,
-        "selections": 0,
-        "group_stage": 0,
-        "knockouts": 0
-      },
-      "details": {
-        "initial": {},
-        "selections": {},
-        "group_stage": {
-          "correct": 0,
-          "answered": 0
-        },
-        "knockouts": {
-          "exact": 0,
-          "result_only": 0,
-          "wrong": 0
-        }
-      },
-      "has_submitted": false
-    },
-    {
-      "name": "Gorka",
-      "total": 0,
-      "breakdown": {
-        "initial": 0,
-        "selections": 0,
-        "group_stage": 0,
-        "knockouts": 0
-      },
-      "details": {
-        "initial": {},
-        "selections": {},
-        "group_stage": {
-          "correct": 0,
-          "answered": 0
-        },
-        "knockouts": {
-          "exact": 0,
-          "result_only": 0,
-          "wrong": 0
-        }
-      },
-      "has_submitted": false
-    },
-    {
-      "name": "Jon",
       "total": 0,
       "breakdown": {
         "initial": 0,
