@@ -1,6 +1,6 @@
 {
   "_comment": "Calendario completo del Mundial 2026 generado por scripts/fetch_fixtures.py",
-  "last_updated": "2026-06-11T23:59:50.504842+00:00",
+  "last_updated": "2026-06-12T04:55:35.324241+00:00",
   "fixtures": [
     {
       "id": 537327,
@@ -15,7 +15,7 @@
     {
       "id": 537328,
       "utcDate": "2026-06-12T02:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "stage": "GROUP_STAGE",
       "group": "GROUP_A",
       "matchday": 1,
