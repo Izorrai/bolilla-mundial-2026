@@ -1,6 +1,279 @@
 {
-  "last_updated": "2026-06-12T04:55:36.159301+00:00",
-  "ranking": [],
+  "last_updated": "2026-06-12T06:50:14.739464+00:00",
+  "ranking": [
+    {
+      "name": "ANtxon",
+      "total": 8.0,
+      "breakdown": {
+        "goals": 2.0,
+        "match_results": 6.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Alemania",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "EEUU",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Austria",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Congo",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Haití",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Curazao",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ]
+    }
+  ],
   "team_stats": {
     "España": {
       "matches_played": 0,
