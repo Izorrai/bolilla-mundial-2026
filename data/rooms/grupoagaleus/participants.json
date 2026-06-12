@@ -45,6 +45,46 @@
       "mvp": "MESSI",
       "gk": "SIMON",
       "paid": true
-    }
+    },
+    {
+  "name": "Jon Latxiondo",
+  "pichichi": "Kylian Mbappé",
+  "mvp": "Kylian Mbappé",
+  "gk": "Mike Maignan",
+  "selections": {
+    "A": [
+      "Francia",
+      "Portugal",
+      "Brasil"
+    ],
+    "B": [
+      "Japón",
+      "Holanda",
+      "Bélgica"
+    ],
+    "C": [
+      "México",
+      "Croacia",
+      "Uruguay",
+      "Marruecos"
+    ],
+    "D": [
+      "Chequia",
+      "Corea del Sur",
+      "Paraguay",
+      "Escocia"
+    ],
+    "E": [
+      "Sudáfrica",
+      "Australia"
+    ],
+    "F": [
+      "Catar",
+      "Nueva Zelanda",
+      "Curazao",
+      "Panamá"
+    ]
+  }
+}
   ]
 }
