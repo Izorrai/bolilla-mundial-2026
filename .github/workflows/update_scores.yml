@@ -2,9 +2,9 @@ name: Update scores
 
 on:
   schedule:
-    # Cada 30 minutos durante el periodo del Mundial.
-    # GitHub puede retrasar los cron hasta 15 min en periodos de carga alta.
-    - cron: "*/30 * * * *"
+    # Cada 5 minutos (el minimo permitido por GitHub Actions) durante el Mundial.
+    # GitHub puede retrasar los cron varios minutos en periodos de carga alta.
+    - cron: "*/5 * * * *"
   workflow_dispatch: {}   # permite lanzarlo a mano desde la pestana Actions
   push:
     paths:
