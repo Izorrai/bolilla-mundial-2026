@@ -54,6 +54,15 @@
   .bk .l { font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
   .bk .v { font-size: 18px; font-weight: 800; color: var(--blue-dark); }
   .prize-bar { background: var(--green-light); padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 14px; text-align: center; }
+  .detail-section { margin-top: 16px; }
+  .detail-section h3 { margin: 0 0 6px 0; font-size: 13px; color: var(--blue-dark); border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  .detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .detail-table td { padding: 5px 6px; border-bottom: 1px solid var(--border); }
+  .detail-table tr.head td { font-weight: 700; color: var(--muted); font-size: 10px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+  .detail-table td.pts { text-align: right; font-weight: 700; white-space: nowrap; }
+  .detail-table tr.ok td.pts { color: var(--green); }
+  .detail-table tr.fail td.pts { color: var(--muted); }
+  .muted-note { color: var(--muted); font-style: italic; font-size: 13px; margin: 4px 0; }
 </style>
 </head>
 <body>
@@ -137,10 +146,68 @@ function fallbackRank() {
     .sort((a, b) => a.name.localeCompare(b.name, "es"));
 }
 
+function detailSection(title, body) {
+  return `<div class="detail-section"><h3>${escapeHtml(title)}</h3>${body}</div>`;
+}
+
+function renderInitialDetail(d) {
+  d = d || {};
+  const rows = [];
+  if (d.winner_pick) {
+    rows.push(`<tr class="ok"><td>Campeón: ${escapeHtml(d.winner_pick.pick)}</td><td>${escapeHtml(d.winner_pick.note || "")}</td><td class="pts">+${fmtPts(d.winner_pick.points)}</td></tr>`);
+  }
+  if (d.top_scorer) rows.push(`<tr class="ok"><td>Máximo goleador (Pichichi)</td><td>Acertado</td><td class="pts">+${fmtPts(d.top_scorer)}</td></tr>`);
+  if (d.best_player) rows.push(`<tr class="ok"><td>Mejor jugador (Balón de Oro)</td><td>Acertado</td><td class="pts">+${fmtPts(d.best_player)}</td></tr>`);
+  if (d.best_keeper) rows.push(`<tr class="ok"><td>Mejor portero (Guante de Oro)</td><td>Acertado</td><td class="pts">+${fmtPts(d.best_keeper)}</td></tr>`);
+  if (rows.length === 0) {
+    return detailSection("Pronósticos iniciales", `<p class="muted-note">Todavía no hay resultados oficiales (campeón, pichichi, balón de oro, guante de oro) para puntuar esta categoría.</p>`);
+  }
+  return detailSection("Pronósticos iniciales", `<table class="detail-table">${rows.join("")}</table>`);
+}
+
+function renderSelectionsDetail(d) {
+  d = d || {};
+  const teams = Object.keys(d);
+  if (teams.length === 0) {
+    return detailSection("Selecciones (5 pts por acertar la ronda exacta)", `<p class="muted-note">Sin datos todavía.</p>`);
+  }
+  let rows = `<tr class="head"><td>Selección</td><td>Pronóstico</td><td>Llegó a</td><td class="pts">Pts</td></tr>`;
+  rows += teams.map(team => {
+    const t = d[team] || {};
+    const ok = (t.points || 0) > 0;
+    return `<tr class="${ok ? "ok" : "fail"}">
+      <td>${escapeHtml(team)}</td>
+      <td>${escapeHtml(t.predicted)}</td>
+      <td>${escapeHtml(t.actual)}</td>
+      <td class="pts">${ok ? "+" + fmtPts(t.points) : "0"}</td>
+    </tr>`;
+  }).join("");
+  return detailSection("Selecciones (5 pts por acertar la ronda exacta)", `<table class="detail-table">${rows}</table>`);
+}
+
+function renderGroupStageDetail(d) {
+  d = d || {};
+  const correct = d.correct || 0, answered = d.answered || 0;
+  if (answered === 0) {
+    return detailSection("Fase de grupos (1 pt por 1X2 acertado)", `<p class="muted-note">Todavía no se ha jugado ningún partido de grupos.</p>`);
+  }
+  return detailSection("Fase de grupos (1 pt por 1X2 acertado)", `<p>${correct} de ${answered} partidos acertados.</p>`);
+}
+
+function renderKnockoutsDetail(d) {
+  d = d || {};
+  const exact = d.exact || 0, resultOnly = d.result_only || 0, wrong = d.wrong || 0;
+  if (exact + resultOnly + wrong === 0) {
+    return detailSection("Eliminatorias", `<p class="muted-note">Todavía no hay partidos de eliminatorias jugados.</p>`);
+  }
+  return detailSection("Eliminatorias", `<p>Resultado exacto: <strong>${exact}</strong> · Solo 1X2: <strong>${resultOnly}</strong> · Fallados: <strong>${wrong}</strong></p>`);
+}
+
 window.showDetail = name => {
   const score = SCOREBOARD && SCOREBOARD.ranking ? SCOREBOARD.ranking.find(x => x.name === name) : null;
   const total = score ? score.total : 0;
   const bk = score && score.breakdown ? score.breakdown : { initial: 0, selections: 0, group_stage: 0, knockouts: 0 };
+  const det = score && score.details ? score.details : { initial: {}, selections: {}, group_stage: {}, knockouts: {} };
   document.getElementById("detailModal").innerHTML = `
     <button class="modal-close" onclick="document.getElementById('detailBg').classList.remove('open')">×</button>
     <h2>${escapeHtml(name)} <span class="total">${fmtPts(total)} pts</span></h2>
@@ -150,6 +217,10 @@ window.showDetail = name => {
       <div class="bk"><div class="l">Grupos</div><div class="v">${fmtPts(bk.group_stage || 0)}</div></div>
       <div class="bk"><div class="l">Eliminatorias</div><div class="v">${fmtPts(bk.knockouts || 0)}</div></div>
     </div>
+    ${renderInitialDetail(det.initial)}
+    ${renderSelectionsDetail(det.selections)}
+    ${renderGroupStageDetail(det.group_stage)}
+    ${renderKnockoutsDetail(det.knockouts)}
   `;
   document.getElementById("detailBg").classList.add("open");
 };
