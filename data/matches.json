@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-13T00:08:21.670651+00:00",
+  "last_updated": "2026-06-13T04:47:50.718620+00:00",
   "matches": [
     {
       "id": 537327,
@@ -39,6 +39,19 @@
       "away_goals_90": 1,
       "duration": "REGULAR",
       "winner_overall": "DRAW"
+    },
+    {
+      "id": 537345,
+      "utcDate": "2026-06-13T01:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_D",
+      "matchday": 1,
+      "home_team": "United States",
+      "away_team": "Paraguay",
+      "home_goals_90": 4,
+      "away_goals_90": 1,
+      "duration": "REGULAR",
+      "winner_overall": "HOME_TEAM"
     }
   ]
 }
