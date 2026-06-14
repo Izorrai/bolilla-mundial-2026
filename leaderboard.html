@@ -55,6 +55,17 @@
   .badge { display: inline-block; background: var(--green-light); color: var(--green-dark); padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-left: 4px; }
   .badge.eliminated { background: #fde7e4; color: #c0392b; }
   .badge.champion { background: var(--gold); color: white; }
+  .rank-change { display: inline-block; font-size: 11px; font-weight: 800; margin-left: 4px; vertical-align: middle; }
+  .rank-change.up { color: #1d8a4a; }
+  .rank-change.down { color: #c0392b; }
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 4px; margin-left: 6px;
+    background: linear-gradient(135deg, #c0392b, #962d22); color: #fff;
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px;
+    padding: 2px 8px; border-radius: 20px; vertical-align: middle;
+    animation: liveDotPulse 1.6s infinite;
+  }
+  @keyframes liveDotPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
   .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 100; }
   .modal-bg.open { display: flex; }
   .modal { background: var(--card); border-radius: 10px; max-width: 800px; width: 100%; padding: 22px; }
@@ -180,9 +191,13 @@
 <script>
 const REPO_TEAMS_URL = "data/teams.json";
 const REPO_ROOMS_URL = "data/rooms.json";
+const REPO_FIXTURES_URL = "data/fixtures.json";
+const LIVE_STATUSES = ["IN_PLAY", "PAUSED"];
+const LIVE_REFRESH_MS = 60000;
 
 let TEAMS = null, PARTICIPANTS = null, SCOREBOARD = null;
 let ROOMS_DATA = null, CURRENT_ROOM = null;
+let LIVE_TEAMS = new Set();
 
 const LAST_ROOM_KEY = "bolilla2026_last_room";
 function readRoomFromUrl() {
@@ -228,9 +243,17 @@ function renderRanking() {
   ranking.forEach((p, i) => {
     const pos = i + 1;
     const cls = pos === 1 ? "gold" : pos === 2 ? "silver" : pos === 3 ? "bronze" : "";
+    const rc = p.rank_change || 0;
+    const rankChange = rc > 0
+      ? `<span class="rank-change up" title="Sube ${rc} puesto${rc === 1 ? "" : "s"}">▲${rc}</span>`
+      : rc < 0
+        ? `<span class="rank-change down" title="Baja ${-rc} puesto${rc === -1 ? "" : "s"}">▼${-rc}</span>`
+        : "";
+    const isLive = (p.team_points || []).some(tp => LIVE_TEAMS.has(tp.name));
+    const liveBadge = isLive ? `<span class="live-badge">🔴 En directo</span>` : "";
     html += `<tr onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
       <td class="pos ${cls}">${pos}</td>
-      <td><strong>${escapeHtml(p.name)}</strong></td>
+      <td><strong>${escapeHtml(p.name)}</strong>${rankChange}${liveBadge}</td>
       <td class="points">${fmtPts(p.total || 0)} pts</td>
     </tr>`;
   });
@@ -374,6 +397,25 @@ async function loadRoomData(roomId) {
   renderTeams();
 }
 
+async function loadLiveTeams() {
+  try {
+    const fixturesDoc = await fetchJson(REPO_FIXTURES_URL);
+    const liveFd = new Set();
+    for (const f of fixturesDoc.fixtures || []) {
+      if (!LIVE_STATUSES.includes(f.status)) continue;
+      if (f.home_team) liveFd.add(f.home_team.toLowerCase());
+      if (f.away_team) liveFd.add(f.away_team.toLowerCase());
+    }
+    const live = new Set();
+    for (const t of (TEAMS && TEAMS.teams) || []) {
+      if (t.fd_name && liveFd.has(t.fd_name.toLowerCase())) live.add(t.name);
+    }
+    LIVE_TEAMS = live;
+  } catch {
+    LIVE_TEAMS = new Set();
+  }
+}
+
 (async function init() {
   try {
     const [teams, rooms] = await Promise.all([fetchJson(REPO_TEAMS_URL), fetchJson(REPO_ROOMS_URL)]);
@@ -388,7 +430,12 @@ async function loadRoomData(roomId) {
     const initial = (fromUrl && validIds.includes(fromUrl)) ? fromUrl
                   : (fromStorage && validIds.includes(fromStorage)) ? fromStorage
                   : (ROOMS_DATA.default || ROOMS_DATA.rooms[0].id);
+    await loadLiveTeams();
     await loadRoomData(initial);
+    setInterval(async () => {
+      await loadLiveTeams();
+      renderRanking();
+    }, LIVE_REFRESH_MS);
   } catch (err) {
     document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Error cargando datos: ${escapeHtml(err.message)}</td></tr>`;
   }

@@ -199,7 +199,7 @@ def compute_extras_points(participant, extras_official):
     return pts
 
 
-def compute_room_scoreboard(room_id, participants_doc, team_stats, teams):
+def compute_room_scoreboard(room_id, participants_doc, team_stats, teams, prev_pos):
     participants = participants_doc.get("participants", [])
     extras_official = participants_doc.get("tournament_extras") or {}
     ranking = []
@@ -238,6 +238,9 @@ def compute_room_scoreboard(room_id, participants_doc, team_stats, teams):
             "team_points": team_points_list,
         })
     ranking.sort(key=lambda x: (-x["total"], x["name"].lower()))
+    for i, entry in enumerate(ranking):
+        old_pos = prev_pos.get(entry["name"])
+        entry["rank_change"] = (old_pos - (i + 1)) if old_pos is not None else 0
     return ranking
 
 
@@ -294,7 +297,9 @@ def main():
         participants_file = room_dir / "participants.json"
         scoreboard_file = room_dir / "scoreboard.json"
         participants_doc = load_json(participants_file, {"participants": [], "tournament_extras": {}})
-        ranking = compute_room_scoreboard(room_id, participants_doc, team_stats, teams)
+        prev_scoreboard = load_json(scoreboard_file, {})
+        prev_pos = {e["name"]: i + 1 for i, e in enumerate(prev_scoreboard.get("ranking", []))}
+        ranking = compute_room_scoreboard(room_id, participants_doc, team_stats, teams, prev_pos)
         save_json(scoreboard_file, {
             "last_updated": now_iso,
             "ranking": ranking,
