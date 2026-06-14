@@ -92,6 +92,12 @@
         return new Date(a.utcDate) - new Date(b.utcDate);
       });
 
+      const heading = section.querySelector("h2");
+      if (heading) {
+        const hasLive = todayFixtures.some(f => LIVE_STATUSES.includes(f.status));
+        heading.innerHTML = "Partidos de hoy" + (hasLive ? ` <span class="today-live-badge">🔴 En directo</span>` : "");
+      }
+
       section.style.display = "";
       carousel.innerHTML = todayFixtures.map(renderMatchCard).join("");
     } catch {

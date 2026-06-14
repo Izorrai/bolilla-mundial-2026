@@ -1,63 +1,128 @@
 /* Carrusel "Partidos de hoy" — compartido por todas las páginas */
-.today-section { margin-bottom: 20px; }
-.today-section h2 { margin: 0 0 10px 0; font-size: 16px; color: var(--text); }
+.today-section { margin-bottom: 22px; }
+.today-section h2 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.today-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #c0392b, #962d22);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(192, 57, 43, 0.35);
+  animation: todayLivePulse 1.6s infinite;
+}
 .carousel {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   overflow-x: auto;
-  padding-bottom: 8px;
+  padding: 4px 4px 12px;
   scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
 }
+.carousel::-webkit-scrollbar { height: 6px; }
+.carousel::-webkit-scrollbar-track { background: transparent; }
+.carousel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
 .match-card {
-  flex: 0 0 200px;
+  flex: 0 0 210px;
   scroll-snap-align: start;
-  background: var(--card);
+  background: linear-gradient(180deg, var(--card), #fafafa);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.match-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.09);
 }
 .match-card.live {
-  border-color: var(--warn, var(--live, #c0392b));
-  background: var(--live-light, #fbe2df);
+  border-color: transparent;
+  background: linear-gradient(180deg, var(--live-light, #fbe2df), var(--card));
+  animation: todayLiveGlow 2.2s ease-in-out infinite;
 }
+@keyframes todayLiveGlow {
+  0%, 100% { box-shadow: 0 0 0 2px var(--warn, var(--live, #c0392b)), 0 6px 16px rgba(192, 57, 43, 0.12); }
+  50%      { box-shadow: 0 0 0 2px var(--warn, var(--live, #c0392b)), 0 6px 22px rgba(192, 57, 43, 0.32); }
+}
+
 .mc-group {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--muted);
   text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
 }
 .mc-team {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 14px;
   font-weight: 600;
-  padding: 3px 0;
+  padding: 6px 0;
 }
-.mc-crest { width: 22px; height: 22px; object-fit: contain; flex-shrink: 0; }
-.mc-name { flex: 1; }
-.mc-score { font-weight: 800; }
+.mc-team + .mc-team {
+  border-top: 1px solid var(--border);
+}
+.mc-crest {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.12));
+}
+.mc-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mc-score {
+  font-weight: 800;
+  font-size: 16px;
+  min-width: 20px;
+  text-align: right;
+}
 .mc-time {
-  margin-top: 8px;
-  font-size: 13px;
+  margin-top: 10px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--muted);
   text-align: center;
+  background: var(--bg, #f5f5f1);
+  border-radius: 20px;
+  padding: 5px 0;
 }
 .mc-badge-live {
-  display: inline-block;
-  margin-top: 8px;
-  background: var(--warn, var(--live, #c0392b));
-  color: white;
-  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #c0392b, #962d22);
+  color: #fff;
+  font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
-  padding: 2px 6px;
-  border-radius: 4px;
   letter-spacing: 0.5px;
+  padding: 5px 0;
+  border-radius: 20px;
   animation: todayLivePulse 1.5s infinite;
 }
 @keyframes todayLivePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
