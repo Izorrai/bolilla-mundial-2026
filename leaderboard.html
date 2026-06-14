@@ -198,6 +198,7 @@ const LIVE_REFRESH_MS = 60000;
 let TEAMS = null, PARTICIPANTS = null, SCOREBOARD = null;
 let ROOMS_DATA = null, CURRENT_ROOM = null;
 let LIVE_TEAMS = new Set();
+let LIVE_FIXTURES = [];
 
 const LAST_ROOM_KEY = "bolilla2026_last_room";
 function readRoomFromUrl() {
@@ -250,11 +251,13 @@ function renderRanking() {
         ? `<span class="rank-change down" title="Baja ${-rc} puesto${rc === -1 ? "" : "s"}">▼${-rc}</span>`
         : "";
     const isLive = (p.team_points || []).some(tp => LIVE_TEAMS.has(tp.name));
+    const liveBonus = isLive ? computeLiveBonus(p) : 0;
+    const displayTotal = Math.round((p.total || 0) * 10 + liveBonus * 10) / 10;
     const liveBadge = isLive ? `<span class="live-badge">🔴 En directo</span>` : "";
     html += `<tr onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
       <td class="pos ${cls}">${pos}</td>
       <td><strong>${escapeHtml(p.name)}</strong>${rankChange}${liveBadge}</td>
-      <td class="points">${fmtPts(p.total || 0)} pts</td>
+      <td class="points">${fmtPts(displayTotal)} pts</td>
     </tr>`;
   });
   tbody.innerHTML = html;
@@ -401,8 +404,10 @@ async function loadLiveTeams() {
   try {
     const fixturesDoc = await fetchJson(REPO_FIXTURES_URL);
     const liveFd = new Set();
+    LIVE_FIXTURES = [];
     for (const f of fixturesDoc.fixtures || []) {
       if (!LIVE_STATUSES.includes(f.status)) continue;
+      LIVE_FIXTURES.push(f);
       if (f.home_team) liveFd.add(f.home_team.toLowerCase());
       if (f.away_team) liveFd.add(f.away_team.toLowerCase());
     }
@@ -413,7 +418,36 @@ async function loadLiveTeams() {
     LIVE_TEAMS = live;
   } catch {
     LIVE_TEAMS = new Set();
+    LIVE_FIXTURES = [];
   }
+}
+
+function computeLiveBonus(participantEntry) {
+  if (!LIVE_FIXTURES.length || !participantEntry.team_points) return 0;
+  const fdToName = {};
+  for (const t of (TEAMS && TEAMS.teams) || []) {
+    if (t.fd_name) fdToName[t.fd_name.toLowerCase()] = t.name;
+  }
+  let bonus = 0;
+  for (const f of LIVE_FIXTURES) {
+    const homeCanon = fdToName[(f.home_team || "").toLowerCase()] || f.home_team;
+    const awayCanon = fdToName[(f.away_team || "").toLowerCase()] || f.away_team;
+    const hg = f.home_goals ?? 0;
+    const ag = f.away_goals ?? 0;
+    const homePick = participantEntry.team_points.find(tp => tp.name === homeCanon);
+    const awayPick = participantEntry.team_points.find(tp => tp.name === awayCanon);
+    if (homePick) {
+      bonus += 0.5 * hg;
+      if (hg > ag) bonus += 3;
+      else if (hg === ag) bonus += 1;
+    }
+    if (awayPick) {
+      bonus += 0.5 * ag;
+      if (ag > hg) bonus += 3;
+      else if (ag === hg) bonus += 1;
+    }
+  }
+  return Math.round(bonus * 10) / 10;
 }
 
 (async function init() {
@@ -434,7 +468,24 @@ async function loadLiveTeams() {
     await loadRoomData(initial);
     setInterval(async () => {
       await loadLiveTeams();
+      if (CURRENT_ROOM) {
+        try {
+          const [part, score] = await Promise.all([
+            fetchJson(`data/rooms/${CURRENT_ROOM.id}/participants.json`),
+            fetchJson(`data/rooms/${CURRENT_ROOM.id}/scoreboard.json`),
+          ]);
+          PARTICIPANTS = part;
+          SCOREBOARD = score;
+          const ts = score && score.last_updated;
+          if (ts) {
+            document.getElementById("rankUpdated").textContent = `Actualizado: ${fmtDate(ts)}`;
+            document.getElementById("teamsUpdated").textContent = `Actualizado: ${fmtDate(ts)}`;
+            document.getElementById("roomSub").textContent = `Sala "${CURRENT_ROOM.name}" · actualizado ${fmtDate(ts)}`;
+          }
+        } catch {}
+      }
       renderRanking();
+      renderTeams();
     }, LIVE_REFRESH_MS);
   } catch (err) {
     document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Error cargando datos: ${escapeHtml(err.message)}</td></tr>`;
