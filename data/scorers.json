@@ -1,5 +1,66 @@
 {
   "_comment": "Top goleadores generado por scripts/fetch_fixtures.py",
-  "last_updated": null,
-  "scorers": []
+  "last_updated": "2026-06-14T10:11:26.963301+00:00",
+  "scorers": [
+    {
+      "player": "Folarin Balogun",
+      "team": "United States",
+      "nationality": "USA",
+      "goals": 2
+    },
+    {
+      "player": "Julián Quiñones",
+      "team": "Mexico",
+      "nationality": "Colombia",
+      "goals": 1
+    },
+    {
+      "player": "Raúl Jiménez",
+      "team": "Mexico",
+      "nationality": "Mexico",
+      "goals": 1
+    },
+    {
+      "player": "Ladislav Krejčí",
+      "team": "Czechia",
+      "nationality": "Czech Republic",
+      "goals": 1
+    },
+    {
+      "player": "In-beom Hwang",
+      "team": "South Korea",
+      "nationality": "South Korea",
+      "goals": 1
+    },
+    {
+      "player": "Hyun-Gyu Oh",
+      "team": "South Korea",
+      "nationality": "South Korea",
+      "goals": 1
+    },
+    {
+      "player": "Jovo Lukić",
+      "team": "Bosnia-Herzegovina",
+      "nationality": "Bosnia-Herzegovina",
+      "goals": 1
+    },
+    {
+      "player": "Cyle Larin",
+      "team": "Canada",
+      "nationality": "Canada",
+      "goals": 1
+    },
+    {
+      "player": "Mauricio",
+      "team": "Paraguay",
+      "nationality": "Paraguay",
+      "goals": 1
+    },
+    {
+      "player": "Gio Reyna",
+      "team": "United States",
+      "nationality": "USA",
+      "goals": 1
+    }
+  ]
 }
