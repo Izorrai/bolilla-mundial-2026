@@ -1,0 +1,95 @@
+/* Capa de estilo compartida: look mas moderno/corporativo en todas las paginas.
+   Se carga despues del <style> de cada pagina para poder afinar header, cards,
+   botones, pestañas e inputs sin tocar la paleta de colores de cada una. */
+
+html { scroll-behavior: smooth; }
+
+/* Cabecera: degradado sutil + sombra + linea de acento inferior */
+header {
+  background-image:
+    radial-gradient(circle at 18% 15%, rgba(255,255,255,0.18), transparent 45%),
+    linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.20));
+  background-blend-mode: screen, multiply;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.14), inset 0 -3px 0 rgba(255,255,255,0.35);
+}
+
+header h1 {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+/* Pestañas de navegacion dentro del header -> estilo pill */
+nav a {
+  border-bottom: none;
+  border-radius: 20px;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+nav a:hover { background: rgba(255,255,255,0.12); }
+nav a.active {
+  border-color: transparent;
+  background: rgba(255,255,255,0.20);
+}
+
+/* Tarjetas: bordes mas redondeados + sombra suave + hover */
+.card,
+.modal,
+.ranking-table,
+.participants-table,
+.team-card,
+details.section,
+.extras-bar,
+.extras-section {
+  border-radius: 14px;
+}
+
+.card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s ease;
+}
+.card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* Pestañas internas (.tabs / .tab) -> estilo pill agrupado */
+.tabs {
+  border-bottom: none;
+  background: var(--card);
+  padding: 4px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.tab {
+  border-bottom: none;
+  border-radius: 8px;
+  margin-bottom: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.tab:hover { background: rgba(0,0,0,0.035); }
+.tab.active {
+  border-color: transparent;
+  background: rgba(0,0,0,0.045);
+}
+
+/* Botones: mas redondeados, con transiciones y micro-interaccion */
+button, .btn {
+  border-radius: 10px;
+  transition: filter 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+button:active, .btn:active { transform: scale(0.97); }
+
+button.primary, .btn:not(.secondary) {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+}
+button.primary:hover, .btn:not(.secondary):hover {
+  filter: brightness(1.08);
+}
+
+/* Campos de formulario: bordes redondeados + foco mas visible */
+input, select, textarea {
+  border-radius: 8px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+}
