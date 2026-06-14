@@ -20,6 +20,7 @@ Uso:
 import json
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -33,10 +34,19 @@ MATCHES_API = f"{API_BASE}/competitions/WC/matches"
 SCORERS_API = f"{API_BASE}/competitions/WC/scorers?limit=10"
 
 
-def api_get(url, key):
+def api_get(url, key, retries=3, backoff=5):
+    """GET con reintentos: un 429/5xx o timeout puntual de football-data.org
+    no debe tirar toda la ejecucion (y con ella el refresco de marcadores)."""
     req = Request(url, headers={"X-Auth-Token": key, "Accept": "application/json"})
-    with urlopen(req, timeout=30) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+    for attempt in range(1, retries + 1):
+        try:
+            with urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except URLError as e:
+            if attempt == retries:
+                raise
+            print(f"[warn] intento {attempt}/{retries} fallido ({e}); reintentando en {backoff}s...")
+            time.sleep(backoff)
 
 
 def fetch_fixtures(key):
@@ -97,22 +107,19 @@ def main():
 
     try:
         fixtures = fetch_fixtures(key)
+        save_json(FIXTURES_FILE, {
+            "_comment": "Calendario completo del Mundial 2026 generado por scripts/fetch_fixtures.py",
+            "last_updated": now_iso,
+            "fixtures": fixtures,
+        })
+        by_status = {}
+        for f in fixtures:
+            by_status[f["status"]] = by_status.get(f["status"], 0) + 1
+        print(f"[ok] {len(fixtures)} partidos guardados en {FIXTURES_FILE.relative_to(ROOT)}")
+        for status, n in sorted(by_status.items()):
+            print(f"  {status}: {n}")
     except URLError as e:
-        print(f"ERROR al obtener partidos: {e}")
-        sys.exit(1)
-
-    save_json(FIXTURES_FILE, {
-        "_comment": "Calendario completo del Mundial 2026 generado por scripts/fetch_fixtures.py",
-        "last_updated": now_iso,
-        "fixtures": fixtures,
-    })
-
-    by_status = {}
-    for f in fixtures:
-        by_status[f["status"]] = by_status.get(f["status"], 0) + 1
-    print(f"[ok] {len(fixtures)} partidos guardados en {FIXTURES_FILE.relative_to(ROOT)}")
-    for status, n in sorted(by_status.items()):
-        print(f"  {status}: {n}")
+        print(f"[warn] no se pudieron obtener los partidos (se mantiene fixtures.json anterior): {e}")
 
     try:
         scorers = fetch_scorers(key)
