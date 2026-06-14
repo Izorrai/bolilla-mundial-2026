@@ -1,6 +1,6 @@
 {
   "_comment": "Generado por scripts/update_porra.py. No editar a mano.",
-  "last_updated": "2026-06-14T16:09:20.195271+00:00",
+  "last_updated": "2026-06-14T17:45:57.737176+00:00",
   "champion": null,
   "ranking": [
     {
@@ -53,7 +53,7 @@
         },
         "group_stage": {
           "correct": 4,
-          "answered": 8
+          "answered": 7
         },
         "knockouts": {
           "exact": 0,
@@ -113,7 +113,7 @@
         },
         "group_stage": {
           "correct": 5,
-          "answered": 8
+          "answered": 7
         },
         "knockouts": {
           "exact": 0,
