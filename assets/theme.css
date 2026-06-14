@@ -93,3 +93,22 @@ input:focus, select:focus, textarea:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
 }
+
+/* Tema "GrupoAgaleus": paleta corporativa (teal + verde) para la sala de la empresa */
+body.theme-agaleus {
+  --green: #1c5263;
+  --green-dark: #0e3540;
+  --green-light: #d6f7ea;
+}
+body.theme-agaleus header {
+  background-color: #0e3540;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18), inset 0 -3px 0 #14e08a;
+}
+
+.room-logo {
+  height: 28px;
+  vertical-align: middle;
+  margin-right: 10px;
+  filter: brightness(0) invert(1);
+}
+

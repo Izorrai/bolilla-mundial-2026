@@ -96,7 +96,7 @@
 <header>
   <div class="row1">
     <div>
-      <h1>Admin · Bolilla Mundial 2026</h1>
+      <h1><img id="roomLogo" class="room-logo" src="assets/agaleus-logo.png" alt="Grupo Agaleus" hidden>Admin · Bolilla Mundial 2026</h1>
       <div class="sub" id="roomDescription">—</div>
     </div>
     <div class="room-selector" style="margin-left:auto;">
@@ -564,6 +564,8 @@ function selectRoom(roomId) {
   document.getElementById("repoPath").textContent = `data/rooms/${room.id}/participants.json`;
   document.getElementById("navAdmin").href = `admin.html?room=${room.id}`;
   document.getElementById("navLeader").href = `leaderboard.html?room=${room.id}`;
+  document.body.classList.toggle("theme-agaleus", room.id === "grupoagaleus");
+  document.getElementById("roomLogo").hidden = room.id !== "grupoagaleus";
   store = loadStorage();
   document.getElementById("extraPichichi").value = store.tournament_extras.pichichi || "";
   document.getElementById("extraMVP").value = store.tournament_extras.mvp || "";

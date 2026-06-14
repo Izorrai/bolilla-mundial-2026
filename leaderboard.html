@@ -92,7 +92,7 @@
 <header>
   <div class="row1">
     <div>
-      <h1>🏆 Clasificación · Bolilla Mundial 2026</h1>
+      <h1><img id="roomLogo" class="room-logo" src="assets/agaleus-logo.png" alt="Grupo Agaleus" hidden>🏆 Clasificación · Bolilla Mundial 2026</h1>
       <div class="sub" id="roomSub">Cargando…</div>
     </div>
     <div class="room-selector" style="margin-left:auto;">
@@ -335,6 +335,8 @@ async function loadRoomData(roomId) {
   setRoomInUrl(room.id);
   document.getElementById("roomSelect").value = room.id;
   document.getElementById("navLeader").href = `leaderboard.html?room=${room.id}`;
+  document.body.classList.toggle("theme-agaleus", room.id === "grupoagaleus");
+  document.getElementById("roomLogo").hidden = room.id !== "grupoagaleus";
   document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Cargando sala "${escapeHtml(room.name)}"…</td></tr>`;
 
   const PART_URL = `data/rooms/${room.id}/participants.json`;
