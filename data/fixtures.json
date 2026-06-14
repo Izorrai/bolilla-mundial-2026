@@ -1,6 +1,6 @@
 {
   "_comment": "Calendario completo del Mundial 2026 generado por scripts/fetch_fixtures.py",
-  "last_updated": "2026-06-14T20:38:50.456192+00:00",
+  "last_updated": "2026-06-14T21:48:29.024636+00:00",
   "fixtures": [
     {
       "id": 537327,
@@ -149,8 +149,8 @@
       "away_team": "Japan",
       "home_crest": "https://crests.football-data.org/8601.svg",
       "away_crest": "https://crests.football-data.org/766.svg",
-      "home_goals": 0,
-      "away_goals": 0
+      "home_goals": 2,
+      "away_goals": 1
     },
     {
       "id": 537352,
