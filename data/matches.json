@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-14T21:48:31.195750+00:00",
+  "last_updated": "2026-06-14T22:55:12.492496+00:00",
   "matches": [
     {
       "id": 537327,
@@ -117,6 +117,19 @@
       "away_goals_90": 1,
       "duration": "REGULAR",
       "winner_overall": "HOME_TEAM"
+    },
+    {
+      "id": 537357,
+      "utcDate": "2026-06-14T20:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_F",
+      "matchday": 1,
+      "home_team": "Netherlands",
+      "away_team": "Japan",
+      "home_goals_90": 2,
+      "away_goals_90": 2,
+      "duration": "REGULAR",
+      "winner_overall": "DRAW"
     }
   ]
 }

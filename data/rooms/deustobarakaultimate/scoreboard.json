@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-14T21:48:31.197524+00:00",
+  "last_updated": "2026-06-14T22:55:12.493512+00:00",
   "ranking": [],
   "team_stats": {
     "España": {
@@ -94,17 +94,17 @@
       "points_generated": 6.5
     },
     "Holanda": {
-      "matches_played": 0,
-      "goals_for": 0,
-      "goals_against": 0,
+      "matches_played": 1,
+      "goals_for": 2,
+      "goals_against": 2,
       "wins": 0,
-      "draws": 0,
+      "draws": 1,
       "losses": 0,
-      "stage_reached": "—",
+      "stage_reached": "GROUP_STAGE",
       "round_bonuses": 0,
-      "goals_pts": 0.0,
-      "results_pts": 0,
-      "points_generated": 0.0
+      "goals_pts": 1.0,
+      "results_pts": 1,
+      "points_generated": 2.0
     },
     "Noruega": {
       "matches_played": 0,
@@ -159,17 +159,17 @@
       "points_generated": 5.0
     },
     "Japón": {
-      "matches_played": 0,
-      "goals_for": 0,
-      "goals_against": 0,
+      "matches_played": 1,
+      "goals_for": 2,
+      "goals_against": 2,
       "wins": 0,
-      "draws": 0,
+      "draws": 1,
       "losses": 0,
-      "stage_reached": "—",
+      "stage_reached": "GROUP_STAGE",
       "round_bonuses": 0,
-      "goals_pts": 0.0,
-      "results_pts": 0,
-      "points_generated": 0.0
+      "goals_pts": 1.0,
+      "results_pts": 1,
+      "points_generated": 2.0
     },
     "Suiza": {
       "matches_played": 1,
