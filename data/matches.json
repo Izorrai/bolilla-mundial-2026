@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-14T02:05:06.404001+00:00",
+  "last_updated": "2026-06-14T06:54:49.609459+00:00",
   "matches": [
     {
       "id": 537327,
@@ -26,6 +26,19 @@
       "away_goals_90": 1,
       "duration": "REGULAR",
       "winner_overall": "HOME_TEAM"
+    },
+    {
+      "id": 537333,
+      "utcDate": "2026-06-12T19:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_B",
+      "matchday": 1,
+      "home_team": "Canada",
+      "away_team": "Bosnia-Herzegovina",
+      "home_goals_90": 1,
+      "away_goals_90": 1,
+      "duration": "REGULAR",
+      "winner_overall": "DRAW"
     },
     {
       "id": 537345,
@@ -65,6 +78,32 @@
       "away_goals_90": 1,
       "duration": "REGULAR",
       "winner_overall": "DRAW"
+    },
+    {
+      "id": 537340,
+      "utcDate": "2026-06-14T01:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_C",
+      "matchday": 1,
+      "home_team": "Haiti",
+      "away_team": "Scotland",
+      "home_goals_90": 0,
+      "away_goals_90": 1,
+      "duration": "REGULAR",
+      "winner_overall": "AWAY_TEAM"
+    },
+    {
+      "id": 537346,
+      "utcDate": "2026-06-14T04:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_D",
+      "matchday": 1,
+      "home_team": "Australia",
+      "away_team": "Turkey",
+      "home_goals_90": 2,
+      "away_goals_90": 0,
+      "duration": "REGULAR",
+      "winner_overall": "HOME_TEAM"
     }
   ]
 }
