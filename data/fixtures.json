@@ -1,6 +1,6 @@
 {
   "_comment": "Calendario completo del Mundial 2026 generado por scripts/fetch_fixtures.py",
-  "last_updated": "2026-06-14T10:21:28.709644+00:00",
+  "last_updated": "2026-06-14T10:50:52.421888+00:00",
   "fixtures": [
     {
       "id": 537327,
@@ -12,6 +12,8 @@
       "matchday": 1,
       "home_team": "Mexico",
       "away_team": "South Africa",
+      "home_crest": "https://crests.football-data.org/769.svg",
+      "away_crest": "https://crests.football-data.org/9396.svg",
       "home_goals": 2,
       "away_goals": 0
     },
@@ -25,6 +27,8 @@
       "matchday": 1,
       "home_team": "South Korea",
       "away_team": "Czechia",
+      "home_crest": "https://crests.football-data.org/772.png",
+      "away_crest": "https://crests.football-data.org/798.svg",
       "home_goals": 2,
       "away_goals": 1
     },
@@ -38,6 +42,8 @@
       "matchday": 1,
       "home_team": "Canada",
       "away_team": "Bosnia-Herzegovina",
+      "home_crest": "https://crests.football-data.org/canada.svg",
+      "away_crest": "https://crests.football-data.org/bosnia.svg",
       "home_goals": 1,
       "away_goals": 1
     },
@@ -51,6 +57,8 @@
       "matchday": 1,
       "home_team": "United States",
       "away_team": "Paraguay",
+      "home_crest": "https://crests.football-data.org/usa.svg",
+      "away_crest": "https://crests.football-data.org/761.svg",
       "home_goals": 4,
       "away_goals": 1
     },
@@ -64,6 +72,8 @@
       "matchday": 1,
       "home_team": "Qatar",
       "away_team": "Switzerland",
+      "home_crest": "https://crests.football-data.org/8030.svg",
+      "away_crest": "https://crests.football-data.org/788.svg",
       "home_goals": 1,
       "away_goals": 1
     },
@@ -77,6 +87,8 @@
       "matchday": 1,
       "home_team": "Brazil",
       "away_team": "Morocco",
+      "home_crest": "https://crests.football-data.org/764.svg",
+      "away_crest": "https://crests.football-data.org/morocco.svg",
       "home_goals": 1,
       "away_goals": 1
     },
@@ -90,6 +102,8 @@
       "matchday": 1,
       "home_team": "Haiti",
       "away_team": "Scotland",
+      "home_crest": "https://crests.football-data.org/haiti.svg",
+      "away_crest": "https://crests.football-data.org/814.svg",
       "home_goals": 0,
       "away_goals": 1
     },
@@ -103,6 +117,8 @@
       "matchday": 1,
       "home_team": "Australia",
       "away_team": "Turkey",
+      "home_crest": "https://crests.football-data.org/779.svg",
+      "away_crest": "https://crests.football-data.org/803.svg",
       "home_goals": 2,
       "away_goals": 0
     },
@@ -116,6 +132,8 @@
       "matchday": 1,
       "home_team": "Germany",
       "away_team": "Curaçao",
+      "home_crest": "https://crests.football-data.org/759.svg",
+      "away_crest": "https://crests.football-data.org/curacao.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -129,6 +147,8 @@
       "matchday": 1,
       "home_team": "Netherlands",
       "away_team": "Japan",
+      "home_crest": "https://crests.football-data.org/8601.svg",
+      "away_crest": "https://crests.football-data.org/766.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -142,6 +162,8 @@
       "matchday": 1,
       "home_team": "Ivory Coast",
       "away_team": "Ecuador",
+      "home_crest": "https://crests.football-data.org/787.svg",
+      "away_crest": "https://crests.football-data.org/791.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -155,6 +177,8 @@
       "matchday": 1,
       "home_team": "Sweden",
       "away_team": "Tunisia",
+      "home_crest": "https://crests.football-data.org/792.svg",
+      "away_crest": "https://crests.football-data.org/tunisia.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -168,6 +192,8 @@
       "matchday": 1,
       "home_team": "Spain",
       "away_team": "Cape Verde Islands",
+      "home_crest": "https://crests.football-data.org/760.svg",
+      "away_crest": "https://crests.football-data.org/cape_verde.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -181,6 +207,8 @@
       "matchday": 1,
       "home_team": "Belgium",
       "away_team": "Egypt",
+      "home_crest": "https://crests.football-data.org/805.svg",
+      "away_crest": "https://crests.football-data.org/825.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -194,6 +222,8 @@
       "matchday": 1,
       "home_team": "Saudi Arabia",
       "away_team": "Uruguay",
+      "home_crest": "https://crests.football-data.org/saudi_arabia.svg",
+      "away_crest": "https://crests.football-data.org/758.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -207,6 +237,8 @@
       "matchday": 1,
       "home_team": "Iran",
       "away_team": "New Zealand",
+      "home_crest": "https://crests.football-data.org/iran.svg",
+      "away_crest": "https://crests.football-data.org/783.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -220,6 +252,8 @@
       "matchday": 1,
       "home_team": "France",
       "away_team": "Senegal",
+      "home_crest": "https://crests.football-data.org/773.svg",
+      "away_crest": "https://crests.football-data.org/senegal.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -233,6 +267,8 @@
       "matchday": 1,
       "home_team": "Iraq",
       "away_team": "Norway",
+      "home_crest": "https://crests.football-data.org/iraq.svg",
+      "away_crest": "https://crests.football-data.org/813.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -246,6 +282,8 @@
       "matchday": 1,
       "home_team": "Argentina",
       "away_team": "Algeria",
+      "home_crest": "https://crests.football-data.org/762.png",
+      "away_crest": "https://crests.football-data.org/algeria.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -259,6 +297,8 @@
       "matchday": 1,
       "home_team": "Austria",
       "away_team": "Jordan",
+      "home_crest": "https://crests.football-data.org/816.svg",
+      "away_crest": "https://crests.football-data.org/8049.png",
       "home_goals": null,
       "away_goals": null
     },
@@ -272,6 +312,8 @@
       "matchday": 1,
       "home_team": "Portugal",
       "away_team": "Congo DR",
+      "home_crest": "https://crests.football-data.org/765.svg",
+      "away_crest": "https://crests.football-data.org/congo_dr.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -285,6 +327,8 @@
       "matchday": 1,
       "home_team": "England",
       "away_team": "Croatia",
+      "home_crest": "https://crests.football-data.org/770.svg",
+      "away_crest": "https://crests.football-data.org/799.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -298,6 +342,8 @@
       "matchday": 1,
       "home_team": "Ghana",
       "away_team": "Panama",
+      "home_crest": "https://crests.football-data.org/ghana.svg",
+      "away_crest": "https://crests.football-data.org/panama.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -311,6 +357,8 @@
       "matchday": 1,
       "home_team": "Uzbekistan",
       "away_team": "Colombia",
+      "home_crest": "https://crests.football-data.org/8070.png",
+      "away_crest": "https://crests.football-data.org/818.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -324,6 +372,8 @@
       "matchday": 2,
       "home_team": "Czechia",
       "away_team": "South Africa",
+      "home_crest": "https://crests.football-data.org/798.svg",
+      "away_crest": "https://crests.football-data.org/9396.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -337,6 +387,8 @@
       "matchday": 2,
       "home_team": "Switzerland",
       "away_team": "Bosnia-Herzegovina",
+      "home_crest": "https://crests.football-data.org/788.svg",
+      "away_crest": "https://crests.football-data.org/bosnia.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -350,6 +402,8 @@
       "matchday": 2,
       "home_team": "Canada",
       "away_team": "Qatar",
+      "home_crest": "https://crests.football-data.org/canada.svg",
+      "away_crest": "https://crests.football-data.org/8030.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -363,6 +417,8 @@
       "matchday": 2,
       "home_team": "Mexico",
       "away_team": "South Korea",
+      "home_crest": "https://crests.football-data.org/769.svg",
+      "away_crest": "https://crests.football-data.org/772.png",
       "home_goals": null,
       "away_goals": null
     },
@@ -376,6 +432,8 @@
       "matchday": 2,
       "home_team": "United States",
       "away_team": "Australia",
+      "home_crest": "https://crests.football-data.org/usa.svg",
+      "away_crest": "https://crests.football-data.org/779.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -389,6 +447,8 @@
       "matchday": 2,
       "home_team": "Scotland",
       "away_team": "Morocco",
+      "home_crest": "https://crests.football-data.org/814.svg",
+      "away_crest": "https://crests.football-data.org/morocco.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -402,6 +462,8 @@
       "matchday": 2,
       "home_team": "Brazil",
       "away_team": "Haiti",
+      "home_crest": "https://crests.football-data.org/764.svg",
+      "away_crest": "https://crests.football-data.org/haiti.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -415,6 +477,8 @@
       "matchday": 2,
       "home_team": "Turkey",
       "away_team": "Paraguay",
+      "home_crest": "https://crests.football-data.org/803.svg",
+      "away_crest": "https://crests.football-data.org/761.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -428,6 +492,8 @@
       "matchday": 2,
       "home_team": "Netherlands",
       "away_team": "Sweden",
+      "home_crest": "https://crests.football-data.org/8601.svg",
+      "away_crest": "https://crests.football-data.org/792.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -441,6 +507,8 @@
       "matchday": 2,
       "home_team": "Germany",
       "away_team": "Ivory Coast",
+      "home_crest": "https://crests.football-data.org/759.svg",
+      "away_crest": "https://crests.football-data.org/787.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -454,6 +522,8 @@
       "matchday": 2,
       "home_team": "Ecuador",
       "away_team": "Curaçao",
+      "home_crest": "https://crests.football-data.org/791.svg",
+      "away_crest": "https://crests.football-data.org/curacao.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -467,6 +537,8 @@
       "matchday": 2,
       "home_team": "Tunisia",
       "away_team": "Japan",
+      "home_crest": "https://crests.football-data.org/tunisia.svg",
+      "away_crest": "https://crests.football-data.org/766.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -480,6 +552,8 @@
       "matchday": 2,
       "home_team": "Spain",
       "away_team": "Saudi Arabia",
+      "home_crest": "https://crests.football-data.org/760.svg",
+      "away_crest": "https://crests.football-data.org/saudi_arabia.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -493,6 +567,8 @@
       "matchday": 2,
       "home_team": "Belgium",
       "away_team": "Iran",
+      "home_crest": "https://crests.football-data.org/805.svg",
+      "away_crest": "https://crests.football-data.org/iran.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -506,6 +582,8 @@
       "matchday": 2,
       "home_team": "Uruguay",
       "away_team": "Cape Verde Islands",
+      "home_crest": "https://crests.football-data.org/758.svg",
+      "away_crest": "https://crests.football-data.org/cape_verde.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -519,6 +597,8 @@
       "matchday": 2,
       "home_team": "New Zealand",
       "away_team": "Egypt",
+      "home_crest": "https://crests.football-data.org/783.svg",
+      "away_crest": "https://crests.football-data.org/825.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -532,6 +612,8 @@
       "matchday": 2,
       "home_team": "Argentina",
       "away_team": "Austria",
+      "home_crest": "https://crests.football-data.org/762.png",
+      "away_crest": "https://crests.football-data.org/816.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -545,6 +627,8 @@
       "matchday": 2,
       "home_team": "France",
       "away_team": "Iraq",
+      "home_crest": "https://crests.football-data.org/773.svg",
+      "away_crest": "https://crests.football-data.org/iraq.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -558,6 +642,8 @@
       "matchday": 2,
       "home_team": "Norway",
       "away_team": "Senegal",
+      "home_crest": "https://crests.football-data.org/813.svg",
+      "away_crest": "https://crests.football-data.org/senegal.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -571,6 +657,8 @@
       "matchday": 2,
       "home_team": "Jordan",
       "away_team": "Algeria",
+      "home_crest": "https://crests.football-data.org/8049.png",
+      "away_crest": "https://crests.football-data.org/algeria.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -584,6 +672,8 @@
       "matchday": 2,
       "home_team": "Portugal",
       "away_team": "Uzbekistan",
+      "home_crest": "https://crests.football-data.org/765.svg",
+      "away_crest": "https://crests.football-data.org/8070.png",
       "home_goals": null,
       "away_goals": null
     },
@@ -597,6 +687,8 @@
       "matchday": 2,
       "home_team": "England",
       "away_team": "Ghana",
+      "home_crest": "https://crests.football-data.org/770.svg",
+      "away_crest": "https://crests.football-data.org/ghana.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -610,6 +702,8 @@
       "matchday": 2,
       "home_team": "Panama",
       "away_team": "Croatia",
+      "home_crest": "https://crests.football-data.org/panama.svg",
+      "away_crest": "https://crests.football-data.org/799.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -623,6 +717,8 @@
       "matchday": 2,
       "home_team": "Colombia",
       "away_team": "Congo DR",
+      "home_crest": "https://crests.football-data.org/818.svg",
+      "away_crest": "https://crests.football-data.org/congo_dr.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -636,6 +732,8 @@
       "matchday": 3,
       "home_team": "Switzerland",
       "away_team": "Canada",
+      "home_crest": "https://crests.football-data.org/788.svg",
+      "away_crest": "https://crests.football-data.org/canada.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -649,6 +747,8 @@
       "matchday": 3,
       "home_team": "Bosnia-Herzegovina",
       "away_team": "Qatar",
+      "home_crest": "https://crests.football-data.org/bosnia.svg",
+      "away_crest": "https://crests.football-data.org/8030.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -662,6 +762,8 @@
       "matchday": 3,
       "home_team": "Morocco",
       "away_team": "Haiti",
+      "home_crest": "https://crests.football-data.org/morocco.svg",
+      "away_crest": "https://crests.football-data.org/haiti.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -675,6 +777,8 @@
       "matchday": 3,
       "home_team": "Scotland",
       "away_team": "Brazil",
+      "home_crest": "https://crests.football-data.org/814.svg",
+      "away_crest": "https://crests.football-data.org/764.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -688,6 +792,8 @@
       "matchday": 3,
       "home_team": "Czechia",
       "away_team": "Mexico",
+      "home_crest": "https://crests.football-data.org/798.svg",
+      "away_crest": "https://crests.football-data.org/769.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -701,6 +807,8 @@
       "matchday": 3,
       "home_team": "South Africa",
       "away_team": "South Korea",
+      "home_crest": "https://crests.football-data.org/9396.svg",
+      "away_crest": "https://crests.football-data.org/772.png",
       "home_goals": null,
       "away_goals": null
     },
@@ -714,6 +822,8 @@
       "matchday": 3,
       "home_team": "Ecuador",
       "away_team": "Germany",
+      "home_crest": "https://crests.football-data.org/791.svg",
+      "away_crest": "https://crests.football-data.org/759.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -727,6 +837,8 @@
       "matchday": 3,
       "home_team": "Curaçao",
       "away_team": "Ivory Coast",
+      "home_crest": "https://crests.football-data.org/curacao.svg",
+      "away_crest": "https://crests.football-data.org/787.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -740,6 +852,8 @@
       "matchday": 3,
       "home_team": "Tunisia",
       "away_team": "Netherlands",
+      "home_crest": "https://crests.football-data.org/tunisia.svg",
+      "away_crest": "https://crests.football-data.org/8601.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -753,6 +867,8 @@
       "matchday": 3,
       "home_team": "Japan",
       "away_team": "Sweden",
+      "home_crest": "https://crests.football-data.org/766.svg",
+      "away_crest": "https://crests.football-data.org/792.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -766,6 +882,8 @@
       "matchday": 3,
       "home_team": "Turkey",
       "away_team": "United States",
+      "home_crest": "https://crests.football-data.org/803.svg",
+      "away_crest": "https://crests.football-data.org/usa.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -779,6 +897,8 @@
       "matchday": 3,
       "home_team": "Paraguay",
       "away_team": "Australia",
+      "home_crest": "https://crests.football-data.org/761.svg",
+      "away_crest": "https://crests.football-data.org/779.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -792,6 +912,8 @@
       "matchday": 3,
       "home_team": "Norway",
       "away_team": "France",
+      "home_crest": "https://crests.football-data.org/813.svg",
+      "away_crest": "https://crests.football-data.org/773.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -805,6 +927,8 @@
       "matchday": 3,
       "home_team": "Senegal",
       "away_team": "Iraq",
+      "home_crest": "https://crests.football-data.org/senegal.svg",
+      "away_crest": "https://crests.football-data.org/iraq.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -818,6 +942,8 @@
       "matchday": 3,
       "home_team": "Uruguay",
       "away_team": "Spain",
+      "home_crest": "https://crests.football-data.org/758.svg",
+      "away_crest": "https://crests.football-data.org/760.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -831,6 +957,8 @@
       "matchday": 3,
       "home_team": "Cape Verde Islands",
       "away_team": "Saudi Arabia",
+      "home_crest": "https://crests.football-data.org/cape_verde.svg",
+      "away_crest": "https://crests.football-data.org/saudi_arabia.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -844,6 +972,8 @@
       "matchday": 3,
       "home_team": "New Zealand",
       "away_team": "Belgium",
+      "home_crest": "https://crests.football-data.org/783.svg",
+      "away_crest": "https://crests.football-data.org/805.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -857,6 +987,8 @@
       "matchday": 3,
       "home_team": "Egypt",
       "away_team": "Iran",
+      "home_crest": "https://crests.football-data.org/825.svg",
+      "away_crest": "https://crests.football-data.org/iran.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -870,6 +1002,8 @@
       "matchday": 3,
       "home_team": "Panama",
       "away_team": "England",
+      "home_crest": "https://crests.football-data.org/panama.svg",
+      "away_crest": "https://crests.football-data.org/770.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -883,6 +1017,8 @@
       "matchday": 3,
       "home_team": "Croatia",
       "away_team": "Ghana",
+      "home_crest": "https://crests.football-data.org/799.svg",
+      "away_crest": "https://crests.football-data.org/ghana.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -896,6 +1032,8 @@
       "matchday": 3,
       "home_team": "Colombia",
       "away_team": "Portugal",
+      "home_crest": "https://crests.football-data.org/818.svg",
+      "away_crest": "https://crests.football-data.org/765.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -909,6 +1047,8 @@
       "matchday": 3,
       "home_team": "Congo DR",
       "away_team": "Uzbekistan",
+      "home_crest": "https://crests.football-data.org/congo_dr.svg",
+      "away_crest": "https://crests.football-data.org/8070.png",
       "home_goals": null,
       "away_goals": null
     },
@@ -922,6 +1062,8 @@
       "matchday": 3,
       "home_team": "Jordan",
       "away_team": "Argentina",
+      "home_crest": "https://crests.football-data.org/8049.png",
+      "away_crest": "https://crests.football-data.org/762.png",
       "home_goals": null,
       "away_goals": null
     },
@@ -935,6 +1077,8 @@
       "matchday": 3,
       "home_team": "Algeria",
       "away_team": "Austria",
+      "home_crest": "https://crests.football-data.org/algeria.svg",
+      "away_crest": "https://crests.football-data.org/816.svg",
       "home_goals": null,
       "away_goals": null
     },
@@ -948,6 +1092,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -961,6 +1107,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -974,6 +1122,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -987,6 +1137,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1000,6 +1152,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1013,6 +1167,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1026,6 +1182,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1039,6 +1197,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1052,6 +1212,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1065,6 +1227,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1078,6 +1242,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1091,6 +1257,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1104,6 +1272,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1117,6 +1287,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1130,6 +1302,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1143,6 +1317,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1156,6 +1332,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1169,6 +1347,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1182,6 +1362,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1195,6 +1377,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1208,6 +1392,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1221,6 +1407,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1234,6 +1422,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1247,6 +1437,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1260,6 +1452,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1273,6 +1467,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1286,6 +1482,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1299,6 +1497,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1312,6 +1512,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1325,6 +1527,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1338,6 +1542,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     },
@@ -1351,6 +1557,8 @@
       "matchday": null,
       "home_team": null,
       "away_team": null,
+      "home_crest": null,
+      "away_crest": null,
       "home_goals": null,
       "away_goals": null
     }
