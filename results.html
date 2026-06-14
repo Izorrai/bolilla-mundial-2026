@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados · Mundial 2026</title>
+<style>
+  :root {
+    --blue: #1a5490;
+    --blue-light: #d9e7f5;
+    --blue-dark: #0f3a66;
+    --bg: #f5f5f1;
+    --card: #ffffff;
+    --border: #d8d8d2;
+    --text: #1a1a1a;
+    --muted: #6a6a64;
+    --live: #c0392b;
+    --live-light: #fbe2df;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+  header { background: var(--blue); color: white; padding: 14px 20px; }
+  header h1 { margin: 0; font-size: 21px; }
+  header .sub { font-size: 12px; opacity: 0.9; margin-top: 2px; }
+  header a.back { color: white; text-decoration: none; font-size: 13px; font-weight: 600; opacity: 0.85; display: inline-block; margin-top: 8px; cursor: pointer; }
+  header a.back:hover { opacity: 1; text-decoration: underline; }
+  main { max-width: 900px; margin: 0 auto; padding: 18px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .card h2 { margin: 0; padding: 12px 14px; font-size: 15px; color: var(--blue-dark); border-bottom: 1px solid var(--border); background: var(--blue-light); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td, th { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+  tr:last-child td { border-bottom: none; }
+  .empty { padding: 24px 14px; text-align: center; color: var(--muted); font-style: italic; }
+  .match-row .teams { font-weight: 600; }
+  .match-row .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .score { font-weight: 800; font-size: 16px; text-align: right; white-space: nowrap; }
+  .badge-live { background: var(--live); color: white; font-size: 10px; font-weight: 800; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+  .live-row { background: var(--live-light); }
+  .pos { font-weight: 800; min-width: 24px; }
+  .num { text-align: right; font-weight: 800; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📅 Resultados · Mundial 2026</h1>
+  <div class="sub" id="updated">Cargando…</div>
+  <a class="back" onclick="history.back()">← Volver</a>
+</header>
+
+<main>
+  <div class="card" id="liveCard" style="display:none;">
+    <h2>🔴 En directo</h2>
+    <table><tbody id="liveBody"></tbody></table>
+  </div>
+
+  <div class="card">
+    <h2>Resultados</h2>
+    <table><tbody id="resultsBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+  </div>
+
+  <div class="card">
+    <h2>Próximos partidos</h2>
+    <table><tbody id="upcomingBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+  </div>
+
+  <div class="card">
+    <h2>⚽ Goleadores</h2>
+    <table>
+      <thead><tr><th>#</th><th>Jugador</th><th>Selección</th><th class="num">Goles</th></tr></thead>
+      <tbody id="scorersBody"><tr><td colspan="4" class="empty">Cargando…</td></tr></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+const REPO_FIXTURES_URL = "data/fixtures.json";
+const REPO_SCORERS_URL = "data/scorers.json";
+const REPO_TEAMS_URL = "data/teams.json";
+const REFRESH_MS = 60000;
+
+const STAGE_LABELS = {
+  GROUP_STAGE: "Fase de grupos",
+  LAST_32: "Dieciseisavos",
+  ROUND_OF_32: "Dieciseisavos",
+  LAST_16: "Octavos de final",
+  ROUND_OF_16: "Octavos de final",
+  QUARTER_FINALS: "Cuartos de final",
+  SEMI_FINALS: "Semifinales",
+  FINAL: "Final",
+};
+const GROUP_LABELS = { GROUP_A: "Grupo A", GROUP_B: "Grupo B", GROUP_C: "Grupo C", GROUP_D: "Grupo D", GROUP_E: "Grupo E", GROUP_F: "Grupo F" };
+const LIVE_STATUSES = ["IN_PLAY", "PAUSED"];
+const FINISHED_STATUSES = ["FINISHED"];
+
+let TEAM_NAMES = {};
+
+function escapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
+function teamName(fdName) { return TEAM_NAMES[(fdName || "").toLowerCase()] || fdName || "?"; }
+function stageGroupLabel(f) { return f.group ? GROUP_LABELS[f.group] || f.group : (STAGE_LABELS[f.stage] || f.stage || ""); }
+function fmtDate(iso) {
+  if (!iso) return "—";
+  try { return new Date(iso).toLocaleString("es-ES", { weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }); }
+  catch { return iso; }
+}
+
+async function fetchJson(url) {
+  const r = await fetch(url + "?t=" + Date.now());
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+
+function renderLive(fixtures) {
+  const card = document.getElementById("liveCard");
+  const body = document.getElementById("liveBody");
+  const live = fixtures.filter(f => LIVE_STATUSES.includes(f.status));
+  if (live.length === 0) { card.style.display = "none"; return; }
+  card.style.display = "";
+  body.innerHTML = live.map(f => `
+    <tr class="match-row live-row">
+      <td>
+        <div class="teams">${escapeHtml(teamName(f.home_team))} – ${escapeHtml(teamName(f.away_team))}</div>
+        <div class="meta">${escapeHtml(stageGroupLabel(f))} <span class="badge-live">${f.minute ? f.minute + "'" : "En directo"}</span></div>
+      </td>
+      <td class="score">${f.home_goals ?? 0} – ${f.away_goals ?? 0}</td>
+    </tr>
+  `).join("");
+}
+
+function renderResults(fixtures) {
+  const body = document.getElementById("resultsBody");
+  const finished = fixtures
+    .filter(f => FINISHED_STATUSES.includes(f.status))
+    .sort((a, b) => new Date(b.utcDate) - new Date(a.utcDate));
+  if (finished.length === 0) {
+    body.innerHTML = `<tr><td class="empty">Todavía no se ha jugado ningún partido.</td></tr>`;
+    return;
+  }
+  body.innerHTML = finished.map(f => `
+    <tr class="match-row">
+      <td>
+        <div class="teams">${escapeHtml(teamName(f.home_team))} – ${escapeHtml(teamName(f.away_team))}</div>
+        <div class="meta">${escapeHtml(stageGroupLabel(f))} · ${fmtDate(f.utcDate)}</div>
+      </td>
+      <td class="score">${f.home_goals} – ${f.away_goals}</td>
+    </tr>
+  `).join("");
+}
+
+function renderUpcoming(fixtures) {
+  const body = document.getElementById("upcomingBody");
+  const now = Date.now();
+  const upcoming = fixtures
+    .filter(f => !LIVE_STATUSES.includes(f.status) && !FINISHED_STATUSES.includes(f.status) && new Date(f.utcDate).getTime() >= now)
+    .sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate))
+    .slice(0, 12);
+  if (upcoming.length === 0) {
+    body.innerHTML = `<tr><td class="empty">No hay más partidos programados.</td></tr>`;
+    return;
+  }
+  body.innerHTML = upcoming.map(f => `
+    <tr class="match-row">
+      <td>
+        <div class="teams">${escapeHtml(teamName(f.home_team))} – ${escapeHtml(teamName(f.away_team))}</div>
+        <div class="meta">${escapeHtml(stageGroupLabel(f))}</div>
+      </td>
+      <td class="score" style="font-size:13px; font-weight:600;">${fmtDate(f.utcDate)}</td>
+    </tr>
+  `).join("");
+}
+
+function renderScorers(doc) {
+  const body = document.getElementById("scorersBody");
+  const scorers = doc && doc.scorers || [];
+  if (scorers.length === 0) {
+    body.innerHTML = `<tr><td colspan="4" class="empty">Todavía no hay datos de goleadores.</td></tr>`;
+    return;
+  }
+  body.innerHTML = scorers.map((s, i) => `
+    <tr>
+      <td class="pos">${i + 1}</td>
+      <td>${escapeHtml(s.player)}</td>
+      <td>${escapeHtml(teamName(s.team) !== "?" ? teamName(s.team) : s.team)}</td>
+      <td class="num">${s.goals}</td>
+    </tr>
+  `).join("");
+}
+
+async function load() {
+  try {
+    const [fixturesDoc, scorersResult, teamsDoc] = await Promise.all([
+      fetchJson(REPO_FIXTURES_URL),
+      fetchJson(REPO_SCORERS_URL).catch(() => null),
+      fetchJson(REPO_TEAMS_URL).catch(() => null),
+    ]);
+
+    TEAM_NAMES = {};
+    if (teamsDoc && teamsDoc.teams) {
+      for (const t of teamsDoc.teams) {
+        if (t.fd_name) TEAM_NAMES[t.fd_name.toLowerCase()] = t.name;
+      }
+    }
+
+    const fixtures = fixturesDoc.fixtures || [];
+    renderLive(fixtures);
+    renderResults(fixtures);
+    renderUpcoming(fixtures);
+    renderScorers(scorersResult);
+
+    const ts = fixturesDoc.last_updated;
+    document.getElementById("updated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "";
+  } catch (err) {
+    document.getElementById("resultsBody").innerHTML = `<tr><td class="empty">Error: ${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+load();
+setInterval(load, REFRESH_MS);
+</script>
+</body>
+</html>

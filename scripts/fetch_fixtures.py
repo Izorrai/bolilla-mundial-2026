@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """
-Descarga TODOS los partidos del Mundial 2026 (FINISHED y SCHEDULED) y los guarda
-en data/fixtures.json. Lo necesita el formulario de la porra para mostrar los
-72 partidos de fase de grupos y los emparejamientos de eliminatorias.
+Descarga TODOS los partidos del Mundial 2026 (en directo, finalizados y por jugar)
+y los guarda en data/fixtures.json, junto con el top de goleadores en data/scorers.json.
+
+Lo necesita results.html para mostrar partidos en directo, resultados y goleadores,
+y el formulario de la porra para mostrar los 72 partidos de fase de grupos y los
+emparejamientos de eliminatorias.
 
 Diferencia con update_scores.py:
   - update_scores.py guarda SOLO partidos terminados (matches.json) para calcular puntos.
-  - fetch_fixtures.py guarda TODOS los partidos (fixtures.json) para que el front pueda mostrarlos.
+  - fetch_fixtures.py guarda TODOS los partidos (fixtures.json), incluido marcador
+    y estado (en directo / finalizado / programado), para que el front los muestre.
 
 Uso:
   set FOOTBALL_DATA_API_KEY=xxxx
@@ -19,11 +23,64 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
-from urllib.error import HTTPError, URLError
+from urllib.error import URLError
 
 ROOT = Path(__file__).resolve().parent.parent
 FIXTURES_FILE = ROOT / "data" / "fixtures.json"
-API = "https://api.football-data.org/v4/competitions/WC/matches"
+SCORERS_FILE = ROOT / "data" / "scorers.json"
+API_BASE = "https://api.football-data.org/v4"
+MATCHES_API = f"{API_BASE}/competitions/WC/matches"
+SCORERS_API = f"{API_BASE}/competitions/WC/scorers?limit=10"
+
+
+def api_get(url, key):
+    req = Request(url, headers={"X-Auth-Token": key, "Accept": "application/json"})
+    with urlopen(req, timeout=30) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+
+def fetch_fixtures(key):
+    payload = api_get(MATCHES_API, key)
+    raw = payload.get("matches", [])
+    fixtures = []
+    for m in raw:
+        score = m.get("score") or {}
+        full_time = score.get("fullTime") or {}
+        fixtures.append({
+            "id": m.get("id"),
+            "utcDate": m.get("utcDate"),
+            "status": m.get("status"),
+            "minute": m.get("minute"),
+            "stage": m.get("stage"),
+            "group": m.get("group"),
+            "matchday": m.get("matchday"),
+            "home_team": (m.get("homeTeam") or {}).get("name"),
+            "away_team": (m.get("awayTeam") or {}).get("name"),
+            "home_goals": full_time.get("home"),
+            "away_goals": full_time.get("away"),
+        })
+    return fixtures
+
+
+def fetch_scorers(key):
+    payload = api_get(SCORERS_API, key)
+    raw = payload.get("scorers", [])
+    scorers = []
+    for s in raw:
+        scorers.append({
+            "player": (s.get("player") or {}).get("name"),
+            "team": (s.get("team") or {}).get("name"),
+            "nationality": (s.get("player") or {}).get("nationality"),
+            "goals": s.get("goals"),
+        })
+    return scorers
+
+
+def save_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+        f.write("\n")
 
 
 def main():
@@ -31,48 +88,38 @@ def main():
     if not key:
         print("ERROR: FOOTBALL_DATA_API_KEY no esta en el entorno.")
         sys.exit(1)
-    req = Request(API, headers={"X-Auth-Token": key, "Accept": "application/json"})
+
+    now_iso = datetime.now(timezone.utc).isoformat()
+
     try:
-        with urlopen(req, timeout=30) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
-    except HTTPError as e:
-        print(f"ERROR HTTP {e.code}: {e.read().decode('utf-8', errors='replace')[:500]}")
-        sys.exit(1)
+        fixtures = fetch_fixtures(key)
     except URLError as e:
-        print(f"ERROR red: {e}")
+        print(f"ERROR al obtener partidos: {e}")
         sys.exit(1)
 
-    raw = payload.get("matches", [])
-    fixtures = []
-    for m in raw:
-        fixtures.append({
-            "id": m.get("id"),
-            "utcDate": m.get("utcDate"),
-            "status": m.get("status"),
-            "stage": m.get("stage"),
-            "group": m.get("group"),
-            "matchday": m.get("matchday"),
-            "home_team": (m.get("homeTeam") or {}).get("name"),
-            "away_team": (m.get("awayTeam") or {}).get("name"),
-        })
+    save_json(FIXTURES_FILE, {
+        "_comment": "Calendario completo del Mundial 2026 generado por scripts/fetch_fixtures.py",
+        "last_updated": now_iso,
+        "fixtures": fixtures,
+    })
 
-    by_stage = {}
+    by_status = {}
     for f in fixtures:
-        by_stage.setdefault(f.get("stage") or "?", 0)
-        by_stage[f["stage"]] += 1
-
-    FIXTURES_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with open(FIXTURES_FILE, "w", encoding="utf-8") as f:
-        json.dump({
-            "_comment": "Calendario completo del Mundial 2026 generado por scripts/fetch_fixtures.py",
-            "last_updated": datetime.now(timezone.utc).isoformat(),
-            "fixtures": fixtures,
-        }, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-
+        by_status[f["status"]] = by_status.get(f["status"], 0) + 1
     print(f"[ok] {len(fixtures)} partidos guardados en {FIXTURES_FILE.relative_to(ROOT)}")
-    for stage, n in sorted(by_stage.items()):
-        print(f"  {stage}: {n}")
+    for status, n in sorted(by_status.items()):
+        print(f"  {status}: {n}")
+
+    try:
+        scorers = fetch_scorers(key)
+        save_json(SCORERS_FILE, {
+            "_comment": "Top goleadores generado por scripts/fetch_fixtures.py",
+            "last_updated": now_iso,
+            "scorers": scorers,
+        })
+        print(f"[ok] {len(scorers)} goleadores guardados en {SCORERS_FILE.relative_to(ROOT)}")
+    except URLError as e:
+        print(f"[warn] no se pudieron obtener los goleadores (se mantiene el archivo anterior): {e}")
 
 
 if __name__ == "__main__":
