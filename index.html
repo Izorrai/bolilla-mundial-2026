@@ -16,6 +16,7 @@
     --muted: #6a6a64;
     --warn: #c0392b;
     --ok: #2f7a3a;
+    --live-light: #fbe2df;
   }
   * { box-sizing: border-box; }
   body {
@@ -206,6 +207,74 @@
     border-left: 3px solid var(--green);
     border-radius: 4px;
   }
+  .today-section {
+    margin-bottom: 20px;
+  }
+  .today-section h2 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: var(--green-dark);
+  }
+  .carousel {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .match-card {
+    flex: 0 0 200px;
+    scroll-snap-align: start;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .match-card.live {
+    border-color: var(--warn);
+    background: var(--live-light);
+  }
+  .mc-group {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .mc-team {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 2px 0;
+  }
+  .mc-score {
+    font-weight: 800;
+  }
+  .mc-time {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-align: center;
+  }
+  .mc-badge-live {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--warn);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    animation: livePulse 1.5s infinite;
+  }
+  @keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
   @media print {
     header { position: static; background: white; color: black; }
     .controls { display: none; }
@@ -236,6 +305,11 @@
 </header>
 
 <main>
+  <section class="today-section" id="todaySection" style="display:none;">
+    <h2 id="todayTitle">Partidos de hoy</h2>
+    <div class="carousel" id="todayCarousel"></div>
+  </section>
+
   <div class="controls">
     <button class="primary" id="btnOptimize">Optimizar plantilla</button>
     <button class="primary" id="btnSend" style="background:#1a5490;border-color:#1a5490;">📤 Enviar al organizador</button>
@@ -667,6 +741,99 @@ window.addEventListener("beforeunload", autosave);
 
 autoload();
 render();
+</script>
+
+<script>
+// ---------- TODAY'S MATCHES CAROUSEL ----------
+const TODAY_FIXTURES_URL = "data/fixtures.json";
+const TODAY_TEAMS_URL = "data/teams.json";
+const TODAY_REFRESH_MS = 60000;
+const TODAY_LIVE_STATUSES = ["IN_PLAY", "PAUSED"];
+const TODAY_FINISHED_STATUSES = ["FINISHED"];
+const TODAY_GROUP_LABELS = { GROUP_A: "Grupo A", GROUP_B: "Grupo B", GROUP_C: "Grupo C", GROUP_D: "Grupo D", GROUP_E: "Grupo E", GROUP_F: "Grupo F", GROUP_G: "Grupo G", GROUP_H: "Grupo H" };
+const TODAY_STAGE_LABELS = {
+  GROUP_STAGE: "Fase de grupos",
+  LAST_32: "Dieciseisavos",
+  ROUND_OF_32: "Dieciseisavos",
+  LAST_16: "Octavos de final",
+  ROUND_OF_16: "Octavos de final",
+  QUARTER_FINALS: "Cuartos de final",
+  SEMI_FINALS: "Semifinales",
+  FINAL: "Final",
+};
+
+let TODAY_TEAM_NAMES = {};
+
+function todayEscapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
+function todayTeamName(fdName) { return TODAY_TEAM_NAMES[(fdName || "").toLowerCase()] || fdName || "?"; }
+function todayStageGroupLabel(f) { return f.group ? TODAY_GROUP_LABELS[f.group] || f.group : (TODAY_STAGE_LABELS[f.stage] || f.stage || ""); }
+
+function renderMatchCard(f) {
+  const isLive = TODAY_LIVE_STATUSES.includes(f.status);
+  const isFinished = TODAY_FINISHED_STATUSES.includes(f.status);
+  const home = todayTeamName(f.home_team);
+  const away = todayTeamName(f.away_team);
+  const homeScore = (isLive || isFinished) ? (f.home_goals ?? 0) : "";
+  const awayScore = (isLive || isFinished) ? (f.away_goals ?? 0) : "";
+  let footer;
+  if (isLive) {
+    footer = `<span class="mc-badge-live">${f.minute ? f.minute + "'" : "En directo"}</span>`;
+  } else if (isFinished) {
+    footer = `<div class="mc-time">Finalizado</div>`;
+  } else {
+    const time = new Date(f.utcDate).toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+    footer = `<div class="mc-time">${time}</div>`;
+  }
+  return `
+    <div class="match-card${isLive ? " live" : ""}">
+      <div class="mc-group">${todayEscapeHtml(todayStageGroupLabel(f))}</div>
+      <div class="mc-team"><span>${todayEscapeHtml(home)}</span><span class="mc-score">${homeScore}</span></div>
+      <div class="mc-team"><span>${todayEscapeHtml(away)}</span><span class="mc-score">${awayScore}</span></div>
+      ${footer}
+    </div>
+  `;
+}
+
+async function loadTodayMatches() {
+  try {
+    const [fixturesDoc, teamsDoc] = await Promise.all([
+      fetch(TODAY_FIXTURES_URL + "?t=" + Date.now()).then(r => r.json()),
+      fetch(TODAY_TEAMS_URL + "?t=" + Date.now()).then(r => r.json()).catch(() => null),
+    ]);
+
+    TODAY_TEAM_NAMES = {};
+    if (teamsDoc && teamsDoc.teams) {
+      for (const t of teamsDoc.teams) {
+        if (t.fd_name) TODAY_TEAM_NAMES[t.fd_name.toLowerCase()] = t.name;
+      }
+    }
+
+    const now = new Date();
+    const todayFixtures = (fixturesDoc.fixtures || []).filter(f => new Date(f.utcDate).toDateString() === now.toDateString());
+
+    const section = document.getElementById("todaySection");
+    const carousel = document.getElementById("todayCarousel");
+    if (todayFixtures.length === 0) {
+      section.style.display = "none";
+      return;
+    }
+
+    todayFixtures.sort((a, b) => {
+      const aLive = TODAY_LIVE_STATUSES.includes(a.status);
+      const bLive = TODAY_LIVE_STATUSES.includes(b.status);
+      if (aLive !== bLive) return aLive ? -1 : 1;
+      return new Date(a.utcDate) - new Date(b.utcDate);
+    });
+
+    section.style.display = "";
+    carousel.innerHTML = todayFixtures.map(renderMatchCard).join("");
+  } catch {
+    document.getElementById("todaySection").style.display = "none";
+  }
+}
+
+loadTodayMatches();
+setInterval(loadTodayMatches, TODAY_REFRESH_MS);
 </script>
 </body>
 </html>
