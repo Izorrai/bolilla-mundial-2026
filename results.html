@@ -39,6 +39,12 @@
   .live-row { background: var(--live-light); }
   .pos { font-weight: 800; min-width: 24px; }
   .num { text-align: right; font-weight: 800; }
+  .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--border); margin-bottom: 16px; }
+  .tab { padding: 9px 16px; cursor: pointer; font-weight: 600; font-size: 14px; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; }
+  .tab.active { color: var(--blue-dark); border-color: var(--blue); }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .tab-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--live); margin-left: 6px; vertical-align: middle; animation: pulse 1.5s infinite; }
 </style>
 </head>
 <body>
@@ -50,27 +56,39 @@
 </header>
 
 <main>
-  <div class="card" id="liveCard" style="display:none;">
-    <h2>🔴 En directo</h2>
-    <table><tbody id="liveBody"></tbody></table>
+  <div class="tabs">
+    <div class="tab" data-tab="live">🔴 En directo<span class="tab-dot" id="liveDot" style="display:none;"></span></div>
+    <div class="tab active" data-tab="results">Resultados</div>
+    <div class="tab" data-tab="scorers">⚽ Goleadores</div>
   </div>
 
-  <div class="card">
-    <h2>Resultados</h2>
-    <table><tbody id="resultsBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+  <div class="panel" id="panel-live">
+    <div class="card">
+      <h2>🔴 En directo</h2>
+      <table><tbody id="liveBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>Próximos partidos</h2>
-    <table><tbody id="upcomingBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+  <div class="panel active" id="panel-results">
+    <div class="card">
+      <h2>Resultados</h2>
+      <table><tbody id="resultsBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+    </div>
+
+    <div class="card">
+      <h2>Próximos partidos</h2>
+      <table><tbody id="upcomingBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>⚽ Goleadores</h2>
-    <table>
-      <thead><tr><th>#</th><th>Jugador</th><th>Selección</th><th class="num">Goles</th></tr></thead>
-      <tbody id="scorersBody"><tr><td colspan="4" class="empty">Cargando…</td></tr></tbody>
-    </table>
+  <div class="panel" id="panel-scorers">
+    <div class="card">
+      <h2>⚽ Goleadores</h2>
+      <table>
+        <thead><tr><th>#</th><th>Jugador</th><th>Selección</th><th class="num">Goles</th></tr></thead>
+        <tbody id="scorersBody"><tr><td colspan="4" class="empty">Cargando…</td></tr></tbody>
+      </table>
+    </div>
   </div>
 </main>
 
@@ -112,11 +130,13 @@ async function fetchJson(url) {
 }
 
 function renderLive(fixtures) {
-  const card = document.getElementById("liveCard");
   const body = document.getElementById("liveBody");
   const live = fixtures.filter(f => LIVE_STATUSES.includes(f.status));
-  if (live.length === 0) { card.style.display = "none"; return; }
-  card.style.display = "";
+  document.getElementById("liveDot").style.display = live.length > 0 ? "" : "none";
+  if (live.length === 0) {
+    body.innerHTML = `<tr><td class="empty">No hay partidos en directo en este momento.</td></tr>`;
+    return;
+  }
   body.innerHTML = live.map(f => `
     <tr class="match-row live-row">
       <td>
@@ -214,6 +234,15 @@ async function load() {
     document.getElementById("resultsBody").innerHTML = `<tr><td class="empty">Error: ${escapeHtml(err.message)}</td></tr>`;
   }
 }
+
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
+  });
+});
 
 load();
 setInterval(load, REFRESH_MS);
