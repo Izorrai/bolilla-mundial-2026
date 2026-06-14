@@ -55,10 +55,10 @@
   .badge { display: inline-block; background: var(--green-light); color: var(--green-dark); padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-left: 4px; }
   .badge.eliminated { background: #fde7e4; color: #c0392b; }
   .badge.champion { background: var(--gold); color: white; }
-  .rank-change { display: inline-block; font-size: 11px; font-weight: 800; margin-left: 4px; vertical-align: middle; }
-  .rank-change.up { color: #1d8a4a; }
-  .rank-change.down { color: #c0392b; }
-  .delta-badge { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green-dark); background: var(--green-light); border-radius: 10px; padding: 1px 7px; margin-top: 3px; }
+  .rank-change { display: inline-flex; align-items: center; font-size: 13px; font-weight: 900; margin-left: 6px; vertical-align: middle; padding: 1px 5px; border-radius: 6px; }
+  .rank-change.up { color: #1d8a4a; background: #e6f4ea; }
+  .rank-change.down { color: #c0392b; background: #fdecea; }
+  .delta-badge { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green-dark); background: var(--green-light); border-radius: 10px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
   .delta-badge.live-delta { background: #fff3cd; color: #856404; animation: liveDotPulse 1.6s infinite; }
   .pick-card.is-live { border-color: #e8b4b0; background: #fff8f7; }
   .pick-live-pts { font-size: 11px; color: #c0392b; font-weight: 700; margin-top: 4px; }
@@ -270,22 +270,18 @@ function renderRanking() {
         ? `<span class="rank-change down" title="Baja ${-rc} puesto${-rc === 1 ? "" : "s"}">▼${-rc}</span>`
         : "";
     const isLive = (p.team_points || []).some(tp => LIVE_TEAMS.has(tp.name));
-    const liveBadge = isLive ? `<span class="live-badge">🔴 En directo</span>` : "";
     const matchDelta = getMatchDelta(p);
     let deltaBadge = "";
     if (matchDelta !== null && matchDelta.delta !== 0) {
       deltaBadge = matchDelta.live
-        ? `<span class="delta-badge live-delta">+${fmtPts(matchDelta.delta)} pts en directo</span>`
-        : `<span class="delta-badge">+${fmtPts(matchDelta.delta)} pts último partido</span>`;
+        ? `<span class="delta-badge live-delta">+${fmtPts(matchDelta.delta)} pts</span>`
+        : `<span class="delta-badge">+${fmtPts(matchDelta.delta)} pts</span>`;
     } else if (matchDelta !== null && matchDelta.delta === 0 && matchDelta.live) {
-      deltaBadge = `<span class="delta-badge live-delta">En directo · 0 pts</span>`;
+      deltaBadge = `<span class="delta-badge live-delta">0 pts</span>`;
     }
     html += `<tr onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
       <td class="pos ${cls}">${pos}</td>
-      <td>
-        <strong>${escapeHtml(p.name)}</strong>${rankChange}${liveBadge}
-        ${deltaBadge ? `<br><small>${deltaBadge}</small>` : ""}
-      </td>
+      <td><strong>${escapeHtml(p.name)}</strong>${rankChange}${deltaBadge}</td>
       <td class="points">${fmtPts(p.displayTotal)} pts</td>
     </tr>`;
   });
