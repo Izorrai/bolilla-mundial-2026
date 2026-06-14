@@ -58,6 +58,10 @@
   .rank-change { display: inline-block; font-size: 11px; font-weight: 800; margin-left: 4px; vertical-align: middle; }
   .rank-change.up { color: #1d8a4a; }
   .rank-change.down { color: #c0392b; }
+  .delta-badge { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green-dark); background: var(--green-light); border-radius: 10px; padding: 1px 7px; margin-top: 3px; }
+  .delta-badge.live-delta { background: #fff3cd; color: #856404; animation: liveDotPulse 1.6s infinite; }
+  .pick-card.is-live { border-color: #e8b4b0; background: #fff8f7; }
+  .pick-live-pts { font-size: 11px; color: #c0392b; font-weight: 700; margin-top: 4px; }
   .live-badge {
     display: inline-flex; align-items: center; gap: 4px; margin-left: 6px;
     background: linear-gradient(135deg, #c0392b, #962d22); color: #fff;
@@ -199,6 +203,8 @@ let TEAMS = null, PARTICIPANTS = null, SCOREBOARD = null;
 let ROOMS_DATA = null, CURRENT_ROOM = null;
 let LIVE_TEAMS = new Set();
 let LIVE_FIXTURES = [];
+let ALL_FIXTURES = [];
+let OPEN_MODAL_NAME = null;
 
 const LAST_ROOM_KEY = "bolilla2026_last_room";
 function readRoomFromUrl() {
@@ -240,24 +246,47 @@ function renderRanking() {
     tbody.innerHTML = `<tr><td colspan="3" class="empty">Sin inscripciones todavía en sala "${CURRENT_ROOM.name}".</td></tr>`;
     return;
   }
-  let html = "";
-  ranking.forEach((p, i) => {
-    const pos = i + 1;
-    const cls = pos === 1 ? "gold" : pos === 2 ? "silver" : pos === 3 ? "bronze" : "";
-    const rc = p.rank_change || 0;
-    const rankChange = rc > 0
-      ? `<span class="rank-change up" title="Sube ${rc} puesto${rc === 1 ? "" : "s"}">▲${rc}</span>`
-      : rc < 0
-        ? `<span class="rank-change down" title="Baja ${-rc} puesto${rc === -1 ? "" : "s"}">▼${-rc}</span>`
-        : "";
+  const hasLive = LIVE_FIXTURES.length > 0;
+  // Enrich with displayTotal and scoreboard rank
+  const enriched = ranking.map((p, i) => {
     const isLive = (p.team_points || []).some(tp => LIVE_TEAMS.has(tp.name));
     const liveBonus = isLive ? computeLiveBonus(p) : 0;
     const displayTotal = Math.round((p.total || 0) * 10 + liveBonus * 10) / 10;
+    return { ...p, displayTotal, scoreboardRank: i + 1 };
+  });
+  // Re-sort by live total to show live ranking
+  const sorted = [...enriched].sort((a, b) =>
+    b.displayTotal - a.displayTotal || a.name.localeCompare(b.name, "es")
+  );
+  let html = "";
+  sorted.forEach((p, i) => {
+    const pos = i + 1;
+    const cls = pos === 1 ? "gold" : pos === 2 ? "silver" : pos === 3 ? "bronze" : "";
+    // Live arrows: compare live rank vs scoreboard rank
+    const rc = hasLive ? (p.scoreboardRank - pos) : (p.rank_change || 0);
+    const rankChange = rc > 0
+      ? `<span class="rank-change up" title="Sube ${rc} puesto${rc === 1 ? "" : "s"}">▲${rc}</span>`
+      : rc < 0
+        ? `<span class="rank-change down" title="Baja ${-rc} puesto${-rc === 1 ? "" : "s"}">▼${-rc}</span>`
+        : "";
+    const isLive = (p.team_points || []).some(tp => LIVE_TEAMS.has(tp.name));
     const liveBadge = isLive ? `<span class="live-badge">🔴 En directo</span>` : "";
+    const matchDelta = getMatchDelta(p);
+    let deltaBadge = "";
+    if (matchDelta !== null && matchDelta.delta !== 0) {
+      deltaBadge = matchDelta.live
+        ? `<span class="delta-badge live-delta">+${fmtPts(matchDelta.delta)} pts en directo</span>`
+        : `<span class="delta-badge">+${fmtPts(matchDelta.delta)} pts último partido</span>`;
+    } else if (matchDelta !== null && matchDelta.delta === 0 && matchDelta.live) {
+      deltaBadge = `<span class="delta-badge live-delta">En directo · 0 pts</span>`;
+    }
     html += `<tr onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
       <td class="pos ${cls}">${pos}</td>
-      <td><strong>${escapeHtml(p.name)}</strong>${rankChange}${liveBadge}</td>
-      <td class="points">${fmtPts(displayTotal)} pts</td>
+      <td>
+        <strong>${escapeHtml(p.name)}</strong>${rankChange}${liveBadge}
+        ${deltaBadge ? `<br><small>${deltaBadge}</small>` : ""}
+      </td>
+      <td class="points">${fmtPts(p.displayTotal)} pts</td>
     </tr>`;
   });
   tbody.innerHTML = html;
@@ -312,8 +341,12 @@ window.showDetail = (name) => {
   const participant = PARTICIPANTS && PARTICIPANTS.participants
     ? PARTICIPANTS.participants.find(x => x.name === name) : null;
   if (!participant) { alert("No se encuentra el participante."); return; }
-  const total = p ? (p.total || 0) : 0;
+  OPEN_MODAL_NAME = name;
+
+  const liveBonus = p ? computeLiveBonus(p) : 0;
+  const total = Math.round(((p ? p.total : 0) + liveBonus) * 10) / 10;
   const bk = p && p.breakdown ? p.breakdown : { goals: 0, match_results: 0, round_bonuses: 0, extras: 0 };
+
   let picksHtml = "";
   const teamPts = p && p.team_points ? Object.fromEntries(p.team_points.map(x => [x.name, x])) : {};
   for (const g of ["A", "B", "C", "D", "E", "F"]) {
@@ -322,15 +355,23 @@ window.showDetail = (name) => {
       const t = getTeam(tname);
       const tp = teamPts[tname] || {};
       const d = tp.details || {};
-      picksHtml += `<div class="pick-card">
+      const live = liveTeamPts(tname);
+      const liveHtml = live !== null
+        ? `<div class="pick-live-pts">🔴 En directo (${live.score}) → +${fmtPts(live.pts)} pts</div>`
+        : "";
+      const displayPts = live !== null
+        ? Math.round((tp.points || 0) * 10 + live.pts * 10) / 10
+        : (tp.points || 0);
+      picksHtml += `<div class="pick-card${live !== null ? " is-live" : ""}">
         <div class="pc-top">
           <div class="pc-name"><span class="pc-group">${g}</span>${escapeHtml(tname)}</div>
-          <div class="pc-pts">${fmtPts(tp.points || 0)} pts</div>
+          <div class="pc-pts">${fmtPts(displayPts)} pts</div>
         </div>
         <div class="pc-stats">
           <span>Precio ${t ? t.price : "—"} · PJ ${d.PJ || 0} · V${d.V || 0} E${d.E || 0} D${d.D || 0} · GF ${d.GF || 0}</span>
           ${stageBadge(d.stage)}
         </div>
+        ${liveHtml}
       </div>`;
     }
   }
@@ -341,14 +382,18 @@ window.showDetail = (name) => {
     mvp: eq(participant.mvp, extras.mvp) ? 30 : 0,
     gk: eq(participant.gk, extras.best_gk) ? 30 : 0,
   };
+  const liveBonusRow = liveBonus > 0
+    ? `<div class="bk" style="border-color:#e8b4b0;background:#fff8f7"><div class="l" style="color:#c0392b">En directo</div><div class="v" style="color:#c0392b">+${fmtPts(liveBonus)}</div></div>`
+    : "";
   document.getElementById("detailModal").innerHTML = `
-    <button class="modal-close" onclick="document.getElementById('detailBg').classList.remove('open')">×</button>
+    <button class="modal-close" onclick="closeModal()">×</button>
     <h2>${escapeHtml(name)} <span class="total">${fmtPts(total)} pts</span></h2>
     <div class="breakdown">
       <div class="bk"><div class="l">Goles</div><div class="v">${fmtPts(bk.goals || 0)}</div></div>
       <div class="bk"><div class="l">V/E/D</div><div class="v">${fmtPts(bk.match_results || 0)}</div></div>
       <div class="bk"><div class="l">Rondas</div><div class="v">${fmtPts(bk.round_bonuses || 0)}</div></div>
       <div class="bk"><div class="l">Extras</div><div class="v">${fmtPts(bk.extras || 0)}</div></div>
+      ${liveBonusRow}
     </div>
     <h3 class="section-title">Selecciones</h3>
     <div class="picks-grid">${picksHtml || `<div class="empty">Sin selecciones</div>`}</div>
@@ -362,8 +407,13 @@ window.showDetail = (name) => {
   document.getElementById("detailBg").classList.add("open");
 };
 
+window.closeModal = () => {
+  document.getElementById("detailBg").classList.remove("open");
+  OPEN_MODAL_NAME = null;
+};
+
 document.getElementById("detailBg").addEventListener("click", e => {
-  if (e.target.id === "detailBg") e.target.classList.remove("open");
+  if (e.target.id === "detailBg") closeModal();
 });
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
@@ -400,12 +450,28 @@ async function loadRoomData(roomId) {
   renderTeams();
 }
 
+function buildFdToName() {
+  const m = {};
+  for (const t of (TEAMS && TEAMS.teams) || []) {
+    if (t.fd_name) m[t.fd_name.toLowerCase()] = t.name;
+  }
+  return m;
+}
+
+function matchPtsForSide(gf, ga) {
+  let pts = 0.5 * gf;
+  if (gf > ga) pts += 3;
+  else if (gf === ga) pts += 1;
+  return Math.round(pts * 10) / 10;
+}
+
 async function loadLiveTeams() {
   try {
     const fixturesDoc = await fetchJson(REPO_FIXTURES_URL);
+    ALL_FIXTURES = fixturesDoc.fixtures || [];
     const liveFd = new Set();
     LIVE_FIXTURES = [];
-    for (const f of fixturesDoc.fixtures || []) {
+    for (const f of ALL_FIXTURES) {
       if (!LIVE_STATUSES.includes(f.status)) continue;
       LIVE_FIXTURES.push(f);
       if (f.home_team) liveFd.add(f.home_team.toLowerCase());
@@ -424,30 +490,61 @@ async function loadLiveTeams() {
 
 function computeLiveBonus(participantEntry) {
   if (!LIVE_FIXTURES.length || !participantEntry.team_points) return 0;
-  const fdToName = {};
-  for (const t of (TEAMS && TEAMS.teams) || []) {
-    if (t.fd_name) fdToName[t.fd_name.toLowerCase()] = t.name;
-  }
+  const fdToName = buildFdToName();
   let bonus = 0;
   for (const f of LIVE_FIXTURES) {
     const homeCanon = fdToName[(f.home_team || "").toLowerCase()] || f.home_team;
     const awayCanon = fdToName[(f.away_team || "").toLowerCase()] || f.away_team;
     const hg = f.home_goals ?? 0;
     const ag = f.away_goals ?? 0;
-    const homePick = participantEntry.team_points.find(tp => tp.name === homeCanon);
-    const awayPick = participantEntry.team_points.find(tp => tp.name === awayCanon);
-    if (homePick) {
-      bonus += 0.5 * hg;
-      if (hg > ag) bonus += 3;
-      else if (hg === ag) bonus += 1;
-    }
-    if (awayPick) {
-      bonus += 0.5 * ag;
-      if (ag > hg) bonus += 3;
-      else if (ag === hg) bonus += 1;
-    }
+    if (participantEntry.team_points.find(tp => tp.name === homeCanon)) bonus += matchPtsForSide(hg, ag);
+    if (participantEntry.team_points.find(tp => tp.name === awayCanon)) bonus += matchPtsForSide(ag, hg);
   }
   return Math.round(bonus * 10) / 10;
+}
+
+// Returns {delta, live} for the live match (if any) or most recent finished match involving this participant
+function getMatchDelta(participantEntry) {
+  if (!participantEntry || !participantEntry.team_points) return null;
+  const fdToName = buildFdToName();
+  const teamNames = new Set(participantEntry.team_points.map(tp => tp.name));
+
+  function calcDelta(fixtures) {
+    for (const f of fixtures) {
+      const homeCanon = fdToName[(f.home_team || "").toLowerCase()] || f.home_team;
+      const awayCanon = fdToName[(f.away_team || "").toLowerCase()] || f.away_team;
+      let delta = 0, involved = false;
+      if (teamNames.has(homeCanon)) { involved = true; delta += matchPtsForSide(f.home_goals ?? 0, f.away_goals ?? 0); }
+      if (teamNames.has(awayCanon)) { involved = true; delta += matchPtsForSide(f.away_goals ?? 0, f.home_goals ?? 0); }
+      if (involved) return Math.round(delta * 10) / 10;
+    }
+    return null;
+  }
+
+  if (LIVE_FIXTURES.length) {
+    const d = calcDelta(LIVE_FIXTURES);
+    if (d !== null) return { delta: d, live: true };
+  }
+  const finished = [...ALL_FIXTURES]
+    .filter(f => f.status === "FINISHED")
+    .sort((a, b) => new Date(b.utcDate) - new Date(a.utcDate));
+  const d = calcDelta(finished);
+  return d !== null ? { delta: d, live: false } : null;
+}
+
+// Returns per-team live points from ongoing fixtures (for modal)
+function liveTeamPts(teamName) {
+  if (!LIVE_FIXTURES.length) return null;
+  const fdToName = buildFdToName();
+  for (const f of LIVE_FIXTURES) {
+    const homeCanon = fdToName[(f.home_team || "").toLowerCase()] || f.home_team;
+    const awayCanon = fdToName[(f.away_team || "").toLowerCase()] || f.away_team;
+    const hg = f.home_goals ?? 0;
+    const ag = f.away_goals ?? 0;
+    if (teamName === homeCanon) return { pts: matchPtsForSide(hg, ag), score: `${hg}-${ag}` };
+    if (teamName === awayCanon) return { pts: matchPtsForSide(ag, hg), score: `${hg}-${ag}` };
+  }
+  return null;
 }
 
 (async function init() {
@@ -486,6 +583,7 @@ function computeLiveBonus(participantEntry) {
       }
       renderRanking();
       renderTeams();
+      if (OPEN_MODAL_NAME) showDetail(OPEN_MODAL_NAME);
     }, LIVE_REFRESH_MS);
   } catch (err) {
     document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Error cargando datos: ${escapeHtml(err.message)}</td></tr>`;
