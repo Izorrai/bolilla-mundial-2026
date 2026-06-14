@@ -58,16 +58,21 @@
   .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 100; }
   .modal-bg.open { display: flex; }
   .modal { background: var(--card); border-radius: 10px; max-width: 800px; width: 100%; padding: 22px; }
-  .modal h2 { margin: 0 0 12px 0; color: var(--green-dark); display: flex; align-items: baseline; justify-content: space-between; }
-  .modal h2 .total { color: var(--green); font-size: 22px; }
-  .breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin: 12px 0 16px 0; }
-  .bk { background: #fafaf6; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; text-align: center; }
-  .bk .l { font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-  .bk .v { font-size: 18px; font-weight: 800; color: var(--green-dark); }
-  .picks-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .picks-table th { background: #fafaf6; padding: 7px 10px; text-align: left; }
-  .picks-table td { padding: 7px 10px; border-top: 1px solid var(--border); }
-  .picks-table td.num { text-align: right; font-weight: 600; }
+  .modal h2 { margin: 0 0 12px 0; color: var(--green-dark); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .modal h2 .total { color: white; background: var(--green-dark); font-size: 14px; font-weight: 800; padding: 5px 14px; border-radius: 20px; white-space: nowrap; }
+  .breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin: 14px 0 18px 0; }
+  .bk { background: #fafaf6; border: 1px solid var(--border); border-radius: 10px; padding: 10px 10px; text-align: center; }
+  .bk .l { font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 600; letter-spacing: 0.4px; }
+  .bk .v { font-size: 20px; font-weight: 800; color: var(--green-dark); margin-top: 2px; }
+  .section-title { margin: 18px 0 10px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); font-weight: 700; }
+  .picks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .pick-card { background: #fafaf6; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; transition: box-shadow 0.2s ease; }
+  .pick-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+  .pick-card .pc-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .pick-card .pc-name { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .pick-card .pc-group { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--green-light); color: var(--green-dark); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+  .pick-card .pc-pts { font-weight: 800; font-size: 14px; color: var(--green-dark); white-space: nowrap; }
+  .pick-card .pc-stats { font-size: 12px; color: var(--muted); margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
   .modal-close { float: right; cursor: pointer; background: none; border: none; font-size: 22px; color: var(--muted); }
   .team-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
   .team-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
@@ -77,8 +82,8 @@
   .team-card .meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
   .extras-section { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-top: 14px; }
   .extras-section h3 { margin: 0 0 8px 0; color: var(--green-dark); font-size: 15px; }
-  .extras-section .item { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; border-top: 1px solid var(--border); }
-  .extras-section .item:first-of-type { border-top: 0; }
+  .extras-section .item { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; font-size: 13px; border-radius: 8px; }
+  .extras-section .item:nth-child(even) { background: #fafaf6; }
   .extras-section .val { color: var(--green); font-weight: 700; }
   @media (max-width: 600px) {
     th, td { padding: 8px 8px; }
@@ -238,6 +243,22 @@ function buildFallbackRanking() {
     .sort((a, b) => a.name.localeCompare(b.name, "es"));
 }
 
+const STAGE_LABELS = {
+  GROUP_STAGE: "Fase de grupos",
+  ROUND_OF_32: "Dieciseisavos",
+  ROUND_OF_16: "Octavos",
+  QUARTER_FINALS: "Cuartos",
+  SEMI_FINALS: "Semifinal",
+  FINAL: "Final",
+};
+
+function stageBadge(stage) {
+  if (!stage || stage === "—") return "";
+  if (stage === "ELIMINATED") return '<span class="badge eliminated">Eliminado</span>';
+  if (stage === "CHAMPION" || stage === "WINNER") return '<span class="badge champion">¡Campeón!</span>';
+  return `<span class="badge">${escapeHtml(STAGE_LABELS[stage] || stage)}</span>`;
+}
+
 function renderTeams() {
   const container = document.getElementById("teamList");
   if (!TEAMS || !TEAMS.teams) { container.innerHTML = ""; return; }
@@ -246,18 +267,13 @@ function renderTeams() {
   for (const t of TEAMS.teams) {
     const s = stats[t.name] || {};
     const stage = s.stage_reached || "—";
-    const stageBadge = stage === "ELIMINATED"
-      ? '<span class="badge eliminated">Eliminado</span>'
-      : stage === "CHAMPION" || stage === "WINNER"
-        ? '<span class="badge champion">¡Campeón!</span>'
-        : stage !== "—" ? `<span class="badge">${escapeHtml(stage)}</span>` : "";
     html += `<div class="team-card">
       <div class="row1">
         <div class="name">${escapeHtml(t.name)} <span style="font-weight:400;color:var(--muted);">(${t.group})</span></div>
         <div class="pts">${fmtPts(s.points_generated || 0)}</div>
       </div>
       <div class="meta">
-        PJ ${s.matches_played || 0} · V ${s.wins || 0} E ${s.draws || 0} D ${s.losses || 0} · GF ${s.goals_for || 0} ${stageBadge}
+        PJ ${s.matches_played || 0} · V ${s.wins || 0} E ${s.draws || 0} D ${s.losses || 0} · GF ${s.goals_for || 0} ${stageBadge(stage)}
       </div>
     </div>`;
   }
@@ -279,12 +295,17 @@ window.showDetail = (name) => {
     for (const tname of arr) {
       const t = getTeam(tname);
       const tp = teamPts[tname] || {};
-      picksHtml += `<tr>
-        <td><strong>${g}</strong></td>
-        <td>${escapeHtml(tname)}</td>
-        <td class="num">${t ? t.price : "—"}</td>
-        <td class="num">${fmtPts(tp.points || 0)}</td>
-      </tr>`;
+      const d = tp.details || {};
+      picksHtml += `<div class="pick-card">
+        <div class="pc-top">
+          <div class="pc-name"><span class="pc-group">${g}</span>${escapeHtml(tname)}</div>
+          <div class="pc-pts">${fmtPts(tp.points || 0)} pts</div>
+        </div>
+        <div class="pc-stats">
+          <span>Precio ${t ? t.price : "—"} · PJ ${d.PJ || 0} · V${d.V || 0} E${d.E || 0} D${d.D || 0} · GF ${d.GF || 0}</span>
+          ${stageBadge(d.stage)}
+        </div>
+      </div>`;
     }
   }
   const extras = (PARTICIPANTS.tournament_extras) || { pichichi: null, mvp: null, best_gk: null };
@@ -303,10 +324,8 @@ window.showDetail = (name) => {
       <div class="bk"><div class="l">Rondas</div><div class="v">${fmtPts(bk.round_bonuses || 0)}</div></div>
       <div class="bk"><div class="l">Extras</div><div class="v">${fmtPts(bk.extras || 0)}</div></div>
     </div>
-    <table class="picks-table">
-      <thead><tr><th>G</th><th>Selección</th><th class="num">Precio</th><th class="num">Pts</th></tr></thead>
-      <tbody>${picksHtml || `<tr><td colspan="4" class="empty">Sin selecciones</td></tr>`}</tbody>
-    </table>
+    <h3 class="section-title">Selecciones</h3>
+    <div class="picks-grid">${picksHtml || `<div class="empty">Sin selecciones</div>`}</div>
     <div class="extras-section">
       <h3>Apuestas extras</h3>
       <div class="item"><span>Pichichi: <strong>${escapeHtml(participant.pichichi || "—")}</strong></span><span class="val">${extraScore.pichichi > 0 ? "+30 ✓" : ""}</span></div>
