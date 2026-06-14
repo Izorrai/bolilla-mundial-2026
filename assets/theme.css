@@ -104,9 +104,15 @@ body.theme-agaleus header {
   background-color: #0e3540;
   box-shadow: 0 4px 14px rgba(0,0,0,0.18), inset 0 -3px 0 #14e08a;
 }
+body.theme-agaleus header .h1-text {
+  display: none;
+}
+body.theme-agaleus header .sub {
+  font-size: 11px;
+}
 
 .room-logo {
-  height: 28px;
+  height: 42px;
   vertical-align: middle;
   margin-right: 10px;
   filter: brightness(0) invert(1);
