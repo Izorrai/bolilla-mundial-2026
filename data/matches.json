@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-13T23:49:21.967242+00:00",
+  "last_updated": "2026-06-14T02:05:06.404001+00:00",
   "matches": [
     {
       "id": 537327,
@@ -28,19 +28,6 @@
       "winner_overall": "HOME_TEAM"
     },
     {
-      "id": 537333,
-      "utcDate": "2026-06-12T19:00:00Z",
-      "stage": "GROUP_STAGE",
-      "group": "GROUP_B",
-      "matchday": 1,
-      "home_team": "Canada",
-      "away_team": "Bosnia-Herzegovina",
-      "home_goals_90": 1,
-      "away_goals_90": 1,
-      "duration": "REGULAR",
-      "winner_overall": "DRAW"
-    },
-    {
       "id": 537345,
       "utcDate": "2026-06-13T01:00:00Z",
       "stage": "GROUP_STAGE",
@@ -61,6 +48,19 @@
       "matchday": 1,
       "home_team": "Qatar",
       "away_team": "Switzerland",
+      "home_goals_90": 1,
+      "away_goals_90": 1,
+      "duration": "REGULAR",
+      "winner_overall": "DRAW"
+    },
+    {
+      "id": 537339,
+      "utcDate": "2026-06-13T22:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_C",
+      "matchday": 1,
+      "home_team": "Brazil",
+      "away_team": "Morocco",
       "home_goals_90": 1,
       "away_goals_90": 1,
       "duration": "REGULAR",
