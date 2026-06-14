@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin · Bolilla Mundial 2026</title>
+<link rel="stylesheet" href="assets/today-carousel.css">
 <style>
   :root {
     --green: #2f7a3a;
@@ -111,6 +112,11 @@
 </header>
 
 <main>
+  <section class="today-section" id="todaySection" style="display:none;">
+    <h2>Partidos de hoy</h2>
+    <div class="carousel" id="todayCarousel"></div>
+  </section>
+
   <div class="warning-banner room-banner">
     Estás administrando la sala <strong id="roomLabel">—</strong>. Los datos viven en tu navegador (localStorage) por sala. Para publicarlos en el ranking común, <strong>Exportar participants.json</strong> y subirlo al repo (commit + push del archivo <code id="repoPath">data/rooms/&lt;sala&gt;/participants.json</code>).
   </div>
@@ -579,5 +585,6 @@ function selectRoom(roomId) {
   selectRoom(initial);
 })();
 </script>
+<script src="assets/today-carousel.js"></script>
 </body>
 </html>

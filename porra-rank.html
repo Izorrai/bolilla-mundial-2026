@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clasificación Porra · Mundial 2026</title>
+<link rel="stylesheet" href="assets/today-carousel.css">
 <style>
   :root {
     --blue: #1a5490;
@@ -78,6 +79,11 @@
 </header>
 
 <main>
+  <section class="today-section" id="todaySection" style="display:none;">
+    <h2>Partidos de hoy</h2>
+    <div class="carousel" id="todayCarousel"></div>
+  </section>
+
   <div class="prize-bar" id="prizeBar">Bote pendiente</div>
   <div class="updated" id="updated"></div>
 
@@ -256,5 +262,6 @@ document.getElementById("detailBg").addEventListener("click", e => {
   }
 })();
 </script>
+<script src="assets/today-carousel.js"></script>
 </body>
 </html>

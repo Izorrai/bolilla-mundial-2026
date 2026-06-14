@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clasificación · Bolilla Mundial 2026</title>
+<link rel="stylesheet" href="assets/today-carousel.css">
 <style>
   :root {
     --green: #2f7a3a;
@@ -106,6 +107,11 @@
 </header>
 
 <main>
+  <section class="today-section" id="todaySection" style="display:none;">
+    <h2>Partidos de hoy</h2>
+    <div class="carousel" id="todayCarousel"></div>
+  </section>
+
   <div class="tabs">
     <div class="tab active" data-tab="ranking">Ranking</div>
     <div class="tab" data-tab="teams">Selecciones</div>
@@ -366,5 +372,6 @@ async function loadRoomData(roomId) {
   }
 })();
 </script>
+<script src="assets/today-carousel.js"></script>
 </body>
 </html>

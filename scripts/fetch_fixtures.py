@@ -46,6 +46,8 @@ def fetch_fixtures(key):
     for m in raw:
         score = m.get("score") or {}
         full_time = score.get("fullTime") or {}
+        home_team = m.get("homeTeam") or {}
+        away_team = m.get("awayTeam") or {}
         fixtures.append({
             "id": m.get("id"),
             "utcDate": m.get("utcDate"),
@@ -54,8 +56,10 @@ def fetch_fixtures(key):
             "stage": m.get("stage"),
             "group": m.get("group"),
             "matchday": m.get("matchday"),
-            "home_team": (m.get("homeTeam") or {}).get("name"),
-            "away_team": (m.get("awayTeam") or {}).get("name"),
+            "home_team": home_team.get("name"),
+            "away_team": away_team.get("name"),
+            "home_crest": home_team.get("crest"),
+            "away_crest": away_team.get("crest"),
             "home_goals": full_time.get("home"),
             "away_goals": full_time.get("away"),
         })

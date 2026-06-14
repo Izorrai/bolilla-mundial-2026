@@ -1,0 +1,63 @@
+/* Carrusel "Partidos de hoy" — compartido por todas las páginas */
+.today-section { margin-bottom: 20px; }
+.today-section h2 { margin: 0 0 10px 0; font-size: 16px; color: var(--text); }
+.carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.match-card {
+  flex: 0 0 200px;
+  scroll-snap-align: start;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+}
+.match-card.live {
+  border-color: var(--warn, var(--live, #c0392b));
+  background: var(--live-light, #fbe2df);
+}
+.mc-group {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.mc-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 3px 0;
+}
+.mc-crest { width: 22px; height: 22px; object-fit: contain; flex-shrink: 0; }
+.mc-name { flex: 1; }
+.mc-score { font-weight: 800; }
+.mc-time {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+}
+.mc-badge-live {
+  display: inline-block;
+  margin-top: 8px;
+  background: var(--warn, var(--live, #c0392b));
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  animation: todayLivePulse 1.5s infinite;
+}
+@keyframes todayLivePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }

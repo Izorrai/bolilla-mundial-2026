@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Porra · Mundial 2026</title>
+<link rel="stylesheet" href="assets/today-carousel.css">
 <style>
   :root {
     --blue: #1a5490;
@@ -64,6 +65,11 @@
 </header>
 
 <main>
+  <section class="today-section" id="todaySection" style="display:none;">
+    <h2>Partidos de hoy</h2>
+    <div class="carousel" id="todayCarousel"></div>
+  </section>
+
   <div class="warning-banner">
     <strong>Para que se publique:</strong> después de añadir o cambiar algo aquí, pulsa <strong>Exportar predictions.json</strong> y súbelo al repo en
     <code>data/porra/predictions.json</code> (commit + push). Igual con los resultados oficiales en <code>data/porra/initial_results.json</code>.
@@ -305,5 +311,6 @@ document.getElementById("btnExportResults").addEventListener("click", () => {
   renderTable();
 })();
 </script>
+<script src="assets/today-carousel.js"></script>
 </body>
 </html>

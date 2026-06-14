@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resultados · Mundial 2026</title>
+<link rel="stylesheet" href="assets/today-carousel.css">
 <style>
   :root {
     --blue: #1a5490;
@@ -56,6 +57,11 @@
 </header>
 
 <main>
+  <section class="today-section" id="todaySection" style="display:none;">
+    <h2>Partidos de hoy</h2>
+    <div class="carousel" id="todayCarousel"></div>
+  </section>
+
   <div class="tabs">
     <div class="tab" data-tab="live">🔴 En directo<span class="tab-dot" id="liveDot" style="display:none;"></span></div>
     <div class="tab active" data-tab="results">Resultados</div>
@@ -247,5 +253,6 @@ document.querySelectorAll(".tab").forEach(tab => {
 load();
 setInterval(load, REFRESH_MS);
 </script>
+<script src="assets/today-carousel.js"></script>
 </body>
 </html>
