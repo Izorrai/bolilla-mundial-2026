@@ -1,15 +1,15 @@
 {
   "_comment": "Generado por scripts/update_porra.py. No editar a mano.",
-  "last_updated": "2026-06-14T17:45:57.737176+00:00",
+  "last_updated": "2026-06-14T20:23:26.940434+00:00",
   "champion": null,
   "ranking": [
     {
       "name": "Gorka",
-      "total": 19,
+      "total": 20,
       "breakdown": {
         "initial": 0,
         "selections": 15,
-        "group_stage": 4,
+        "group_stage": 5,
         "knockouts": 0
       },
       "details": {
@@ -52,8 +52,8 @@
           }
         },
         "group_stage": {
-          "correct": 4,
-          "answered": 7
+          "correct": 5,
+          "answered": 9
         },
         "knockouts": {
           "exact": 0,
@@ -65,11 +65,11 @@
     },
     {
       "name": "Jon",
-      "total": 10,
+      "total": 11,
       "breakdown": {
         "initial": 0,
         "selections": 5,
-        "group_stage": 5,
+        "group_stage": 6,
         "knockouts": 0
       },
       "details": {
@@ -112,8 +112,8 @@
           }
         },
         "group_stage": {
-          "correct": 5,
-          "answered": 7
+          "correct": 6,
+          "answered": 9
         },
         "knockouts": {
           "exact": 0,

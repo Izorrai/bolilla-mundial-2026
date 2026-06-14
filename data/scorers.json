@@ -1,11 +1,17 @@
 {
   "_comment": "Top goleadores generado por scripts/fetch_fixtures.py",
-  "last_updated": "2026-06-14T17:45:54.847969+00:00",
+  "last_updated": "2026-06-14T20:23:24.613963+00:00",
   "scorers": [
     {
       "player": "Folarin Balogun",
       "team": "United States",
       "nationality": "USA",
+      "goals": 2
+    },
+    {
+      "player": "Kai Havertz",
+      "team": "Germany",
+      "nationality": "Germany",
       "goals": 2
     },
     {
@@ -54,12 +60,6 @@
       "player": "Mauricio",
       "team": "Paraguay",
       "nationality": "Paraguay",
-      "goals": 1
-    },
-    {
-      "player": "Gio Reyna",
-      "team": "United States",
-      "nationality": "USA",
       "goals": 1
     }
   ]
