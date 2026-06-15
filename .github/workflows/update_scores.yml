@@ -1,22 +1,11 @@
 name: Update scores
 
 on:
-  schedule:
-    # Cada 5 minutos (el minimo permitido por GitHub Actions) durante el Mundial.
-    # GitHub puede retrasar los cron varios minutos en periodos de carga alta.
-    - cron: "*/5 * * * *"
-  workflow_dispatch: {}   # permite lanzarlo a mano desde la pestana Actions
-  push:
-    paths:
-      - "data/rooms/**/participants.json"   # bolilla: cuando una sala sube nuevas inscripciones
-      - "data/rooms.json"                    # bolilla: cuando se anade/quita una sala
-      - "data/teams.json"                    # bolilla: cambios en catalogo o reglas
-      - "data/porra/predictions.json"        # porra: cuando llegan nuevos pronosticos
-      - "data/porra/initial_results.json"    # porra: cuando se ponen resultados oficiales
-      - "data/porra/config.json"             # porra: cambios de reglas
-      - "scripts/update_scores.py"           # bolilla: cambio de logica
-      - "scripts/update_porra.py"            # porra: cambio de logica
-      - "scripts/fetch_fixtures.py"          # cambio del fetch del calendario
+  # Cron DESACTIVADO: ahora el servidor bolilla.agaleus.com es la fuente de verdad
+  # (cron del host cada 5 min real, sin throttling). Si el servidor estuviera caido,
+  # puedes lanzar este workflow a mano desde la pestaña Actions con "Run workflow".
+  # Lo dejamos sin schedule para no tener "crones duelos" pisandose data/*.json.
+  workflow_dispatch: {}   # solo manual
 
 permissions:
   contents: write   # necesario para commitear los JSONs actualizados

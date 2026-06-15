@@ -31,9 +31,14 @@ log() { echo "[$(ts)] $*"; }
 exec 200>/tmp/bolilla-cron.lock
 flock -n 200 || { log "Otro run en curso, salgo"; exit 0; }
 
-# Actualizar codigo (no falla si no hay cambios)
-log "git pull"
-git pull --ff-only --quiet || log "git pull fallo (sigue con codigo local)"
+# Actualizar codigo.
+# Antes del pull, descartamos cualquier cambio local en archivos rastreados:
+# los unicos que pueden estar "sucios" son los JSON que regeneran los scripts
+# (matches, scoreboard, fixtures, porra_scoreboard). Los datos los volvemos a
+# regenerar abajo, asi que tirar los cambios locales es seguro.
+log "git fetch + reset + pull"
+git fetch --quiet origin main || log "fetch fallo"
+git reset --hard origin/main --quiet || log "reset fallo (sigue con codigo local)"
 
 # Ejecutar los scripts en orden
 log "fetch_fixtures.py"
