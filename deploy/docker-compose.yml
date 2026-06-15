@@ -1,0 +1,17 @@
+services:
+  bolilla-web:
+    image: nginx:alpine
+    container_name: bolilla-web
+    restart: unless-stopped
+    ports:
+      - "5050:80"
+    volumes:
+      # Sirve los archivos del repo directamente, en solo lectura.
+      # El cron del host (crontab) actualiza los JSON y nginx los expone.
+      - ../:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

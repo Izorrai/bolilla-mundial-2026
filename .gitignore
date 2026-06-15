@@ -3,3 +3,8 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Secretos del despliegue del servidor
+.env
+deploy/cron.log
+
