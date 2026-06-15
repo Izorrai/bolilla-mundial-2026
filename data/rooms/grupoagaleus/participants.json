@@ -50,41 +50,42 @@
   "name": "Jon Latxiondo",
   "pichichi": "Kylian Mbappé",
   "mvp": "Kylian Mbappé",
-  "gk": "Mike Maignan",
+  "gk": "Diogo Costa",
   "selections": {
     "A": [
-      "Francia",
       "Portugal",
-      "Brasil"
+      "Francia",
+      "Alemania"
     ],
     "B": [
-      "Japón",
       "Holanda",
-      "Bélgica"
+      "Japón",
+      "Colombia"
     ],
     "C": [
       "México",
+      "Marruecos",
       "Croacia",
-      "Uruguay",
-      "Marruecos"
+      "Suecia"
     ],
     "D": [
-      "Chequia",
+      "Escocia",
+      "Egipto",
       "Corea del Sur",
-      "Paraguay",
-      "Escocia"
+      "Paraguay"
     ],
     "E": [
-      "Sudáfrica",
+      "Irán",
       "Australia"
     ],
     "F": [
-      "Catar",
-      "Nueva Zelanda",
+      "Panamá",
       "Curazao",
-      "Panamá"
+      "Nueva Zelanda",
+      "Cabo Verde"
     ]
   }
+
 }
   ]
 }
