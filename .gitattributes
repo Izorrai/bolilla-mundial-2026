@@ -1,0 +1,12 @@
+# Archivos que SIEMPRE deben tener line endings LF (aunque se editen en Windows),
+# para que bash en Linux pueda ejecutarlos sin "bad interpreter" ni "command not found".
+*.sh         text eol=lf
+*.yml        text eol=lf
+*.yaml       text eol=lf
+Dockerfile   text eol=lf
+.env*        text eol=lf
+
+# Python: tradicionalmente LF
+*.py         text eol=lf
+
+# Resto: line endings nativos del sistema (no fuerzo)
