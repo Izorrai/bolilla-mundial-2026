@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-15T04:34:58.559590+00:00",
+  "last_updated": "2026-06-15T05:23:22.561256+00:00",
   "ranking": [
     {
       "name": "Jon Latxiondo",
@@ -367,12 +367,12 @@
           "group": "C",
           "points": 0.0,
           "details": {
-            "PJ": 1,
+            "PJ": 0,
             "V": 0,
             "E": 0,
-            "D": 1,
+            "D": 0,
             "GF": 0,
-            "stage": "GROUP_STAGE"
+            "stage": "—"
           }
         },
         {
@@ -797,17 +797,17 @@
       "points_generated": 0.0
     },
     "Costa de Marfil": {
-      "matches_played": 1,
-      "goals_for": 1,
+      "matches_played": 0,
+      "goals_for": 0,
       "goals_against": 0,
-      "wins": 1,
+      "wins": 0,
       "draws": 0,
       "losses": 0,
-      "stage_reached": "GROUP_STAGE",
+      "stage_reached": "—",
       "round_bonuses": 0,
-      "goals_pts": 0.5,
-      "results_pts": 3,
-      "points_generated": 3.5
+      "goals_pts": 0.0,
+      "results_pts": 0,
+      "points_generated": 0.0
     },
     "Turquía": {
       "matches_played": 1,
@@ -823,13 +823,13 @@
       "points_generated": 0.0
     },
     "Ecuador": {
-      "matches_played": 1,
+      "matches_played": 0,
       "goals_for": 0,
-      "goals_against": 1,
+      "goals_against": 0,
       "wins": 0,
       "draws": 0,
-      "losses": 1,
-      "stage_reached": "GROUP_STAGE",
+      "losses": 0,
+      "stage_reached": "—",
       "round_bonuses": 0,
       "goals_pts": 0.0,
       "results_pts": 0,
