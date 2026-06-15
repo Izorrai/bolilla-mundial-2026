@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:\\\\Users\\\\latxi\\\\Desktop\\\\programas\\\\worldCup\\\\bolilla-mundial-2026\" add leaderboard.html)",
+      "Bash(git -C 'C:\\\\Users\\\\latxi\\\\Desktop\\\\programas\\\\worldCup\\\\bolilla-mundial-2026' commit -m ' *)",
+      "Bash(git -C \"C:\\\\Users\\\\latxi\\\\Desktop\\\\programas\\\\worldCup\\\\bolilla-mundial-2026\" pull --rebase origin main)",
+      "Bash(git -C \"C:\\\\Users\\\\latxi\\\\Desktop\\\\programas\\\\worldCup\\\\bolilla-mundial-2026\" push origin main)"
+    ]
+  }
+}

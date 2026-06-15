@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resultados · Mundial 2026</title>
+<title>Resultados · Bolilla Mundial 2026</title>
 <link rel="stylesheet" href="assets/today-carousel.css">
 <style>
   :root {
-    --blue: #1a5490;
-    --blue-light: #d9e7f5;
-    --blue-dark: #0f3a66;
+    --green: #2f7a3a;
+    --green-light: #d4ecd6;
+    --green-dark: #1d4e25;
     --bg: #f5f5f1;
     --card: #ffffff;
     --border: #d8d8d2;
@@ -20,14 +20,17 @@
   }
   * { box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
-  header { background: var(--blue); color: white; padding: 14px 20px; }
-  header h1 { margin: 0; font-size: 21px; }
-  header .sub { font-size: 12px; opacity: 0.9; margin-top: 2px; }
-  header a.back { color: white; text-decoration: none; font-size: 13px; font-weight: 600; opacity: 0.85; display: inline-block; margin-top: 8px; cursor: pointer; }
-  header a.back:hover { opacity: 1; text-decoration: underline; }
+  header { background: var(--green); color: white; padding: 14px 20px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+  header .row1 { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
+  header .sub { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+  nav { padding: 6px 0 0 0; display: flex; gap: 0; margin-top: 8px; }
+  nav a { color: white; text-decoration: none; padding: 6px 14px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
+  nav a.active { opacity: 1; border-color: white; }
+  nav a:hover { opacity: 1; }
   main { max-width: 900px; margin: 0 auto; padding: 18px; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
-  .card h2 { margin: 0; padding: 12px 14px; font-size: 15px; color: var(--blue-dark); border-bottom: 1px solid var(--border); background: var(--blue-light); }
+  .card h2 { margin: 0; padding: 12px 14px; font-size: 15px; color: var(--green-dark); border-bottom: 1px solid var(--border); background: var(--green-light); }
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
   td, th { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
   tr:last-child td { border-bottom: none; }
@@ -42,19 +45,27 @@
   .num { text-align: right; font-weight: 800; }
   .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--border); margin-bottom: 16px; }
   .tab { padding: 9px 16px; cursor: pointer; font-weight: 600; font-size: 14px; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; }
-  .tab.active { color: var(--blue-dark); border-color: var(--blue); }
+  .tab.active { color: var(--green-dark); border-color: var(--green); }
   .panel { display: none; }
   .panel.active { display: block; }
   .tab-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--live); margin-left: 6px; vertical-align: middle; animation: pulse 1.5s infinite; }
 </style>
 <link rel="stylesheet" href="assets/theme.css">
 </head>
-<body>
+<body class="theme-agaleus">
 
 <header>
-  <h1>📅 Resultados · Mundial 2026</h1>
+  <div class="row1">
+    <h1>
+      <img class="room-logo" src="assets/agaleus-logo.png" alt="Grupo Agaleus">
+      Resultados · Bolilla Mundial 2026
+    </h1>
+  </div>
   <div class="sub" id="updated">Cargando…</div>
-  <a class="back" onclick="history.back()">← Volver</a>
+  <nav>
+    <a href="leaderboard.html">Clasificación</a>
+    <a href="results.html" class="active">Resultados</a>
+  </nav>
 </header>
 
 <main>

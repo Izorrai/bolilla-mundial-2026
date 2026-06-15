@@ -127,17 +127,12 @@
 <header>
   <div class="row1">
     <div>
-      <h1><img id="roomLogo" class="room-logo" src="assets/agaleus-logo.png" alt="Grupo Agaleus" hidden><span class="h1-text">🏆 Clasificación · Bolilla Mundial 2026</span></h1>
+      <h1><img class="room-logo" src="assets/agaleus-logo.png" alt="Grupo Agaleus"><span class="h1-text">Clasificación · Bolilla Mundial 2026</span></h1>
       <div class="sub" id="roomSub">Cargando…</div>
-    </div>
-    <div class="room-selector" style="margin-left:auto;">
-      <label>Sala</label>
-      <select id="roomSelect"></select>
     </div>
   </div>
   <nav>
-    <a href="index.html">Selector</a>
-    <a id="navLeader" href="leaderboard.html" class="active">Clasificación</a>
+    <a href="leaderboard.html" class="active">Clasificación</a>
     <a href="results.html">Resultados</a>
   </nav>
 </header>
@@ -493,24 +488,18 @@ document.querySelectorAll(".tab").forEach(tab => {
 });
 
 async function loadRoomData(roomId) {
-  const room = ROOMS_DATA.rooms.find(r => r.id === roomId) || ROOMS_DATA.rooms[0];
-  CURRENT_ROOM = room;
-  setRoomInUrl(room.id);
-  document.getElementById("roomSelect").value = room.id;
-  document.getElementById("navLeader").href = `leaderboard.html?room=${room.id}`;
-  document.body.classList.toggle("theme-agaleus", room.id === "grupoagaleus");
-  document.getElementById("roomLogo").hidden = room.id !== "grupoagaleus";
-  document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Cargando sala "${escapeHtml(room.name)}"…</td></tr>`;
+  CURRENT_ROOM = { id: roomId, name: "GrupoAgaleus" };
+  document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Cargando…</td></tr>`;
 
-  const PART_URL = `data/rooms/${room.id}/participants.json`;
-  const SCORE_URL = `data/rooms/${room.id}/scoreboard.json`;
-  const results = await Promise.allSettled([fetchJson(PART_URL), fetchJson(SCORE_URL)]);
-  PARTICIPANTS = results[0].status === "fulfilled" ? results[0].value : { participants: [], tournament_extras: {} };
-  SCOREBOARD = results[1].status === "fulfilled" ? results[1].value : null;
+  const [partRes, scoreRes] = await Promise.allSettled([
+    fetchJson(`data/rooms/${roomId}/participants.json`),
+    fetchJson(`data/rooms/${roomId}/scoreboard.json`),
+  ]);
+  PARTICIPANTS = partRes.status === "fulfilled" ? partRes.value : { participants: [], tournament_extras: {} };
+  SCOREBOARD = scoreRes.status === "fulfilled" ? scoreRes.value : null;
 
   const ts = (SCOREBOARD && SCOREBOARD.last_updated) || null;
-  document.getElementById("roomSub").textContent =
-    `Sala "${room.name}" · ` + (ts ? `actualizado ${fmtDate(ts)}` : "Mundial aún no comenzado");
+  document.getElementById("roomSub").textContent = ts ? `actualizado ${fmtDate(ts)}` : "Mundial aún no comenzado";
   document.getElementById("rankUpdated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "";
   document.getElementById("teamsUpdated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "";
 
@@ -617,20 +606,11 @@ function liveTeamPts(teamName) {
 
 (async function init() {
   try {
-    const [teams, rooms] = await Promise.all([fetchJson(REPO_TEAMS_URL), fetchJson(REPO_ROOMS_URL)]);
+    const [teams] = await Promise.all([fetchJson(REPO_TEAMS_URL)]);
     TEAMS = teams;
-    ROOMS_DATA = rooms;
-    const sel = document.getElementById("roomSelect");
-    sel.innerHTML = ROOMS_DATA.rooms.map(r => `<option value="${r.id}">${escapeHtml(r.name)}</option>`).join("");
-    sel.addEventListener("change", e => loadRoomData(e.target.value));
-    const validIds = ROOMS_DATA.rooms.map(r => r.id);
-    const fromUrl = readRoomFromUrl();
-    const fromStorage = lastVisitedRoom();
-    const initial = (fromUrl && validIds.includes(fromUrl)) ? fromUrl
-                  : (fromStorage && validIds.includes(fromStorage)) ? fromStorage
-                  : (ROOMS_DATA.default || ROOMS_DATA.rooms[0].id);
+    document.body.classList.add("theme-agaleus");
     await loadLiveTeams();
-    await loadRoomData(initial);
+    await loadRoomData("grupoagaleus");
     async function refreshAll() {
       await loadLiveTeams();
       if (CURRENT_ROOM) {
