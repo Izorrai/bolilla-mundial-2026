@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-15T00:04:47.327015+00:00",
+  "last_updated": "2026-06-15T04:34:58.558316+00:00",
   "matches": [
     {
       "id": 537327,
@@ -130,6 +130,32 @@
       "away_goals_90": 2,
       "duration": "REGULAR",
       "winner_overall": "DRAW"
+    },
+    {
+      "id": 537352,
+      "utcDate": "2026-06-14T23:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_E",
+      "matchday": 1,
+      "home_team": "Ivory Coast",
+      "away_team": "Ecuador",
+      "home_goals_90": 1,
+      "away_goals_90": 0,
+      "duration": "REGULAR",
+      "winner_overall": "HOME_TEAM"
+    },
+    {
+      "id": 537358,
+      "utcDate": "2026-06-15T02:00:00Z",
+      "stage": "GROUP_STAGE",
+      "group": "GROUP_F",
+      "matchday": 1,
+      "home_team": "Sweden",
+      "away_team": "Tunisia",
+      "home_goals_90": 5,
+      "away_goals_90": 1,
+      "duration": "REGULAR",
+      "winner_overall": "HOME_TEAM"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "_comment": "Top goleadores generado por scripts/fetch_fixtures.py",
-  "last_updated": "2026-06-15T00:04:45.064749+00:00",
+  "last_updated": "2026-06-15T04:34:55.751014+00:00",
   "scorers": [
     {
       "player": "Folarin Balogun",
@@ -12,6 +12,12 @@
       "player": "Kai Havertz",
       "team": "Germany",
       "nationality": "Germany",
+      "goals": 2
+    },
+    {
+      "player": "Yasin Ayari",
+      "team": "Sweden",
+      "nationality": "Sweden",
       "goals": 2
     },
     {
@@ -54,12 +60,6 @@
       "player": "Cyle Larin",
       "team": "Canada",
       "nationality": "Canada",
-      "goals": 1
-    },
-    {
-      "player": "Mauricio",
-      "team": "Paraguay",
-      "nationality": "Paraguay",
       "goals": 1
     }
   ]
