@@ -44,7 +44,49 @@
       "Cabo Verde"
     ]
   }
+    },
+    {
+      "name": "CHRISTIAN MARCOS",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Bélgica",
+          "Colombia",
+          "Suiza"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "Croacia",
+          "Ecuador"
+        ],
+        "D": [
+          "Escocia",
+          "Chequia",
+          "Ghana",
+          "Argelia"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Australia"
+        ],
+        "F": [
+          "Catar",
+          "Arabia Saudí",
+          "Irak",
+          "Panamá"
+        ]
+      },
+      "pichichi": "HARRY KANE",
+      "mvp": "LAMINE YAMAL",
+      "gk": "DIOGO COSTA",
+      "paid": true
+    }
 
-}
+
   ]
 }
