@@ -59,8 +59,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/matches.json data/fixtures.json data/scorers.json data/rooms/*/scoreboard.json data/porra/porra_scoreboard.json
           if git diff --cached --quiet; then
-            echo "Sin cambios en JSONs"
-            exit 0
+            echo "Sin cambios, forzando timestamp para mantener workflow activo"
+            echo "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > data/.last_run
+            git add data/.last_run
           fi
           git commit -m "chore(scores): refresh matches and scoreboard"
           # Retry push hasta 5 veces con rebase. En conflicto, siempre nos quedamos
