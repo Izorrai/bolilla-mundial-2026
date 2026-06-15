@@ -1,29 +1,16 @@
 {
-  "last_updated": "2026-06-15T05:23:22.561256+00:00",
+  "last_updated": "2026-06-15T07:40:18.777384+00:00",
   "ranking": [
     {
       "name": "Jon Latxiondo",
-      "total": 25.5,
+      "total": 34.0,
       "breakdown": {
-        "goals": 8.5,
-        "match_results": 17.0,
+        "goals": 13.0,
+        "match_results": 21.0,
         "round_bonuses": 0.0,
         "extras": 0
       },
       "team_points": [
-        {
-          "name": "Francia",
-          "group": "A",
-          "points": 0.0,
-          "details": {
-            "PJ": 0,
-            "V": 0,
-            "E": 0,
-            "D": 0,
-            "GF": 0,
-            "stage": "—"
-          }
-        },
         {
           "name": "Portugal",
           "group": "A",
@@ -38,28 +25,28 @@
           }
         },
         {
-          "name": "Brasil",
+          "name": "Francia",
           "group": "A",
-          "points": 1.5,
+          "points": 0.0,
           "details": {
-            "PJ": 1,
+            "PJ": 0,
             "V": 0,
-            "E": 1,
+            "E": 0,
             "D": 0,
-            "GF": 1,
-            "stage": "GROUP_STAGE"
+            "GF": 0,
+            "stage": "—"
           }
         },
         {
-          "name": "Japón",
-          "group": "B",
-          "points": 2.0,
+          "name": "Alemania",
+          "group": "A",
+          "points": 6.5,
           "details": {
             "PJ": 1,
-            "V": 0,
-            "E": 1,
+            "V": 1,
+            "E": 0,
             "D": 0,
-            "GF": 2,
+            "GF": 7,
             "stage": "GROUP_STAGE"
           }
         },
@@ -77,7 +64,20 @@
           }
         },
         {
-          "name": "Bélgica",
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Colombia",
           "group": "B",
           "points": 0.0,
           "details": {
@@ -103,32 +103,6 @@
           }
         },
         {
-          "name": "Croacia",
-          "group": "C",
-          "points": 0.0,
-          "details": {
-            "PJ": 0,
-            "V": 0,
-            "E": 0,
-            "D": 0,
-            "GF": 0,
-            "stage": "—"
-          }
-        },
-        {
-          "name": "Uruguay",
-          "group": "C",
-          "points": 0.0,
-          "details": {
-            "PJ": 0,
-            "V": 0,
-            "E": 0,
-            "D": 0,
-            "GF": 0,
-            "stage": "—"
-          }
-        },
-        {
           "name": "Marruecos",
           "group": "C",
           "points": 1.5,
@@ -142,16 +116,55 @@
           }
         },
         {
-          "name": "Chequia",
-          "group": "D",
-          "points": 0.5,
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
           "details": {
-            "PJ": 1,
+            "PJ": 0,
             "V": 0,
             "E": 0,
-            "D": 1,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suecia",
+          "group": "C",
+          "points": 5.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 5,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
             "GF": 1,
             "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
           }
         },
         {
@@ -181,29 +194,16 @@
           }
         },
         {
-          "name": "Escocia",
-          "group": "D",
-          "points": 3.5,
-          "details": {
-            "PJ": 1,
-            "V": 1,
-            "E": 0,
-            "D": 0,
-            "GF": 1,
-            "stage": "GROUP_STAGE"
-          }
-        },
-        {
-          "name": "Sudáfrica",
+          "name": "Irán",
           "group": "E",
           "points": 0.0,
           "details": {
-            "PJ": 1,
+            "PJ": 0,
             "V": 0,
             "E": 0,
-            "D": 1,
+            "D": 0,
             "GF": 0,
-            "stage": "GROUP_STAGE"
+            "stage": "—"
           }
         },
         {
@@ -220,20 +220,7 @@
           }
         },
         {
-          "name": "Catar",
-          "group": "F",
-          "points": 1.5,
-          "details": {
-            "PJ": 1,
-            "V": 0,
-            "E": 1,
-            "D": 0,
-            "GF": 1,
-            "stage": "GROUP_STAGE"
-          }
-        },
-        {
-          "name": "Nueva Zelanda",
+          "name": "Panamá",
           "group": "F",
           "points": 0.0,
           "details": {
@@ -259,7 +246,20 @@
           }
         },
         {
-          "name": "Panamá",
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Cabo Verde",
           "group": "F",
           "points": 0.0,
           "details": {
@@ -367,12 +367,12 @@
           "group": "C",
           "points": 0.0,
           "details": {
-            "PJ": 0,
+            "PJ": 1,
             "V": 0,
             "E": 0,
-            "D": 0,
+            "D": 1,
             "GF": 0,
-            "stage": "—"
+            "stage": "GROUP_STAGE"
           }
         },
         {
@@ -797,17 +797,17 @@
       "points_generated": 0.0
     },
     "Costa de Marfil": {
-      "matches_played": 0,
-      "goals_for": 0,
+      "matches_played": 1,
+      "goals_for": 1,
       "goals_against": 0,
-      "wins": 0,
+      "wins": 1,
       "draws": 0,
       "losses": 0,
-      "stage_reached": "—",
+      "stage_reached": "GROUP_STAGE",
       "round_bonuses": 0,
-      "goals_pts": 0.0,
-      "results_pts": 0,
-      "points_generated": 0.0
+      "goals_pts": 0.5,
+      "results_pts": 3,
+      "points_generated": 3.5
     },
     "Turquía": {
       "matches_played": 1,
@@ -823,13 +823,13 @@
       "points_generated": 0.0
     },
     "Ecuador": {
-      "matches_played": 0,
+      "matches_played": 1,
       "goals_for": 0,
-      "goals_against": 0,
+      "goals_against": 1,
       "wins": 0,
       "draws": 0,
-      "losses": 0,
-      "stage_reached": "—",
+      "losses": 1,
+      "stage_reached": "GROUP_STAGE",
       "round_bonuses": 0,
       "goals_pts": 0.0,
       "results_pts": 0,

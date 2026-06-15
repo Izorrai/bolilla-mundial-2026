@@ -1,6 +1,6 @@
 {
   "_comment": "Calendario completo del Mundial 2026 generado por scripts/fetch_fixtures.py",
-  "last_updated": "2026-06-15T05:23:20.182693+00:00",
+  "last_updated": "2026-06-15T07:40:15.543764+00:00",
   "fixtures": [
     {
       "id": 537327,
@@ -44,8 +44,8 @@
       "away_team": "Bosnia-Herzegovina",
       "home_crest": "https://crests.football-data.org/canada.svg",
       "away_crest": "https://crests.football-data.org/bosnia.svg",
-      "home_goals": null,
-      "away_goals": null
+      "home_goals": 1,
+      "away_goals": 1
     },
     {
       "id": 537345,
@@ -155,7 +155,7 @@
     {
       "id": 537352,
       "utcDate": "2026-06-14T23:00:00Z",
-      "status": "FINISHED",
+      "status": "IN_PLAY",
       "minute": null,
       "stage": "GROUP_STAGE",
       "group": "GROUP_E",
