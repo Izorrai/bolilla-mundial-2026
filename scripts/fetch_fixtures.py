@@ -17,14 +17,27 @@ Uso:
   python scripts/fetch_fixtures.py
 """
 
+import http.client
 import json
 import os
+import socket
 import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.error import URLError
+
+# Errores transitorios de red que merecen retry (no son bug nuestro,
+# football-data.org cierra la conexion de vez en cuando)
+TRANSIENT_NET_ERRORS = (
+    URLError,
+    http.client.HTTPException,    # incluye RemoteDisconnected
+    ConnectionError,
+    TimeoutError,
+    socket.timeout,
+    OSError,                       # red caida, dns, etc.
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 FIXTURES_FILE = ROOT / "data" / "fixtures.json"
@@ -34,19 +47,21 @@ MATCHES_API = f"{API_BASE}/competitions/WC/matches"
 SCORERS_API = f"{API_BASE}/competitions/WC/scorers?limit=10"
 
 
-def api_get(url, key, retries=3, backoff=5):
-    """GET con reintentos: un 429/5xx o timeout puntual de football-data.org
-    no debe tirar toda la ejecucion (y con ella el refresco de marcadores)."""
+def api_get(url, key, retries=4, backoff=3):
+    """GET con reintentos: un 429/5xx o RemoteDisconnected/timeout puntual de
+    football-data.org no debe tirar toda la ejecucion (y con ella el refresco
+    de marcadores). Backoff exponencial: 3s, 6s, 12s, 24s entre intentos."""
     req = Request(url, headers={"X-Auth-Token": key, "Accept": "application/json"})
     for attempt in range(1, retries + 1):
         try:
             with urlopen(req, timeout=30) as resp:
                 return json.loads(resp.read().decode("utf-8"))
-        except URLError as e:
+        except TRANSIENT_NET_ERRORS as e:
             if attempt == retries:
                 raise
-            print(f"[warn] intento {attempt}/{retries} fallido ({e}); reintentando en {backoff}s...")
-            time.sleep(backoff)
+            wait = backoff * (2 ** (attempt - 1))
+            print(f"[warn] intento {attempt}/{retries} fallido ({type(e).__name__}: {e}); reintentando en {wait}s...")
+            time.sleep(wait)
 
 
 def fetch_fixtures(key):
@@ -118,8 +133,8 @@ def main():
         print(f"[ok] {len(fixtures)} partidos guardados en {FIXTURES_FILE.relative_to(ROOT)}")
         for status, n in sorted(by_status.items()):
             print(f"  {status}: {n}")
-    except URLError as e:
-        print(f"[warn] no se pudieron obtener los partidos (se mantiene fixtures.json anterior): {e}")
+    except TRANSIENT_NET_ERRORS as e:
+        print(f"[warn] no se pudieron obtener los partidos tras varios reintentos (se mantiene fixtures.json anterior): {type(e).__name__}: {e}")
 
     try:
         scorers = fetch_scorers(key)
@@ -129,8 +144,8 @@ def main():
             "scorers": scorers,
         })
         print(f"[ok] {len(scorers)} goleadores guardados en {SCORERS_FILE.relative_to(ROOT)}")
-    except URLError as e:
-        print(f"[warn] no se pudieron obtener los goleadores (se mantiene el archivo anterior): {e}")
+    except TRANSIENT_NET_ERRORS as e:
+        print(f"[warn] no se pudieron obtener los goleadores (se mantiene el archivo anterior): {type(e).__name__}: {e}")
 
 
 if __name__ == "__main__":

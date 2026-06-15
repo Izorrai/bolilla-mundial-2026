@@ -8,7 +8,13 @@
 # de vuelta a GitHub. Si quieres que GitHub Pages siga al dia, deja activo
 # el workflow update_scores.yml en el repo (lento pero independiente).
 
-set -euo pipefail
+# OJO: NO usar 'set -e' aqui. Si un script python falla (tipico: API
+# temporalmente caida), queremos seguir ejecutando los demas y que el
+# scoreboard del server se mantenga con los datos que regenere lo que si
+# vaya bien. Con set -e, un fallo en fetch_fixtures.py abortaba toda la
+# ejecucion DESPUES del 'git reset --hard', dejando el scoreboard.json
+# del server pisado por la version vieja de GitHub.
+set -uo pipefail
 
 # Directorio del repo: el padre de deploy/
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -40,12 +46,16 @@ log "git fetch + reset + pull"
 git fetch --quiet origin main || log "fetch fallo"
 git reset --hard origin/main --quiet || log "reset fallo (sigue con codigo local)"
 
-# Ejecutar los scripts en orden
+# Ejecutar los scripts en orden. Cada uno encapsula sus propios errores:
+# si fetch_fixtures falla porque la API se cayo, update_scores.py
+# usara el matches.json cacheado. Si update_scores tambien falla,
+# update_porra usa su propio matches cacheado. Importante: los scripts
+# python NO deben tirar excepcion al main por errores transitorios de red.
 log "fetch_fixtures.py"
-python3 scripts/fetch_fixtures.py
+python3 scripts/fetch_fixtures.py || log "fetch_fixtures.py salio con error (no fatal)"
 log "update_scores.py"
-python3 scripts/update_scores.py
+python3 scripts/update_scores.py || log "update_scores.py salio con error (no fatal)"
 log "update_porra.py"
-python3 scripts/update_porra.py
+python3 scripts/update_porra.py || log "update_porra.py salio con error (no fatal)"
 
 log "ok"

@@ -19,13 +19,26 @@ Reglas (recordatorio):
   extras (pichichi/mvp/portero): 30 c/u si coinciden con tournament_extras (case-insensitive)
 """
 
+import http.client
 import json
 import os
+import socket
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
+
+# Errores transitorios de red que merecen retry
+TRANSIENT_NET_ERRORS = (
+    URLError,
+    http.client.HTTPException,    # incluye RemoteDisconnected
+    ConnectionError,
+    TimeoutError,
+    socket.timeout,
+    OSError,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
@@ -47,23 +60,30 @@ STAGE_ORDER = [
 ]
 
 
-def fetch_matches(api_key):
+def fetch_matches(api_key, retries=4, backoff=3):
+    """Llama a la API con reintentos. Si falla tras N intentos devuelve None
+    para que el llamante se quede con el cache de matches.json."""
     if not api_key:
         print("[warn] FOOTBALL_DATA_API_KEY not set; will use cached matches.json")
         return None
     url = f"{API_BASE}/competitions/{COMPETITION}/matches"
     req = Request(url, headers={"X-Auth-Token": api_key, "Accept": "application/json"})
-    try:
-        with urlopen(req, timeout=30) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
-            return payload.get("matches", [])
-    except HTTPError as e:
-        body = e.read().decode("utf-8", errors="replace")[:300]
-        print(f"[error] HTTP {e.code} from football-data: {body}")
-        return None
-    except URLError as e:
-        print(f"[error] network: {e}")
-        return None
+    for attempt in range(1, retries + 1):
+        try:
+            with urlopen(req, timeout=30) as resp:
+                payload = json.loads(resp.read().decode("utf-8"))
+                return payload.get("matches", [])
+        except HTTPError as e:
+            body = e.read().decode("utf-8", errors="replace")[:300]
+            print(f"[error] HTTP {e.code} from football-data: {body}")
+            return None
+        except TRANSIENT_NET_ERRORS as e:
+            if attempt == retries:
+                print(f"[error] network tras {retries} reintentos: {type(e).__name__}: {e}")
+                return None
+            wait = backoff * (2 ** (attempt - 1))
+            print(f"[warn] intento {attempt}/{retries} fallido ({type(e).__name__}: {e}); reintento en {wait}s")
+            time.sleep(wait)
 
 
 def normalize_matches(raw_matches):
