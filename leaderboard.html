@@ -58,6 +58,17 @@
   .rank-change { display: inline-flex; align-items: center; font-size: 13px; font-weight: 900; margin-left: 6px; vertical-align: middle; padding: 1px 5px; border-radius: 6px; }
   .rank-change.up { color: #1d8a4a; background: #e6f4ea; }
   .rank-change.down { color: #c0392b; background: #fdecea; }
+  .rank-change.big-up { animation: pulseUp 1.6s ease-in-out infinite; }
+  .rank-change.big-down { animation: pulseDown 1.6s ease-in-out infinite; }
+  @keyframes pulseUp   { 0%, 100% { box-shadow: 0 0 0 0 rgba(29,138,74,0.55); } 50% { box-shadow: 0 0 0 6px rgba(29,138,74,0); } }
+  @keyframes pulseDown { 0%, 100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.55); } 50% { box-shadow: 0 0 0 6px rgba(192,57,43,0); } }
+  .new-badge { display: inline-block; background: #2196f3; color: white; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: 800; margin-left: 6px; vertical-align: middle; }
+  .overtook-badge { display: inline-block; background: #fff3cd; color: #5a4a00; padding: 1px 7px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .crown-badge { font-size: 16px; margin-left: 4px; animation: bounce 1.2s ease-in-out infinite; display: inline-block; }
+  .bone-badge { font-size: 14px; margin-left: 4px; opacity: 0.7; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  tr.row-new-leader { background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.18), transparent); animation: shineBg 2s ease-in-out 2; }
+  @keyframes shineBg { 0%, 100% { background-position: -200% 0; } 50% { background-position: 200% 0; } }
   .delta-badge { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green-dark); background: var(--green-light); border-radius: 10px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
   .delta-badge.live-delta { background: #fff3cd; color: #856404; animation: liveDotPulse 1.6s infinite; }
   .pick-card.is-live { border-color: #e8b4b0; background: #fff8f7; }
@@ -254,22 +265,38 @@ function renderRanking() {
     const displayTotal = Math.round((p.total || 0) * 10 + liveBonus * 10) / 10;
     return { ...p, displayTotal, scoreboardRank: i + 1 };
   });
-  // Re-sort by live total to show live ranking
   const sorted = [...enriched].sort((a, b) =>
     b.displayTotal - a.displayTotal || a.name.localeCompare(b.name, "es")
   );
+  // Detectar cambio de lider: previous_position del nuevo #1 era > 1
+  const newTop = sorted[0];
+  const isNewLeader = newTop && !newTop.new_in_ranking
+    && typeof newTop.previous_position === "number"
+    && newTop.previous_position > 1;
   let html = "";
   sorted.forEach((p, i) => {
     const pos = i + 1;
     const cls = pos === 1 ? "gold" : pos === 2 ? "silver" : pos === 3 ? "bronze" : "";
-    // Live arrows: compare live rank vs scoreboard rank
-    const rc = hasLive ? (p.scoreboardRank - pos) : (p.rank_change || 0);
+    // Cambio de puesto: si hay partido en directo usamos rank en vivo,
+    // si no usamos el sticky delta_position del backend.
+    const rc = hasLive ? (p.scoreboardRank - pos) : (p.delta_position ?? 0);
+    const absRc = Math.abs(rc);
+    const bigCls = absRc >= 3 ? (rc > 0 ? " big-up" : " big-down") : "";
+    const rocketOrCrash = rc >= 3 ? " 🚀" : rc <= -3 ? " 💥" : "";
     const rankChange = rc > 0
-      ? `<span class="rank-change up" title="Sube ${rc} puesto${rc === 1 ? "" : "s"}">▲${rc}</span>`
+      ? `<span class="rank-change up${bigCls}" title="Sube ${rc} puesto${rc === 1 ? "" : "s"}">▲${rc}${rocketOrCrash}</span>`
       : rc < 0
-        ? `<span class="rank-change down" title="Baja ${-rc} puesto${-rc === 1 ? "" : "s"}">▼${-rc}</span>`
+        ? `<span class="rank-change down${bigCls}" title="Baja ${-rc} puesto${-rc === 1 ? "" : "s"}">▼${-rc}${rocketOrCrash}</span>`
         : "";
-    const isLive = (p.team_points || []).some(tp => LIVE_TEAMS.has(tp.name));
+    const newBadge = p.new_in_ranking ? `<span class="new-badge" title="Nuevo en la clasificación">🆕</span>` : "";
+    const overtook = (p.overtook || []).filter(Boolean);
+    const overtookBadge = overtook.length > 0
+      ? `<span class="overtook-badge" title="Adelantó a ${overtook.join(', ')}">🥊 +${overtook.length}</span>`
+      : "";
+    const crown = (i === 0 && isNewLeader) ? `<span class="crown-badge" title="¡Nuevo líder!">👑</span>` : "";
+    const bone = (sorted.length >= 4 && i === sorted.length - 1)
+      ? `<span class="bone-badge" title="Farolillo rojo">🦴</span>`
+      : "";
     const matchDelta = getMatchDelta(p);
     let deltaBadge = "";
     if (matchDelta !== null && matchDelta.delta !== 0) {
@@ -279,9 +306,10 @@ function renderRanking() {
     } else if (matchDelta !== null && matchDelta.delta === 0 && matchDelta.live) {
       deltaBadge = `<span class="delta-badge live-delta">0 pts</span>`;
     }
-    html += `<tr onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
+    const rowCls = (i === 0 && isNewLeader) ? " row-new-leader" : "";
+    html += `<tr class="${rowCls.trim()}" onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
       <td class="pos ${cls}">${pos}</td>
-      <td><strong>${escapeHtml(p.name)}</strong>${rankChange}${deltaBadge}</td>
+      <td><strong>${escapeHtml(p.name)}</strong>${crown}${rankChange}${newBadge}${overtookBadge}${deltaBadge}${bone}</td>
       <td class="points">${fmtPts(p.displayTotal)} pts</td>
     </tr>`;
   });

@@ -47,6 +47,49 @@ def eq(a, b):
     return bool(a and b and str(a).strip().lower() == str(b).strip().lower())
 
 
+# ---------- Rank-change annotations ----------
+
+def rankings_equal(a, b):
+    if len(a) != len(b):
+        return False
+    da = {e["name"]: e.get("total", 0) for e in a}
+    db = {e["name"]: e.get("total", 0) for e in b}
+    return da == db
+
+
+def annotate_changes(new_ranking, prev_ranking):
+    prev_pos = {e["name"]: i + 1 for i, e in enumerate(prev_ranking)}
+    prev_tot = {e["name"]: e.get("total", 0) for e in prev_ranking}
+    new_pos = {e["name"]: i + 1 for i, e in enumerate(new_ranking)}
+    for i, e in enumerate(new_ranking):
+        n = e["name"]
+        npos = i + 1
+        ppos = prev_pos.get(n)
+        if ppos is None:
+            e["new_in_ranking"] = True
+            e["previous_position"] = None
+            e["delta_position"] = 0
+            e["delta_total"] = e.get("total", 0)
+            e["overtook"] = []
+        else:
+            e["new_in_ranking"] = False
+            e["previous_position"] = ppos
+            e["delta_position"] = ppos - npos
+            e["delta_total"] = round(e.get("total", 0) - prev_tot.get(n, 0), 1)
+            overtook = []
+            for other in new_ranking:
+                on = other["name"]
+                if on == n:
+                    continue
+                op = prev_pos.get(on)
+                if op is None:
+                    continue
+                if op < ppos and new_pos[on] > npos:
+                    overtook.append(on)
+            e["overtook"] = overtook
+    return new_ranking
+
+
 # ---------- Stage ordering and progression ----------
 STAGE_TO_LABEL = {
     "GROUP_STAGE":     "Grupos",
@@ -248,11 +291,22 @@ def main():
 
     ranking.sort(key=lambda x: (-x["total"], x["name"].lower()))
 
+    # Sticky previous + anotacion de movimientos
+    prev_doc = load_json(PORRA / "porra_scoreboard.json", {})
+    last_persisted_ranking = prev_doc.get("ranking", [])
+    sticky_previous = prev_doc.get("previous_ranking", [])
+    if rankings_equal(last_persisted_ranking, ranking):
+        chosen_prev = sticky_previous
+    else:
+        chosen_prev = last_persisted_ranking
+    annotate_changes(ranking, chosen_prev)
+
     save_json(PORRA / "porra_scoreboard.json", {
         "_comment": "Generado por scripts/update_porra.py. No editar a mano.",
         "last_updated": datetime.now(timezone.utc).isoformat(),
         "champion": champion,
         "ranking": ranking,
+        "previous_ranking": chosen_prev,
     })
     print(f"[ok] porra: {len(ranking)} jugadores procesados (campeon={champion})")
 

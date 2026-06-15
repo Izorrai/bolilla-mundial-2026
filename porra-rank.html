@@ -55,6 +55,19 @@
   .bk .l { font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
   .bk .v { font-size: 18px; font-weight: 800; color: var(--blue-dark); }
   .prize-bar { background: var(--green-light); padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 14px; text-align: center; }
+  .rank-change { display: inline-flex; align-items: center; font-size: 13px; font-weight: 900; margin-left: 6px; vertical-align: middle; padding: 1px 5px; border-radius: 6px; }
+  .rank-change.up { color: #1d8a4a; background: #e6f4ea; }
+  .rank-change.down { color: #c0392b; background: #fdecea; }
+  .rank-change.big-up { animation: pulseUp 1.6s ease-in-out infinite; }
+  .rank-change.big-down { animation: pulseDown 1.6s ease-in-out infinite; }
+  @keyframes pulseUp   { 0%, 100% { box-shadow: 0 0 0 0 rgba(29,138,74,0.55); } 50% { box-shadow: 0 0 0 6px rgba(29,138,74,0); } }
+  @keyframes pulseDown { 0%, 100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.55); } 50% { box-shadow: 0 0 0 6px rgba(192,57,43,0); } }
+  .new-badge { display: inline-block; background: #2196f3; color: white; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: 800; margin-left: 6px; vertical-align: middle; }
+  .overtook-badge { display: inline-block; background: #fff3cd; color: #5a4a00; padding: 1px 7px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .crown-badge { font-size: 16px; margin-left: 4px; animation: bounce 1.2s ease-in-out infinite; display: inline-block; }
+  .bone-badge { font-size: 14px; margin-left: 4px; opacity: 0.7; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  tr.row-new-leader { background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.18), transparent); }
   .detail-section { margin-top: 16px; }
   .detail-section h3 { margin: 0 0 6px 0; font-size: 13px; color: var(--blue-dark); border-bottom: 1px solid var(--border); padding-bottom: 4px; }
   .detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -134,13 +147,35 @@ function renderRank() {
     body.innerHTML = `<tr><td colspan="3" class="empty">Sin pronósticos todavía.</td></tr>`;
     return;
   }
+  const newTop = ranking[0];
+  const isNewLeader = newTop && !newTop.new_in_ranking
+    && typeof newTop.previous_position === "number" && newTop.previous_position > 1;
   let html = "";
   ranking.forEach((p, i) => {
     const pos = i + 1;
     const cls = pos === 1 ? "gold" : pos === 2 ? "silver" : pos === 3 ? "bronze" : "";
-    html += `<tr onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
+    const rc = p.delta_position ?? 0;
+    const absRc = Math.abs(rc);
+    const bigCls = absRc >= 3 ? (rc > 0 ? " big-up" : " big-down") : "";
+    const rocketOrCrash = rc >= 3 ? " 🚀" : rc <= -3 ? " 💥" : "";
+    const rankChange = rc > 0
+      ? `<span class="rank-change up${bigCls}" title="Sube ${rc} puesto${rc === 1 ? "" : "s"}">▲${rc}${rocketOrCrash}</span>`
+      : rc < 0
+        ? `<span class="rank-change down${bigCls}" title="Baja ${-rc} puesto${-rc === 1 ? "" : "s"}">▼${-rc}${rocketOrCrash}</span>`
+        : "";
+    const newBadge = p.new_in_ranking ? `<span class="new-badge" title="Nuevo en la clasificación">🆕</span>` : "";
+    const overtook = (p.overtook || []).filter(Boolean);
+    const overtookBadge = overtook.length > 0
+      ? `<span class="overtook-badge" title="Adelantó a ${overtook.join(', ')}">🥊 +${overtook.length}</span>`
+      : "";
+    const crown = (i === 0 && isNewLeader) ? `<span class="crown-badge" title="¡Nuevo líder!">👑</span>` : "";
+    const bone = (ranking.length >= 4 && i === ranking.length - 1)
+      ? `<span class="bone-badge" title="Farolillo rojo">🦴</span>`
+      : "";
+    const rowCls = (i === 0 && isNewLeader) ? "row-new-leader" : "";
+    html += `<tr class="${rowCls}" onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
       <td class="pos ${cls}">${pos}</td>
-      <td><strong>${escapeHtml(p.name)}</strong></td>
+      <td><strong>${escapeHtml(p.name)}</strong>${crown}${rankChange}${newBadge}${overtookBadge}${bone}</td>
       <td class="points">${fmtPts(p.total || 0)}</td>
     </tr>`;
   });

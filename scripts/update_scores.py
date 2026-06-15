@@ -199,7 +199,7 @@ def compute_extras_points(participant, extras_official):
     return pts
 
 
-def compute_room_scoreboard(room_id, participants_doc, team_stats, teams, prev_pos):
+def compute_room_scoreboard(room_id, participants_doc, team_stats, teams):
     participants = participants_doc.get("participants", [])
     extras_official = participants_doc.get("tournament_extras") or {}
     ranking = []
@@ -238,10 +238,60 @@ def compute_room_scoreboard(room_id, participants_doc, team_stats, teams, prev_p
             "team_points": team_points_list,
         })
     ranking.sort(key=lambda x: (-x["total"], x["name"].lower()))
-    for i, entry in enumerate(ranking):
-        old_pos = prev_pos.get(entry["name"])
-        entry["rank_change"] = (old_pos - (i + 1)) if old_pos is not None else 0
     return ranking
+
+
+# ---------- Rank-change annotations (movimientos divertidos en la clasificacion) ----------
+
+def rankings_equal(a, b):
+    """Dos rankings se consideran iguales si tienen las mismas personas con los
+    mismos puntos (no nos importa el orden tras el sort, que es determinista)."""
+    if len(a) != len(b):
+        return False
+    da = {e["name"]: e.get("total", 0) for e in a}
+    db = {e["name"]: e.get("total", 0) for e in b}
+    return da == db
+
+
+def annotate_changes(new_ranking, prev_ranking):
+    """Anade campos por entrada de new_ranking:
+      - previous_position (int | None)
+      - delta_position (int): positivo si subio, negativo si bajo, 0 si igual
+      - delta_total (float): diferencia de puntos vs prev
+      - overtook (list[str]): nombres a los que el jugador acaba de adelantar
+      - new_in_ranking (bool): si no aparecia antes en prev_ranking
+    """
+    prev_pos = {e["name"]: i + 1 for i, e in enumerate(prev_ranking)}
+    prev_tot = {e["name"]: e.get("total", 0) for e in prev_ranking}
+    new_pos = {e["name"]: i + 1 for i, e in enumerate(new_ranking)}
+    for i, e in enumerate(new_ranking):
+        n = e["name"]
+        npos = i + 1
+        ppos = prev_pos.get(n)
+        if ppos is None:
+            e["new_in_ranking"] = True
+            e["previous_position"] = None
+            e["delta_position"] = 0
+            e["delta_total"] = e.get("total", 0)
+            e["overtook"] = []
+        else:
+            e["new_in_ranking"] = False
+            e["previous_position"] = ppos
+            e["delta_position"] = ppos - npos  # +N = subio N puestos
+            e["delta_total"] = round(e.get("total", 0) - prev_tot.get(n, 0), 1)
+            overtook = []
+            for other in new_ranking:
+                on = other["name"]
+                if on == n:
+                    continue
+                op = prev_pos.get(on)
+                if op is None:
+                    continue
+                # estaba delante de mi y ahora esta detras
+                if op < ppos and new_pos[on] > npos:
+                    overtook.append(on)
+            e["overtook"] = overtook
+    return new_ranking
 
 
 def load_json(path, default):
@@ -298,11 +348,25 @@ def main():
         scoreboard_file = room_dir / "scoreboard.json"
         participants_doc = load_json(participants_file, {"participants": [], "tournament_extras": {}})
         prev_scoreboard = load_json(scoreboard_file, {})
-        prev_pos = {e["name"]: i + 1 for i, e in enumerate(prev_scoreboard.get("ranking", []))}
-        ranking = compute_room_scoreboard(room_id, participants_doc, team_stats, teams, prev_pos)
+        last_persisted_ranking = prev_scoreboard.get("ranking", [])
+        sticky_previous = prev_scoreboard.get("previous_ranking", [])
+
+        ranking = compute_room_scoreboard(room_id, participants_doc, team_stats, teams)
+
+        # "Previous" sticky: si el ranking actual coincide con el ultimo persistido,
+        # mantenemos como previous el que ya teniamos (asi los deltas no desaparecen
+        # entre runs sin cambios). Si el ranking cambio, el persistido pasa a ser previous.
+        if rankings_equal(last_persisted_ranking, ranking):
+            chosen_prev = sticky_previous
+        else:
+            chosen_prev = last_persisted_ranking
+
+        annotate_changes(ranking, chosen_prev)
+
         save_json(scoreboard_file, {
             "last_updated": now_iso,
             "ranking": ranking,
+            "previous_ranking": chosen_prev,
             "team_stats": team_stats,
             "champion": champ,
             "room_id": room_id,
