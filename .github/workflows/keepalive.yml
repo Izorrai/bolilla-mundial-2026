@@ -1,23 +1,47 @@
 name: Keepalive
 
 # GitHub desactiva los workflows con cron tras 60 dias sin actividad en el repo.
-# Esto evita que se duerma el cron de update_scores (que actualiza marcadores
-# y rankings) durante periodos de poca actividad. Hace un commit inocuo cada
-# 6 horas para mantener el repo "vivo".
-# Ref: https://github.com/gautamkrishnar/keepalive-workflow
+# Este job hace un commit inocuo cada 5 dias para mantener el repo "vivo" y
+# que el cron de update_scores (resultados + ranking) siga ejecutandose.
+#
+# No usamos una accion externa (gautamkrishnar/keepalive-workflow) porque tu
+# repo tiene la politica restrictiva por defecto que solo permite acciones de
+# actions/*. Hacemos lo mismo a mano con git, es trivial.
 
 on:
   schedule:
-    - cron: "0 */6 * * *"   # cada 6 horas
+    - cron: "0 6 */5 * *"   # cada 5 dias a las 06:00 UTC
   workflow_dispatch: {}
 
 permissions:
-  actions: write
   contents: write
+
+concurrency:
+  group: keepalive
+  cancel-in-progress: false
 
 jobs:
   keepalive:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: gautamkrishnar/keepalive-workflow@v2
+
+      - name: Touch keepalive marker and commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p .github
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/.keepalive
+          git add .github/.keepalive
+          if git diff --cached --quiet; then
+            echo "Sin cambios (raro pero ok)"
+            exit 0
+          fi
+          git commit -m "chore(keepalive): touch marker so GitHub does not pause the cron"
+          # Retry con rebase en caso de race con otros workflows
+          for i in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "Push rechazado en intento $i, rebaseando..."
+            git pull --rebase -X theirs origin main || git rebase --abort
+          done
+          exit 1
