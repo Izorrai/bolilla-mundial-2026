@@ -43,6 +43,29 @@ flock -n 200 || { log "Otro run en curso, salgo"; exit 0; }
 # desde alli desde que el server es la fuente de verdad). Si los scripts python
 # fallaran tras el reset, restauramos el snapshot — asi NUNCA volvemos al
 # scoreboard viejo de GitHub.
+# Marcar como "skip-worktree" los JSON que regenera el server. Con esto, git
+# reset --hard NO los toca al sincronizar el resto del codigo desde GitHub.
+# Es idempotente (se puede ejecutar siempre) y elimina la ventana de unos
+# milisegundos en la que nginx servia el fichero stale entre el reset y el
+# restore manual. Combinado con escritura atomica en los scripts python
+# (save_json a .tmp + rename), nginx siempre sirve un JSON completo y fresco.
+log "marcar archivos del server como skip-worktree (idempotente)"
+mark_skip_worktree() {
+  for f in "$@"; do
+    [[ -f "$f" ]] && git update-index --skip-worktree "$f" 2>/dev/null || true
+  done
+}
+mark_skip_worktree \
+  data/matches.json \
+  data/fixtures.json \
+  data/scorers.json \
+  data/porra/porra_scoreboard.json
+shopt -s nullglob
+for f in data/rooms/*/scoreboard.json; do mark_skip_worktree "$f"; done
+shopt -u nullglob
+
+# Red de seguridad: si por algun motivo el skip-worktree no aplicara,
+# guardamos snapshot antes del reset para poder restaurar despues.
 log "git fetch + reset + pull"
 SNAP=$(mktemp -d -t bolilla-XXXXXX)
 mkdir -p "$SNAP/data/rooms" "$SNAP/data/porra"
@@ -59,15 +82,21 @@ shopt -u nullglob
 git fetch --quiet origin main || log "fetch fallo"
 git reset --hard origin/main --quiet || log "reset fallo (sigue con codigo local)"
 
-# Restaurar los JSON del server (los scripts los regeneran a continuacion,
-# pero si fallaran, este restore mantiene los 28 participantes / ultimos datos).
+# Restaurar SOLO si por alguna razon el archivo cambio durante el reset.
+# Con skip-worktree esto no deberia pasar, pero defensa en profundidad.
 for f in data/matches.json data/fixtures.json data/scorers.json data/porra/porra_scoreboard.json; do
-  [[ -f "$SNAP/$f" ]] && cp -p "$SNAP/$f" "$f"
+  if [[ -f "$SNAP/$f" ]] && ! cmp -s "$SNAP/$f" "$f"; then
+    log "fallback restaurando $f (skip-worktree no actuo)"
+    cp -p "$SNAP/$f" "$f"
+  fi
 done
 shopt -s nullglob
 for f in "$SNAP"/data/rooms/*/scoreboard.json; do
   rel="${f#$SNAP/}"
-  cp -p "$f" "$rel"
+  if [[ -f "$rel" ]] && ! cmp -s "$f" "$rel"; then
+    log "fallback restaurando $rel"
+    cp -p "$f" "$rel"
+  fi
 done
 shopt -u nullglob
 rm -rf "$SNAP"

@@ -37,10 +37,13 @@ def load_json(path, default):
 
 
 def save_json(path, data):
+    """Escritura atomica: write a .tmp + rename, asi nginx nunca sirve JSON a medias."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
         f.write("\n")
+    tmp.replace(path)
 
 
 def eq(a, b):

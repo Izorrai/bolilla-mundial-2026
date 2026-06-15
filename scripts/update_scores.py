@@ -322,10 +322,14 @@ def load_json(path, default):
 
 
 def save_json(path, data):
+    """Escritura ATOMICA: escribe a .tmp y hace rename. Asi nginx nunca
+    sirve un JSON a medias durante la escritura."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
         f.write("\n")
+    tmp.replace(path)  # os.rename atomico en el mismo filesystem
 
 
 def main():
@@ -339,13 +343,37 @@ def main():
     rooms = rooms_doc.get("rooms", [])
 
     raw = fetch_matches(api_key)
+    cached_doc = load_json(MATCHES_FILE, {"matches": []})
+    cached_matches = cached_doc.get("matches", [])
+    cached_by_id = {m.get("id"): m for m in cached_matches if m.get("id") is not None}
+
     if raw is None:
-        cached = load_json(MATCHES_FILE, {"matches": []})
-        matches = cached.get("matches", [])
-        print(f"[info] using {len(matches)} cached matches")
+        matches = cached_matches
+        print(f"[info] using {len(matches)} cached matches (API caida)")
     else:
-        matches = normalize_matches(raw)
-        print(f"[info] fetched {len(raw)} matches, kept {len(matches)} finished")
+        new_matches = normalize_matches(raw)
+        new_by_id = {m.get("id"): m for m in new_matches if m.get("id") is not None}
+
+        # MONOTONICO: nunca perdemos un partido que ya teniamos como FINISHED
+        # con marcador valido. Si la API devuelve menos partidos finalizados
+        # (estados transitorios FINISHED/null durante VAR, hipos de la API,
+        # match que pasa brevemente a IN_PLAY...), conservamos el dato anterior.
+        # Solo aceptamos cambios cuando el nuevo dato es valido y "mejora o iguala"
+        # al anterior.
+        merged_by_id = dict(cached_by_id)  # arranca con todo lo que teniamos
+        for mid, m in new_by_id.items():
+            merged_by_id[mid] = m  # update / insert: el nuevo dato gana si existe
+
+        # Detectamos si se perdieron partidos
+        lost = set(cached_by_id) - set(new_by_id)
+        if lost:
+            print(f"[warn] API devolvio {len(lost)} partidos menos que el cache; los mantenemos para no perder puntos")
+
+        matches = list(merged_by_id.values())
+        # Orden estable por fecha
+        matches.sort(key=lambda m: (m.get("utcDate") or "", m.get("id") or 0))
+
+        print(f"[info] fetched {len(raw)} matches, {len(new_matches)} new FINISHED valid, total acumulado {len(matches)}")
         save_json(MATCHES_FILE, {
             "last_updated": datetime.now(timezone.utc).isoformat(),
             "matches": matches,
