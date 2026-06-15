@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-15T07:46:10.757433+00:00",
+  "last_updated": "2026-06-15T09:19:42.750987+00:00",
   "ranking": [
     {
       "name": "Jon Latxiondo",
@@ -260,6 +260,279 @@
         },
         {
           "name": "Cabo Verde",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "rank_change": 0
+    },
+    {
+      "name": "CHRISTIAN MARCOS",
+      "total": 12.5,
+      "breakdown": {
+        "goals": 3.5,
+        "match_results": 9.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Colombia",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irak",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
           "group": "F",
           "points": 0.0,
           "details": {
