@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-14T22:55:12.493512+00:00",
+  "last_updated": "2026-06-15T00:04:47.328023+00:00",
   "ranking": [
     {
       "name": "Jon Latxiondo",
@@ -272,7 +272,7 @@
           }
         }
       ],
-      "rank_change": 1
+      "rank_change": 0
     },
     {
       "name": "ANtxon",
@@ -545,7 +545,7 @@
           }
         }
       ],
-      "rank_change": -1
+      "rank_change": 0
     }
   ],
   "team_stats": {
