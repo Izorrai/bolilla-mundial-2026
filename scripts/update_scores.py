@@ -300,16 +300,17 @@ def annotate_changes(new_ranking, prev_ranking):
             e["delta_position"] = ppos - npos  # +N = subio N puestos
             e["delta_total"] = round(e.get("total", 0) - prev_tot.get(n, 0), 1)
             overtook = []
-            for other in new_ranking:
-                on = other["name"]
-                if on == n:
-                    continue
-                op = prev_pos.get(on)
-                if op is None:
-                    continue
-                # estaba delante de mi y ahora esta detras
-                if op < ppos and new_pos[on] > npos:
-                    overtook.append(on)
+            if npos < ppos:
+                for other in new_ranking:
+                    on = other["name"]
+                    if on == n:
+                        continue
+                    op = prev_pos.get(on)
+                    if op is None:
+                        continue
+                    # estaba delante de mi y ahora esta detras
+                    if op < ppos and new_pos[on] > npos:
+                        overtook.append(on)
             e["overtook"] = overtook
     return new_ranking
 
