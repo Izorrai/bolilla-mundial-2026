@@ -65,7 +65,7 @@
   .new-badge { display: inline-block; background: #2196f3; color: white; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: 800; margin-left: 6px; vertical-align: middle; }
   .overtook-badge { display: inline-block; background: #fff3cd; color: #5a4a00; padding: 1px 7px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
   .crown-badge { font-size: 16px; margin-left: 4px; animation: bounce 1.2s ease-in-out infinite; display: inline-block; }
-  .bone-badge { font-size: 14px; margin-left: 4px; opacity: 0.7; }
+  .last-badge { display: inline-block; background: #fbe4e4; color: #9a3b2f; padding: 1px 8px; border-radius: 12px; font-size: 12px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
   @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
   tr.row-new-leader { background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.18), transparent); }
   .detail-section { margin-top: 16px; }
@@ -138,6 +138,24 @@ async function fetchJson(url) {
   return r.json();
 }
 
+// Humillaciones simpáticas para el ultimo del ranking, asignadas por hash del nombre.
+const LAST_PLACE_POOL = [
+  { emoji: "🐢", text: "Tortuga",       title: "Más lento que una tortuga" },
+  { emoji: "🦥", text: "Perezoso",      title: "El perezoso del grupo" },
+  { emoji: "🐌", text: "Caracol",       title: "A paso de caracol" },
+  { emoji: "🫠", text: "Derretido",     title: "Derritiéndose en el fondo" },
+  { emoji: "🥴", text: "Tambaleando",   title: "Apañándoselas como puede" },
+  { emoji: "🤡", text: "Payaso",        title: "Bromas aparte..." },
+  { emoji: "🏮", text: "Farolillo",     title: "Farolillo rojo" },
+  { emoji: "😴", text: "Siesta",        title: "Echándose la siesta" },
+  { emoji: "🛟", text: "SOS",           title: "Necesita salvavidas urgente" },
+  { emoji: "🪨", text: "Piedra",        title: "Pesa más que una piedra" },
+  { emoji: "🧱", text: "Ladrillo",      title: "Pegado al suelo" },
+  { emoji: "🚂", text: "Vagón de cola", title: "El vagón de cola" },
+];
+function hashName(s) { let h = 0; for (const c of String(s)) h = ((h * 31) + c.charCodeAt(0)) | 0; return Math.abs(h); }
+function lastPlaceBadge(name) { return LAST_PLACE_POOL[hashName(name) % LAST_PLACE_POOL.length]; }
+
 function renderRank() {
   const body = document.getElementById("rankBody");
   let ranking = (SCOREBOARD && SCOREBOARD.ranking && SCOREBOARD.ranking.length > 0)
@@ -170,7 +188,7 @@ function renderRank() {
       : "";
     const crown = (i === 0 && isNewLeader) ? `<span class="crown-badge" title="¡Nuevo líder!">👑</span>` : "";
     const bone = (ranking.length >= 4 && i === ranking.length - 1)
-      ? `<span class="bone-badge" title="Farolillo rojo">🦴</span>`
+      ? (() => { const b = lastPlaceBadge(p.name); return `<span class="last-badge" title="${escapeHtml(b.title)}">${b.emoji} ${escapeHtml(b.text)}</span>`; })()
       : "";
     const rowCls = (i === 0 && isNewLeader) ? "row-new-leader" : "";
     html += `<tr class="${rowCls}" onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
