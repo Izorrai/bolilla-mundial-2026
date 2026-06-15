@@ -37,14 +37,40 @@ log() { echo "[$(ts)] $*"; }
 exec 200>/tmp/bolilla-cron.lock
 flock -n 200 || { log "Otro run en curso, salgo"; exit 0; }
 
-# Actualizar codigo.
-# Antes del pull, descartamos cualquier cambio local en archivos rastreados:
-# los unicos que pueden estar "sucios" son los JSON que regeneran los scripts
-# (matches, scoreboard, fixtures, porra_scoreboard). Los datos los volvemos a
-# regenerar abajo, asi que tirar los cambios locales es seguro.
+# Antes del 'git reset --hard origin/main' guardamos los JSON que el server
+# regenera (scoreboard.json, matches.json, fixtures.json, porra_scoreboard.json,
+# scorers.json). Estos archivos en GitHub estan obsoletos (no se actualizan
+# desde alli desde que el server es la fuente de verdad). Si los scripts python
+# fallaran tras el reset, restauramos el snapshot — asi NUNCA volvemos al
+# scoreboard viejo de GitHub.
 log "git fetch + reset + pull"
+SNAP=$(mktemp -d -t bolilla-XXXXXX)
+mkdir -p "$SNAP/data/rooms" "$SNAP/data/porra"
+for f in data/matches.json data/fixtures.json data/scorers.json data/porra/porra_scoreboard.json; do
+  [[ -f "$f" ]] && { mkdir -p "$SNAP/$(dirname "$f")"; cp -p "$f" "$SNAP/$f"; }
+done
+shopt -s nullglob
+for f in data/rooms/*/scoreboard.json; do
+  mkdir -p "$SNAP/$(dirname "$f")"
+  cp -p "$f" "$SNAP/$f"
+done
+shopt -u nullglob
+
 git fetch --quiet origin main || log "fetch fallo"
 git reset --hard origin/main --quiet || log "reset fallo (sigue con codigo local)"
+
+# Restaurar los JSON del server (los scripts los regeneran a continuacion,
+# pero si fallaran, este restore mantiene los 28 participantes / ultimos datos).
+for f in data/matches.json data/fixtures.json data/scorers.json data/porra/porra_scoreboard.json; do
+  [[ -f "$SNAP/$f" ]] && cp -p "$SNAP/$f" "$f"
+done
+shopt -s nullglob
+for f in "$SNAP"/data/rooms/*/scoreboard.json; do
+  rel="${f#$SNAP/}"
+  cp -p "$f" "$rel"
+done
+shopt -u nullglob
+rm -rf "$SNAP"
 
 # Ejecutar los scripts en orden. Cada uno encapsula sus propios errores:
 # si fetch_fixtures falla porque la API se cayo, update_scores.py
