@@ -587,7 +587,7 @@ function liveTeamPts(teamName) {
                   : (ROOMS_DATA.default || ROOMS_DATA.rooms[0].id);
     await loadLiveTeams();
     await loadRoomData(initial);
-    setInterval(async () => {
+    async function refreshAll() {
       await loadLiveTeams();
       if (CURRENT_ROOM) {
         try {
@@ -608,7 +608,14 @@ function liveTeamPts(teamName) {
       renderRanking();
       renderTeams();
       if (OPEN_MODAL_NAME) showDetail(OPEN_MODAL_NAME);
-    }, LIVE_REFRESH_MS);
+    }
+    setInterval(refreshAll, LIVE_REFRESH_MS);
+    // Refresco al volver a la pestaña tras dejarla en background:
+    // los navegadores pausan setInterval para ahorrar bateria, asi que
+    // cuando el tab vuelve a estar visible forzamos un refresco inmediato.
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") refreshAll();
+    });
   } catch (err) {
     document.getElementById("rankingBody").innerHTML = `<tr><td colspan="3" class="empty">Error cargando datos: ${escapeHtml(err.message)}</td></tr>`;
   }

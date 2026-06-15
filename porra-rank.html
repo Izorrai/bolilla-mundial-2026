@@ -272,27 +272,44 @@ document.getElementById("detailBg").addEventListener("click", e => {
   if (e.target.id === "detailBg") e.target.classList.remove("open");
 });
 
-(async function init() {
+const REFRESH_MS = 60000;
+
+async function refreshPorra() {
   try {
     const results = await Promise.allSettled([
-      fetchJson(REPO_CONFIG_URL),
       fetchJson(REPO_SCORE_URL),
       fetchJson(REPO_PRED_URL),
     ]);
-    CONFIG = results[0].status === "fulfilled" ? results[0].value : null;
-    SCOREBOARD = results[1].status === "fulfilled" ? results[1].value : null;
-    PREDICTIONS = results[2].status === "fulfilled" ? results[2].value : null;
-
-    const players = CONFIG ? CONFIG.players.length : 0;
-    const fee = CONFIG ? CONFIG.fee_eur : 0;
-    document.getElementById("prizeBar").textContent =
-      players && fee ? `💰 Bote: ${players * fee}€ · ${players} jugadores × ${fee}€` : "Bote pendiente";
+    if (results[0].status === "fulfilled") SCOREBOARD = results[0].value;
+    if (results[1].status === "fulfilled") PREDICTIONS = results[1].value;
 
     const ts = SCOREBOARD && SCOREBOARD.last_updated ? SCOREBOARD.last_updated : null;
     document.getElementById("updated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "Mundial aún no comenzado";
     document.getElementById("subline").textContent = ts ? `Actualizado ${fmtDate(ts)}` : "Sin partidos jugados";
 
     renderRank();
+  } catch (err) {
+    document.getElementById("rankBody").innerHTML = `<tr><td colspan="3" class="empty">Error: ${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+(async function init() {
+  try {
+    const cfgRes = await fetch(REPO_CONFIG_URL + "?t=" + Date.now()).then(r => r.json()).catch(() => null);
+    CONFIG = cfgRes;
+
+    const players = CONFIG ? CONFIG.players.length : 0;
+    const fee = CONFIG ? CONFIG.fee_eur : 0;
+    document.getElementById("prizeBar").textContent =
+      players && fee ? `💰 Bote: ${players * fee}€ · ${players} jugadores × ${fee}€` : "Bote pendiente";
+
+    await refreshPorra();
+    setInterval(refreshPorra, REFRESH_MS);
+    // Refresca al instante cuando el tab vuelve al foreground (los navegadores
+    // pausan setInterval cuando dejas la pestana en background).
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") refreshPorra();
+    });
   } catch (err) {
     document.getElementById("rankBody").innerHTML = `<tr><td colspan="3" class="empty">Error: ${escapeHtml(err.message)}</td></tr>`;
   }
