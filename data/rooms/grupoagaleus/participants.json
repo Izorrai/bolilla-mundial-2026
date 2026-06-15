@@ -5,7 +5,1074 @@
     "best_gk": null
   },
   "participants": [
-        {
+    {
+      "name": "Natalia García",
+      "selections": {
+        "A": [
+          "Inglaterra",
+          "Portugal",
+          "Francia"
+        ],
+        "B": [
+          "Holanda",
+          "Noruega",
+          "Bélgica"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "Croacia",
+          "Ecuador"
+        ],
+        "D": [
+          "Canadá",
+          "Paraguay",
+          "Chequia",
+          "Egipto"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Irán"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Panamá"
+        ]
+      },
+      "pichichi": "HARRY KANE",
+      "mvp": "MBAPPÉ",
+      "gk": "MIKE MAIGNAN",
+      "paid": true
+    },
+    {
+      "name": "Oscar Gandía",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "Suiza"
+        ],
+        "C": [
+          "Marruecos",
+          "Croacia",
+          "Senegal",
+          "Uruguay"
+        ],
+        "D": [
+          "Bosnia",
+          "Ghana",
+          "Egipto",
+          "Argelia"
+        ],
+        "E": [
+          "Túnez",
+          "Congo"
+        ],
+        "F": [
+          "Catar",
+          "Arabia Saudí",
+          "Irak",
+          "Uzbekistán"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "PEDRI",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Iñigo Ornes",
+      "selections": {
+        "A": [
+          "Inglaterra",
+          "Portugal",
+          "Alemania"
+        ],
+        "B": [
+          "Holanda",
+          "Noruega",
+          "Bélgica"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "México",
+          "Suecia"
+        ],
+        "D": [
+          "Canadá",
+          "Paraguay",
+          "Escocia",
+          "Egipto"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Túnez"
+        ],
+        "F": [
+          "Catar",
+          "Arabia Saudí",
+          "Irak",
+          "Jordania"
+        ]
+      },
+      "pichichi": "HARRY KANE",
+      "mvp": "JAMAL MUSIALA",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Iñigo González",
+      "selections": {
+        "A": [
+          "España",
+          "Argentina",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "EEUU"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "Croacia",
+          "Senegal"
+        ],
+        "D": [
+          "Escocia",
+          "Bosnia",
+          "Egipto",
+          "Corea del Sur"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Túnez"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Panamá"
+        ]
+      },
+      "pichichi": "MIKEL OYARZABAL",
+      "mvp": "PEDRI",
+      "gk": "MIKE MAIGNAN",
+      "paid": true
+    },
+    {
+      "name": "Peio Fontal",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Noruega",
+          "Japón"
+        ],
+        "C": [
+          "Marruecos",
+          "México",
+          "Ecuador",
+          "Senegal"
+        ],
+        "D": [
+          "Canadá",
+          "Chequia",
+          "Egipto",
+          "Corea del Sur"
+        ],
+        "E": [
+          "Australia",
+          "Congo"
+        ],
+        "F": [
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Panamá",
+          "Jordania"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "LAMINE YAMAL",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Ander Ondarza",
+      "selections": {
+        "A": [
+          "Francia",
+          "Inglaterra",
+          "Argentina"
+        ],
+        "B": [
+          "Noruega",
+          "Bélgica",
+          "Japón"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "Croacia",
+          "Senegal"
+        ],
+        "D": [
+          "Canadá",
+          "Paraguay",
+          "Escocia",
+          "Egipto"
+        ],
+        "E": [
+          "Australia",
+          "Irán"
+        ],
+        "F": [
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Panamá",
+          "Uzbekistán"
+        ]
+      },
+      "pichichi": "ERLING HAALAND",
+      "mvp": "HARRY KANE",
+      "gk": "MIKE MAIGNAN",
+      "paid": true
+    },
+    {
+      "name": "Rebeca González",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "Japón"
+        ],
+        "C": [
+          "México",
+          "Suecia",
+          "Croacia",
+          "Turquía"
+        ],
+        "D": [
+          "Chequia",
+          "Ghana",
+          "Corea del Sur",
+          "Argelia"
+        ],
+        "E": [
+          "Australia",
+          "Túnez"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Panamá"
+        ]
+      },
+      "pichichi": "HARRY KANE",
+      "mvp": "MBAPPÉ",
+      "gk": "THIBAOUT COURTOIS",
+      "paid": true
+    },
+    {
+      "name": "Loreto Mendoza",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Colombia",
+          "Japón"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "Ecuador",
+          "Senegal"
+        ],
+        "D": [
+          "Canadá",
+          "Chequia",
+          "Corea del Sur",
+          "Argelia"
+        ],
+        "E": [
+          "Australia",
+          "Irán"
+        ],
+        "F": [
+          "Catar",
+          "Cabo Verde",
+          "Uzbekistán",
+          "Haití"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "OUSMANE DEMBELÉ",
+      "gk": "MIKE MAIGNAN",
+      "paid": true
+    },
+    {
+      "name": "Alex Lovin",
+      "selections": {
+        "A": [
+          "Francia",
+          "Inglaterra",
+          "Argentina"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "Japón"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "Croacia",
+          "Turquía"
+        ],
+        "D": [
+          "Canadá",
+          "Paraguay",
+          "Chequia",
+          "Bosnia"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Australia"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Jordania"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "MBAPPÉ",
+      "gk": "EMILIANO MARTINEZ",
+      "paid": true
+    },
+    {
+      "name": "Monika Zelaia",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Noruega",
+          "Colombia",
+          "EEUU"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "Turquía",
+          "Senegal"
+        ],
+        "D": [
+          "Canadá",
+          "Egipto",
+          "Corea del Sur",
+          "Argelia"
+        ],
+        "E": [
+          "Túnez",
+          "Irán"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Panamá"
+        ]
+      },
+      "pichichi": "HARRY KANE",
+      "mvp": "LAMINE YAMAL",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Noelia Angulo",
+      "selections": {
+        "A": [
+          "Francia",
+          "Brasil",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "EEUU"
+        ],
+        "C": [
+          "Marruecos",
+          "México",
+          "Croacia",
+          "Turquía"
+        ],
+        "D": [
+          "Canadá",
+          "Paraguay",
+          "Escocia",
+          "Ghana"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Australia"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Curazao"
+        ]
+      },
+      "pichichi": "HARRY KANE",
+      "mvp": "MICHAEL OLISE",
+      "gk": "THIBAOUT COURTOIS",
+      "paid": true
+    },
+    {
+      "name": "Gontzal Fresno",
+      "selections": {
+        "A": [
+          "España",
+          "Argentina",
+          "Brasil"
+        ],
+        "B": [
+          "Holanda",
+          "Noruega",
+          "Colombia"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "México",
+          "Ecuador"
+        ],
+        "D": [
+          "Canadá",
+          "Paraguay",
+          "Escocia",
+          "Egipto"
+        ],
+        "E": [
+          "Australia",
+          "Irán"
+        ],
+        "F": [
+          "Catar",
+          "Arabia Saudí",
+          "Cabo Verde",
+          "Panamá"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "LAMINE YAMAL",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Arrate Azkunaga",
+      "selections": {
+        "A": [
+          "Francia",
+          "Argentina",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "Suiza"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "Ecuador",
+          "Austria"
+        ],
+        "D": [
+          "Paraguay",
+          "Chequia",
+          "Bosnia",
+          "Egipto"
+        ],
+        "E": [
+          "Irán",
+          "Congo"
+        ],
+        "F": [
+          "Catar",
+          "Arabia Saudí",
+          "Irak",
+          "Panamá"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "VITINHA",
+      "gk": "THIBAOUT COURTOIS",
+      "paid": true
+    },
+    {
+      "name": "Aitor Sanjeronimo",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Inglaterra"
+        ],
+        "B": [
+          "EEUU",
+          "Japón",
+          "Suiza"
+        ],
+        "C": [
+          "Suecia",
+          "Ecuador",
+          "Senegal",
+          "Austria"
+        ],
+        "D": [
+          "Ghana",
+          "Egipto",
+          "Corea del Sur",
+          "Argelia"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Congo"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Uzbekistán",
+          "Jordania"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "LAMINE YAMAL",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Ines Aseguinolaza",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "EEUU"
+        ],
+        "C": [
+          "Marruecos",
+          "México",
+          "Croacia",
+          "Ecuador"
+        ],
+        "D": [
+          "Canadá",
+          "Egipto",
+          "Corea del Sur",
+          "Argelia"
+        ],
+        "E": [
+          "Australia",
+          "Túnez"
+        ],
+        "F": [
+          "Catar",
+          "Irak",
+          "Cabo Verde",
+          "Jordania"
+        ]
+      },
+      "pichichi": "MIKEL OYARZABAL",
+      "mvp": "LAMINE YAMAL",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Alex Niftode",
+      "selections": {
+        "A": [
+          "España",
+          "Brasil",
+          "Alemania"
+        ],
+        "B": [
+          "Bélgica",
+          "Colombia",
+          "Suiza"
+        ],
+        "C": [
+          "Marruecos",
+          "México",
+          "Turquía",
+          "Ecuador"
+        ],
+        "D": [
+          "Canadá",
+          "Paraguay",
+          "Egipto",
+          "Corea del Sur"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Australia"
+        ],
+        "F": [
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Irak",
+          "Panamá"
+        ]
+      },
+      "pichichi": "OUSMANE DEMBELÉ",
+      "mvp": "LAMINE YAMAL",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Raúl Guerrero",
+      "selections": {
+        "A": [
+          "España",
+          "Inglaterra",
+          "Alemania"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "Suiza"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "Turquía",
+          "Senegal"
+        ],
+        "D": [
+          "Canadá",
+          "Chequia",
+          "Bosnia",
+          "Egipto"
+        ],
+        "E": [
+          "Irán",
+          "Congo"
+        ],
+        "F": [
+          "Nueva Zelanda",
+          "Cabo Verde",
+          "Panamá",
+          "Uzbekistán"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "PEDRI",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Naiara Armendariz",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "Japón"
+        ],
+        "C": [
+          "Marruecos",
+          "Croacia",
+          "Ecuador",
+          "Austria"
+        ],
+        "D": [
+          "Canadá",
+          "Paraguay",
+          "Ghana",
+          "Corea del Sur"
+        ],
+        "E": [
+          "Australia",
+          "Congo"
+        ],
+        "F": [
+          "Nueva Zelanda",
+          "Panamá",
+          "Uzbekistán",
+          "Curazao"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "LAMINE YAMAL",
+      "gk": "THIBAOUT COURTOIS",
+      "paid": true
+    },
+    {
+      "name": "Sendoa González",
+      "selections": {
+        "A": [
+          "España",
+          "Inglaterra",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Noruega",
+          "Bélgica"
+        ],
+        "C": [
+          "Marruecos",
+          "Turquía",
+          "Ecuador",
+          "Austria"
+        ],
+        "D": [
+          "Paraguay",
+          "Chequia",
+          "Bosnia",
+          "Corea del Sur"
+        ],
+        "E": [
+          "Australia",
+          "Irán"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Uzbekistán"
+        ]
+      },
+      "pichichi": "MIKEL OYARZABAL",
+      "mvp": "BRUNO FERNANDES",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Gorka Lamborena",
+      "selections": {
+        "A": [
+          "Francia",
+          "Inglaterra",
+          "Argentina"
+        ],
+        "B": [
+          "Bélgica",
+          "EEUU",
+          "Suiza"
+        ],
+        "C": [
+          "Marruecos",
+          "México",
+          "Turquía",
+          "Senegal"
+        ],
+        "D": [
+          "Chequia",
+          "Ghana",
+          "Egipto",
+          "Corea del Sur"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Australia"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Uzbekistán"
+        ]
+      },
+      "pichichi": "HARRY KANE",
+      "mvp": "MBAPPÉ",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Roberto González",
+      "selections": {
+        "A": [
+          "España",
+          "Inglaterra",
+          "Portugal"
+        ],
+        "B": [
+          "Bélgica",
+          "EEUU",
+          "Japón"
+        ],
+        "C": [
+          "Marruecos",
+          "México",
+          "Croacia",
+          "Ecuador"
+        ],
+        "D": [
+          "Paraguay",
+          "Bosnia",
+          "Egipto",
+          "Argelia"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Túnez"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Irak"
+        ]
+      },
+      "pichichi": "NICO WILLIAMS",
+      "mvp": "LAMINE YAMAL",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Ricardo Fernández",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Colombia",
+          "Japón"
+        ],
+        "C": [
+          "Uruguay",
+          "Marruecos",
+          "México",
+          "Ecuador"
+        ],
+        "D": [
+          "Escocia",
+          "Ghana",
+          "Corea del Sur",
+          "Argelia"
+        ],
+        "E": [
+          "Australia",
+          "Congo"
+        ],
+        "F": [
+          "Arabia Saudí",
+          "Irak",
+          "Panamá",
+          "Jordania"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "LAMINE YAMAL",
+      "gk": "MANUEL NEUER",
+      "paid": true
+    },
+    {
+      "name": "Andoni Sánchez",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Bélgica",
+          "Suiza"
+        ],
+        "C": [
+          "Marruecos",
+          "Croacia",
+          "Turquía",
+          "Senegal"
+        ],
+        "D": [
+          "Canadá",
+          "Bosnia",
+          "Egipto",
+          "Corea del Sur"
+        ],
+        "E": [
+          "Sudáfrica",
+          "Australia"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Jordania"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "LAMINE YAMAL",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Jone Asiain",
+      "selections": {
+        "A": [
+          "España",
+          "Argentina",
+          "Portugal"
+        ],
+        "B": [
+          "Noruega",
+          "Bélgica",
+          "EEUU"
+        ],
+        "C": [
+          "Marruecos",
+          "Croacia",
+          "Costa de Marfil",
+          "Turquía"
+        ],
+        "D": [
+          "Canadá",
+          "Escocia",
+          "Chequia",
+          "Argelia"
+        ],
+        "E": [
+          "Australia",
+          "Congo"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Arabia Saudí",
+          "Jordania"
+        ]
+      },
+      "pichichi": "JULIAN ÁLVAREZ",
+      "mvp": "LAMINE YAMAL",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    },
+    {
+      "name": "Igor Torre",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Noruega",
+          "Bélgica"
+        ],
+        "C": [
+          "Marruecos",
+          "Croacia",
+          "Senegal",
+          "Austria"
+        ],
+        "D": [
+          "Chequia",
+          "Egipto",
+          "Corea del Sur",
+          "Argelia"
+        ],
+        "E": [
+          "Australia",
+          "Irán"
+        ],
+        "F": [
+          "Catar",
+          "Nueva Zelanda",
+          "Panamá",
+          "Uzbekistán"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "VITINHA",
+      "gk": "DIOGO COSTA",
+      "paid": true
+    },
+    {
+      "name": "Iratxe Gomez",
+      "selections": {
+        "A": [
+          "España",
+          "Francia",
+          "Portugal"
+        ],
+        "B": [
+          "Holanda",
+          "Japón",
+          "Suiza"
+        ],
+        "C": [
+          "Uruguay",
+          "México",
+          "Senegal",
+          "Austria"
+        ],
+        "D": [
+          "Chequia",
+          "Bosnia",
+          "Corea del Sur",
+          "Argelia"
+        ],
+        "E": [
+          "Australia",
+          "Túnez"
+        ],
+        "F": [
+          "Catar",
+          "Arabia Saudí",
+          "Curazao",
+          "Jordania"
+        ]
+      },
+      "pichichi": "MBAPPÉ",
+      "mvp": "PEDRI",
+      "gk": "UNAI SIMÓN",
+      "paid": true
+    }    
+    ,
+    {
   "name": "Jon Latxiondo",
   "pichichi": "Kylian Mbappé",
   "mvp": "Kylian Mbappé",
