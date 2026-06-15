@@ -65,7 +65,11 @@
   .new-badge { display: inline-block; background: #2196f3; color: white; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: 800; margin-left: 6px; vertical-align: middle; }
   .overtook-badge { display: inline-block; background: #fff3cd; color: #5a4a00; padding: 1px 7px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
   .crown-badge { font-size: 16px; margin-left: 4px; animation: bounce 1.2s ease-in-out infinite; display: inline-block; }
-  .last-badge { display: inline-block; background: #fbe4e4; color: #9a3b2f; padding: 1px 8px; border-radius: 12px; font-size: 12px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .top-medal { font-size: 16px; margin-left: 6px; vertical-align: middle; }
+  .last-badge { display: inline-block; padding: 1px 8px; border-radius: 12px; font-size: 12px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .last-badge.tier-mild   { background: #fff3cd; color: #856404; }
+  .last-badge.tier-medium { background: #ffe5cc; color: #a85a00; }
+  .last-badge.tier-last   { background: #fbe4e4; color: #9a3b2f; }
   @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
   tr.row-new-leader { background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.18), transparent); animation: shineBg 2s ease-in-out 2; }
   @keyframes shineBg { 0%, 100% { background-position: -200% 0; } 50% { background-position: 200% 0; } }
@@ -269,6 +273,27 @@ const LAST_PLACE_POOL = [
 function hashName(s) { let h = 0; for (const c of String(s)) h = ((h * 31) + c.charCodeAt(0)) | 0; return Math.abs(h); }
 function lastPlaceBadge(name) { return LAST_PLACE_POOL[hashName(name) % LAST_PLACE_POOL.length]; }
 
+const TOP_MEDALS = ["🥇", "🥈", "🥉"];
+function topBadge(i) {
+  return i < 3 ? `<span class="top-medal" title="${["Oro","Plata","Bronce"][i]}">${TOP_MEDALS[i]}</span>` : "";
+}
+// Devuelve el badge para la parte baja del ranking. Severidad creciente.
+// Solo aplica para indices >= 3 (no pisamos top 3).
+function bottomBadge(i, total, name) {
+  if (i < 3) return "";
+  if (i === total - 1) {
+    const b = lastPlaceBadge(name);
+    return `<span class="last-badge tier-last" title="${escapeHtml(b.title)}">${b.emoji} ${escapeHtml(b.text)}</span>`;
+  }
+  if (i === total - 2 && total >= 5) {
+    return `<span class="last-badge tier-medium" title="Cuesta abajo">🥴 Cuesta abajo</span>`;
+  }
+  if (i === total - 3 && total >= 6) {
+    return `<span class="last-badge tier-mild" title="En el filo">😬 En el filo</span>`;
+  }
+  return "";
+}
+
 function renderRanking() {
   const tbody = document.getElementById("rankingBody");
   const ranking = (SCOREBOARD && SCOREBOARD.ranking && SCOREBOARD.ranking.length > 0)
@@ -314,9 +339,8 @@ function renderRanking() {
       ? `<span class="overtook-badge" title="Adelantó a ${overtook.join(', ')}">🥊 +${overtook.length}</span>`
       : "";
     const crown = (i === 0 && isNewLeader) ? `<span class="crown-badge" title="¡Nuevo líder!">👑</span>` : "";
-    const bone = (sorted.length >= 4 && i === sorted.length - 1)
-      ? (() => { const b = lastPlaceBadge(p.name); return `<span class="last-badge" title="${escapeHtml(b.title)}">${b.emoji} ${escapeHtml(b.text)}</span>`; })()
-      : "";
+    const top = topBadge(i);
+    const bottom = (sorted.length >= 4) ? bottomBadge(i, sorted.length, p.name) : "";
     const matchDelta = getMatchDelta(p);
     let deltaBadge = "";
     if (matchDelta !== null && matchDelta.delta !== 0) {
@@ -329,7 +353,7 @@ function renderRanking() {
     const rowCls = (i === 0 && isNewLeader) ? " row-new-leader" : "";
     html += `<tr class="${rowCls.trim()}" onclick="showDetail('${escapeHtml(p.name).replace(/'/g, "&#39;")}')">
       <td class="pos ${cls}">${pos}</td>
-      <td><strong>${escapeHtml(p.name)}</strong>${crown}${rankChange}${newBadge}${overtookBadge}${deltaBadge}${bone}</td>
+      <td><strong>${escapeHtml(p.name)}</strong>${top}${crown}${rankChange}${newBadge}${overtookBadge}${deltaBadge}${bottom}</td>
       <td class="points">${fmtPts(p.displayTotal)} pts</td>
     </tr>`;
   });
