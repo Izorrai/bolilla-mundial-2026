@@ -566,26 +566,28 @@ function getMatchDelta(participantEntry) {
   const fdToName = buildFdToName();
   const teamNames = new Set(participantEntry.team_points.map(tp => tp.name));
 
-  function calcDelta(fixtures) {
-    for (const f of fixtures) {
-      const homeCanon = fdToName[(f.home_team || "").toLowerCase()] || f.home_team;
-      const awayCanon = fdToName[(f.away_team || "").toLowerCase()] || f.away_team;
-      let delta = 0, involved = false;
-      if (teamNames.has(homeCanon)) { involved = true; delta += matchPtsForSide(f.home_goals ?? 0, f.away_goals ?? 0); }
-      if (teamNames.has(awayCanon)) { involved = true; delta += matchPtsForSide(f.away_goals ?? 0, f.home_goals ?? 0); }
-      if (involved) return Math.round(delta * 10) / 10;
-    }
-    return null;
+  function calcForFixture(f) {
+    const homeCanon = fdToName[(f.home_team || "").toLowerCase()] || f.home_team;
+    const awayCanon = fdToName[(f.away_team || "").toLowerCase()] || f.away_team;
+    let delta = 0, involved = false;
+    if (teamNames.has(homeCanon)) { involved = true; delta += matchPtsForSide(f.home_goals ?? 0, f.away_goals ?? 0); }
+    if (teamNames.has(awayCanon)) { involved = true; delta += matchPtsForSide(f.away_goals ?? 0, f.home_goals ?? 0); }
+    return involved ? Math.round(delta * 10) / 10 : null;
   }
 
-  if (LIVE_FIXTURES.length) {
-    const d = calcDelta(LIVE_FIXTURES);
+  // Partido en directo: prioridad (puede haber varios simultaneos)
+  for (const f of LIVE_FIXTURES) {
+    const d = calcForFixture(f);
     if (d !== null) return { delta: d, live: true };
   }
+
+  // Sin partidos en directo: solo el ultimo partido finalizado del torneo
+  // (no el ultimo partido en el que jugo este participante)
   const finished = [...ALL_FIXTURES]
     .filter(f => f.status === "FINISHED")
     .sort((a, b) => new Date(b.utcDate) - new Date(a.utcDate));
-  const d = calcDelta(finished);
+  if (finished.length === 0) return null;
+  const d = calcForFixture(finished[0]);
   return d !== null ? { delta: d, live: false } : null;
 }
 
