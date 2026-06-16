@@ -112,5 +112,7 @@ log "update_scores.py"
 python3 scripts/update_scores.py || log "update_scores.py salio con error (no fatal)"
 log "update_porra.py"
 python3 scripts/update_porra.py || log "update_porra.py salio con error (no fatal)"
+log "generate_feed.py"
+python3 scripts/generate_feed.py || log "generate_feed.py salio con error (no fatal)"
 
 log "ok"
