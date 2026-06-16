@@ -1,6 +1,6 @@
 {
   "_comment": "Generado por scripts/update_porra.py. No editar a mano.",
-  "last_updated": "2026-06-15T09:19:42.792444+00:00",
+  "last_updated": "2026-06-15T12:22:22.106293+00:00",
   "champion": null,
   "ranking": [
     {
@@ -61,7 +61,12 @@
           "wrong": 0
         }
       },
-      "has_submitted": true
+      "has_submitted": true,
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 21,
+      "overtook": []
     },
     {
       "name": "Jon",
@@ -121,7 +126,12 @@
           "wrong": 0
         }
       },
-      "has_submitted": true
+      "has_submitted": true,
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 12,
+      "overtook": []
     },
     {
       "name": "Ander",
@@ -145,7 +155,12 @@
           "wrong": 0
         }
       },
-      "has_submitted": false
+      "has_submitted": false,
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
     },
     {
       "name": "Eneko",
@@ -169,7 +184,12 @@
           "wrong": 0
         }
       },
-      "has_submitted": false
+      "has_submitted": false,
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
     },
     {
       "name": "Julen",
@@ -193,7 +213,12 @@
           "wrong": 0
         }
       },
-      "has_submitted": false
+      "has_submitted": false,
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
     },
     {
       "name": "Mikel",
@@ -217,7 +242,12 @@
           "wrong": 0
         }
       },
-      "has_submitted": false
+      "has_submitted": false,
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
     },
     {
       "name": "Pablo",
@@ -241,7 +271,13 @@
           "wrong": 0
         }
       },
-      "has_submitted": false
+      "has_submitted": false,
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
     }
-  ]
+  ],
+  "previous_ranking": []
 }

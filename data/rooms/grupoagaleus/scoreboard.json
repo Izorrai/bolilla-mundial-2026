@@ -1,6 +1,7764 @@
 {
-  "last_updated": "2026-06-15T09:19:42.750987+00:00",
+  "last_updated": "2026-06-15T12:22:21.926046+00:00",
   "ranking": [
+    {
+      "name": "Jon Latxiondo",
+      "total": 34.0,
+      "breakdown": {
+        "goals": 13.0,
+        "match_results": 21.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Alemania",
+          "group": "A",
+          "points": 6.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 7,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Colombia",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suecia",
+          "group": "C",
+          "points": 5.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 5,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Curazao",
+          "group": "F",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Cabo Verde",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": false,
+      "previous_position": 1,
+      "delta_position": 0,
+      "delta_total": 0.0,
+      "overtook": []
+    },
+    {
+      "name": "Iñigo Ornes",
+      "total": 27.0,
+      "breakdown": {
+        "goals": 11.0,
+        "match_results": 16.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Alemania",
+          "group": "A",
+          "points": 6.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 7,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Noruega",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Suecia",
+          "group": "C",
+          "points": 5.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 5,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Túnez",
+          "group": "E",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irak",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 27.0,
+      "overtook": []
+    },
+    {
+      "name": "Noelia Angulo",
+      "total": 25.5,
+      "breakdown": {
+        "goals": 8.5,
+        "match_results": 17.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Brasil",
+          "group": "A",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "EEUU",
+          "group": "B",
+          "points": 5.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 4,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Curazao",
+          "group": "F",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 25.5,
+      "overtook": []
+    },
+    {
+      "name": "Alex Niftode",
+      "total": 25.0,
+      "breakdown": {
+        "goals": 9.0,
+        "match_results": 16.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Brasil",
+          "group": "A",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Alemania",
+          "group": "A",
+          "points": 6.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 7,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Colombia",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irak",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 25.0,
+      "overtook": []
+    },
+    {
+      "name": "Ines Aseguinolaza",
+      "total": 24.0,
+      "breakdown": {
+        "goals": 8.0,
+        "match_results": 16.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "EEUU",
+          "group": "B",
+          "points": 5.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 4,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Túnez",
+          "group": "E",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Irak",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Cabo Verde",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 24.0,
+      "overtook": []
+    },
+    {
+      "name": "Rebeca González",
+      "total": 24.0,
+      "breakdown": {
+        "goals": 9.0,
+        "match_results": 15.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Suecia",
+          "group": "C",
+          "points": 5.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 5,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Túnez",
+          "group": "E",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 24.0,
+      "overtook": []
+    },
+    {
+      "name": "Gorka Lamborena",
+      "total": 22.0,
+      "breakdown": {
+        "goals": 7.0,
+        "match_results": 15.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argentina",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "EEUU",
+          "group": "B",
+          "points": 5.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 4,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 22.0,
+      "overtook": []
+    },
+    {
+      "name": "Iratxe Gomez",
+      "total": 22.0,
+      "breakdown": {
+        "goals": 8.0,
+        "match_results": 14.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Austria",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bosnia",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Túnez",
+          "group": "E",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Curazao",
+          "group": "F",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 22.0,
+      "overtook": []
+    },
+    {
+      "name": "Jone Asiain",
+      "total": 21.0,
+      "breakdown": {
+        "goals": 6.0,
+        "match_results": 15.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argentina",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Noruega",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "EEUU",
+          "group": "B",
+          "points": 5.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 4,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Costa de Marfil",
+          "group": "C",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Congo",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 21.0,
+      "overtook": []
+    },
+    {
+      "name": "Ricardo Fernández",
+      "total": 21.0,
+      "breakdown": {
+        "goals": 6.0,
+        "match_results": 15.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Colombia",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Congo",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irak",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 21.0,
+      "overtook": []
+    },
+    {
+      "name": "Gontzal Fresno",
+      "total": 20.0,
+      "breakdown": {
+        "goals": 6.0,
+        "match_results": 14.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argentina",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Brasil",
+          "group": "A",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Noruega",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Colombia",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Cabo Verde",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 20.0,
+      "overtook": []
+    },
+    {
+      "name": "Aitor Sanjeronimo",
+      "total": 19.5,
+      "breakdown": {
+        "goals": 7.5,
+        "match_results": 12.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "EEUU",
+          "group": "B",
+          "points": 5.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 4,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Suecia",
+          "group": "C",
+          "points": 5.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 5,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Austria",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Congo",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 19.5,
+      "overtook": []
+    },
+    {
+      "name": "Iñigo González",
+      "total": 19.5,
+      "breakdown": {
+        "goals": 6.5,
+        "match_results": 13.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argentina",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "EEUU",
+          "group": "B",
+          "points": 5.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 4,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bosnia",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Túnez",
+          "group": "E",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 19.5,
+      "overtook": []
+    },
+    {
+      "name": "Peio Fontal",
+      "total": 19.5,
+      "breakdown": {
+        "goals": 6.5,
+        "match_results": 13.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Noruega",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Congo",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 19.5,
+      "overtook": []
+    },
+    {
+      "name": "Andoni Sánchez",
+      "total": 17.5,
+      "breakdown": {
+        "goals": 5.5,
+        "match_results": 12.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bosnia",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 17.5,
+      "overtook": []
+    },
+    {
+      "name": "Loreto Mendoza",
+      "total": 17.0,
+      "breakdown": {
+        "goals": 6.0,
+        "match_results": 11.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Colombia",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Cabo Verde",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Haití",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 17.0,
+      "overtook": []
+    },
+    {
+      "name": "Roberto González",
+      "total": 16.5,
+      "breakdown": {
+        "goals": 6.5,
+        "match_results": 10.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "EEUU",
+          "group": "B",
+          "points": 5.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 4,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "México",
+          "group": "C",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bosnia",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Túnez",
+          "group": "E",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irak",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 16.5,
+      "overtook": []
+    },
+    {
+      "name": "Naiara Armendariz",
+      "total": 16.0,
+      "breakdown": {
+        "goals": 6.0,
+        "match_results": 10.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Austria",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Congo",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Curazao",
+          "group": "F",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 16.0,
+      "overtook": []
+    },
+    {
+      "name": "Sendoa González",
+      "total": 15.5,
+      "breakdown": {
+        "goals": 5.5,
+        "match_results": 10.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Noruega",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Austria",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bosnia",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 15.5,
+      "overtook": []
+    },
+    {
+      "name": "Alex Lovin",
+      "total": 15.0,
+      "breakdown": {
+        "goals": 6.0,
+        "match_results": 9.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argentina",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bosnia",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Jordania",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 15.0,
+      "overtook": []
+    },
+    {
+      "name": "Raúl Guerrero",
+      "total": 15.0,
+      "breakdown": {
+        "goals": 7.0,
+        "match_results": 8.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Alemania",
+          "group": "A",
+          "points": 6.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 7,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bosnia",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Congo",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Cabo Verde",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 15.0,
+      "overtook": []
+    },
+    {
+      "name": "Monika Zelaia",
+      "total": 14.0,
+      "breakdown": {
+        "goals": 5.0,
+        "match_results": 9.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Noruega",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Colombia",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "EEUU",
+          "group": "B",
+          "points": 5.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 4,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Turquía",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Túnez",
+          "group": "E",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 14.0,
+      "overtook": []
+    },
+    {
+      "name": "Igor Torre",
+      "total": 13.5,
+      "breakdown": {
+        "goals": 4.5,
+        "match_results": 9.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Noruega",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Austria",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Corea del Sur",
+          "group": "D",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 13.5,
+      "overtook": []
+    },
+    {
+      "name": "Ander Ondarza",
+      "total": 13.0,
+      "breakdown": {
+        "goals": 4.0,
+        "match_results": 9.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argentina",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Noruega",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Japón",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 13.0,
+      "overtook": []
+    },
+    {
+      "name": "Christian Marcos",
+      "total": 12.5,
+      "breakdown": {
+        "goals": 3.5,
+        "match_results": 9.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Colombia",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Escocia",
+          "group": "D",
+          "points": 3.5,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Australia",
+          "group": "E",
+          "points": 4.0,
+          "details": {
+            "PJ": 1,
+            "V": 1,
+            "E": 0,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irak",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 12.5,
+      "overtook": []
+    },
+    {
+      "name": "Arrate Azkunaga",
+      "total": 9.0,
+      "breakdown": {
+        "goals": 4.0,
+        "match_results": 5.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argentina",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Austria",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bosnia",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Congo",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irak",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 9.0,
+      "overtook": []
+    },
+    {
+      "name": "Oscar Gandía",
+      "total": 8.5,
+      "breakdown": {
+        "goals": 3.5,
+        "match_results": 5.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "España",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Suiza",
+          "group": "B",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Senegal",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bosnia",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Ghana",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Argelia",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Túnez",
+          "group": "E",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Congo",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Irak",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uzbekistán",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 8.5,
+      "overtook": []
+    },
+    {
+      "name": "Natalia García",
+      "total": 7.5,
+      "breakdown": {
+        "goals": 3.5,
+        "match_results": 4.0,
+        "round_bonuses": 0.0,
+        "extras": 0
+      },
+      "team_points": [
+        {
+          "name": "Inglaterra",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Portugal",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Francia",
+          "group": "A",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Holanda",
+          "group": "B",
+          "points": 2.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 2,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Noruega",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Bélgica",
+          "group": "B",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Uruguay",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Marruecos",
+          "group": "C",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Croacia",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Ecuador",
+          "group": "C",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Canadá",
+          "group": "D",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Paraguay",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Chequia",
+          "group": "D",
+          "points": 0.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Egipto",
+          "group": "D",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Sudáfrica",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 0,
+            "D": 1,
+            "GF": 0,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Irán",
+          "group": "E",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Catar",
+          "group": "F",
+          "points": 1.5,
+          "details": {
+            "PJ": 1,
+            "V": 0,
+            "E": 1,
+            "D": 0,
+            "GF": 1,
+            "stage": "GROUP_STAGE"
+          }
+        },
+        {
+          "name": "Nueva Zelanda",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Arabia Saudí",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        },
+        {
+          "name": "Panamá",
+          "group": "F",
+          "points": 0.0,
+          "details": {
+            "PJ": 0,
+            "V": 0,
+            "E": 0,
+            "D": 0,
+            "GF": 0,
+            "stage": "—"
+          }
+        }
+      ],
+      "new_in_ranking": true,
+      "previous_position": null,
+      "delta_position": 0,
+      "delta_total": 7.5,
+      "overtook": []
+    }
+  ],
+  "previous_ranking": [
     {
       "name": "Jon Latxiondo",
       "total": 34.0,
