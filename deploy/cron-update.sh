@@ -43,29 +43,14 @@ flock -n 200 || { log "Otro run en curso, salgo"; exit 0; }
 # desde alli desde que el server es la fuente de verdad). Si los scripts python
 # fallaran tras el reset, restauramos el snapshot — asi NUNCA volvemos al
 # scoreboard viejo de GitHub.
-# Marcar como "skip-worktree" los JSON que regenera el server. Con esto, git
-# reset --hard NO los toca al sincronizar el resto del codigo desde GitHub.
-# Es idempotente (se puede ejecutar siempre) y elimina la ventana de unos
-# milisegundos en la que nginx servia el fichero stale entre el reset y el
-# restore manual. Combinado con escritura atomica en los scripts python
-# (save_json a .tmp + rename), nginx siempre sirve un JSON completo y fresco.
-log "marcar archivos del server como skip-worktree (idempotente)"
-mark_skip_worktree() {
-  for f in "$@"; do
-    [[ -f "$f" ]] && git update-index --skip-worktree "$f" 2>/dev/null || true
-  done
-}
-mark_skip_worktree \
-  data/matches.json \
-  data/fixtures.json \
-  data/scorers.json \
-  data/porra/porra_scoreboard.json
-shopt -s nullglob
-for f in data/rooms/*/scoreboard.json; do mark_skip_worktree "$f"; done
-shopt -u nullglob
+# Limpiar cualquier marca skip-worktree que se hubiera puesto en runs
+# anteriores: era una idea que en la practica rompia el git reset --hard
+# si los archivos del server tenian cambios locales. La proteccion contra
+# la ventana de pisado la conseguimos via escritura atomica en save_json
+# (.tmp + rename) + snapshot/restore aqui mismo.
+git ls-files -v 2>/dev/null | awk '/^S/ {print $2}' | xargs -r git update-index --no-skip-worktree 2>/dev/null || true
 
-# Red de seguridad: si por algun motivo el skip-worktree no aplicara,
-# guardamos snapshot antes del reset para poder restaurar despues.
+# Snapshot de los JSON que regenera el server antes del reset.
 log "git fetch + reset + pull"
 SNAP=$(mktemp -d -t bolilla-XXXXXX)
 mkdir -p "$SNAP/data/rooms" "$SNAP/data/porra"
