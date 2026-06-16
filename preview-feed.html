@@ -31,12 +31,7 @@
   button:hover { background: var(--border); }
   .event { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: start; }
   .event:hover { background: var(--card-hover); }
-  .pers-tag { font-size: 10px; padding: 3px 9px; border-radius: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; align-self: start; }
-  .pers-tag.cuñao      { background: rgba(231,127,52,0.25); color: #ffc499; }
-  .pers-tag.cronista   { background: rgba(74,158,255,0.22); color: #a8d0ff; }
-  .pers-tag.sarcastico { background: rgba(155,89,182,0.25); color: #d8b7ed; }
-  .pers-tag.meme       { background: rgba(241,196,15,0.20); color: #f8da55; }
-  .pers-tag.residuos   { background: rgba(47,122,58,0.25); color: #8edaa0; }
+  .bot-dot { width: 10px; height: 10px; border-radius: 50%; background: #2ecc71; margin-top: 6px; box-shadow: 0 0 8px rgba(46,204,113,0.6); }
   .text { font-size: 15px; line-height: 1.45; }
   .meta { font-size: 11px; color: var(--muted); margin-top: 4px; text-align: right; white-space: nowrap; }
   .ev-type { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
@@ -75,14 +70,6 @@
 </main>
 
 <script>
-const PERS_NAMES = {
-  "cuñao": "Cuñao",
-  "cronista": "Cronista",
-  "sarcastico": "Sarcástico",
-  "meme": "Meme",
-  "residuos": "Residuos",
-};
-
 const TYPE_NAMES = {
   "overtake": "Adelantamiento",
   "big_up": "Subida grande",
@@ -108,17 +95,12 @@ async function loadFeed(url) {
     const doc = await r.json();
     document.getElementById("updated").textContent = "Actualizado " + fmtDate(doc.last_updated);
 
-    // Conteos por personaje + por tipo
-    const byPers = {}, byType = {};
+    // Conteos por tipo (sin personajes — solo lo divertido para ti)
+    const byType = {};
     for (const e of doc.events || []) {
-      byPers[e.personaje] = (byPers[e.personaje] || 0) + 1;
       byType[e.type] = (byType[e.type] || 0) + 1;
     }
-    let chips = "";
-    chips += `<span class="count-chip">Total: <strong>${(doc.events||[]).length}</strong></span>`;
-    for (const [pers, n] of Object.entries(byPers)) {
-      chips += `<span class="count-chip">${PERS_NAMES[pers] || pers}: <strong>${n}</strong></span>`;
-    }
+    let chips = `<span class="count-chip">Total: <strong>${(doc.events||[]).length}</strong></span>`;
     for (const [t, n] of Object.entries(byType)) {
       chips += `<span class="count-chip">${TYPE_NAMES[t] || t}: <strong>${n}</strong></span>`;
     }
@@ -131,9 +113,8 @@ async function loadFeed(url) {
 
     let html = "";
     for (const e of doc.events) {
-      const persClass = e.personaje || "cronista";
       html += `<div class="event">
-        <span class="pers-tag ${persClass}">${PERS_NAMES[persClass] || persClass}</span>
+        <span class="bot-dot" title="Crónica del bot"></span>
         <div>
           <div class="text">${escapeHtml(e.text)}</div>
           <div class="ev-type">${TYPE_NAMES[e.type] || e.type}</div>
