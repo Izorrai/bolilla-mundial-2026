@@ -28,21 +28,24 @@ PORRA_SCOREBOARD = DATA / "porra" / "porra_scoreboard.json"
 
 # Cuantos eventos guardamos en cada feed
 MAX_EVENTS = 80
-# Cuantas frases recientes no se repiten
-ANTI_REPEAT_WINDOW = 20
+# Cuantas frases recientes no se repiten (mas alto = menos repeticion visible)
+ANTI_REPEAT_WINDOW = 35
+
+# Salas donde generamos feed. El resto no recibe bromas (la pe\xf1a del barrio
+# no aprecia el humor de oficina, ni la porra entre 7 amigos).
+BOT_ENABLED_ROOMS = {"grupoagaleus"}
+BOT_ENABLED_PORRA = False
 
 
 # ---------- Personajes y reparto por sala ----------
-# Pesos por personaje, por sala. La oficina (GrupoAgaleus) se lleva mas
-# residuos. La peña de Deusto, mas cuñao/cronista. Porra es mezcla neutral.
+# GrupoAgaleus va 100% al personaje "residuos" (curro / gestion de residuos),
+# que es donde encaja el humor que les hace gracia.
 PERSONAJE_WEIGHTS = {
-    "grupoagaleus":          {"residuos": 40, "sarcastico": 20, "cronista": 15, "cuñao": 15, "meme": 10},
-    "deustobarakaultimate":  {"cuñao": 30, "cronista": 25, "sarcastico": 25, "meme": 20, "residuos": 0},
-    "_porra":                {"cronista": 30, "cuñao": 25, "sarcastico": 25, "meme": 20, "residuos": 0},
-    "_default":              {"cronista": 25, "cuñao": 25, "sarcastico": 25, "meme": 15, "residuos": 10},
+    "grupoagaleus":  {"residuos": 100},
+    "_default":      {"residuos": 100},
 }
 
-CLOSERS = ["🥊", "📉", "👀", "🍿", "🔥", "💥", "🚀", "💀", "🗑️", "📦", "⚖️", "📊", "🚛", "", "", ""]
+CLOSERS = ["", "", "", "", "", "", "🗑️", "📦", "⚖️", "📊", "🚛", "📋", "💼", "📑", "🔧"]
 
 
 # ---------- Plantillas ----------
@@ -50,217 +53,171 @@ CLOSERS = ["🥊", "📉", "👀", "🍿", "🔥", "💥", "🚀", "💀", "🗑
 # Cuanto mayor el banco, menos repeticion. Empiezo con ~6-8 por personaje/evento.
 
 T = {
+    # ============= DEBUT (primera vez en el ranking) =============
+    # Esta es la que mas dispara en arranques (28 altas), asi que mas variedad.
+    ("debut", "residuos"): [
+        "Alta nueva: {actor}. DCS pendiente de tramitar.",
+        "Nuevo cliente: {actor}. Contrato de tratamiento por firmar.",
+        "{actor} entra en planta. Primera pesada en báscula.",
+        "{actor} se incorpora a la cartera. Comercial avisado.",
+        "Nuevo en la cartera: {actor}. Tarifa estándar aplicada.",
+        "{actor} se da de alta. Asignar código CER y a tramitar.",
+        "Alta provisional: {actor}. 15 días para completar trámites.",
+        "Recepción de {actor}. Albarán generado.",
+        "{actor} firma alta. Cuestión de tiempo que pase por báscula.",
+        "Llega {actor}. Inscripción en el registro de productores.",
+        "Cliente nuevo: {actor}. Visita técnica programada.",
+        "{actor} entra en producción. Caracterización del residuo pendiente.",
+        "Nueva entrada: {actor}. Falta validar productor.",
+        "{actor} presenta documentación. Periodo de evaluación abierto.",
+        "Alta tramitada: {actor}. Asignar gestor de cuenta.",
+        "{actor} estrena ficha de cliente. Esperando primer servicio.",
+        "{actor} llega a almacén. Asignar contenedor según CER.",
+        "Llegada de {actor}. Pendiente de homologación.",
+        "{actor}, alta en sistema. Pendiente de firma del responsable.",
+        "Nuevo expediente: {actor}. Pasa a operaciones.",
+        "{actor} se incorpora. Plantilla revisada, equipo asignado.",
+        "Alta de {actor}. Periodo de prueba: 30 días.",
+        "{actor} entra al circuito. Producción pendiente de cuantificar.",
+        "Cliente nuevo: {actor}. Pendiente visita técnica del comercial.",
+        "{actor} firma compromiso. A esperar primer albarán de retirada.",
+        "Alta operativa de {actor}. Esperando primera recogida.",
+        "{actor} se ha dado de alta. Asignar ruta a la cisterna.",
+        "Nuevo registro: {actor}. Documento de Identificación en trámite.",
+        "{actor} entra en planta. Visto bueno del jefe de producción.",
+        "Alta confirmada: {actor}. Bienvenido a la facturación mensual.",
+        "{actor} se da de alta. Esperando confirmación de Hacienda.",
+        "Cliente potencial validado: {actor}. Pasa a productor activo.",
+        "{actor}, alta provisional. Falta análisis del CER 200301.",
+        "Recepción de {actor}. A coger turno en el muelle de descarga.",
+        "{actor} se incorpora. Pendiente formación PRL.",
+    ],
+
     # ============= OVERTAKE (adelantamiento) =============
-    ("overtake", "cuñao"): [
-        "Hala, {actor} se acaba de merendar a {victim}. ¡Lo que les digo yo!",
-        "¡Pero qué hace {actor} pasándole por encima a {victim}!",
-        "{actor} le ha calzado un buen adelantamiento a {victim}, casi se da con la valla.",
-        "Mira tú, {actor} dejando a {victim} con cara de tonto.",
-        "Esto es lo que les digo yo a mis cuñaos: {actor} le acaba de comer la merienda a {victim}.",
-        "{victim} se ha despistado y {actor} se ha colado por la rendija.",
-    ],
-    ("overtake", "cronista"): [
-        "¡Atención! {actor} se planta delante de {victim} en la recta final.",
-        "Y por la banda izquierda aparece {actor}, fulminando a {victim}.",
-        "¡{actor} no perdona! {victim}, golpeado y hundido en la tabla.",
-        "Adelantamiento de manual: {actor} deja atrás a {victim}.",
-        "Ohhh, qué hace {actor}. Adelanta a {victim} como si nada.",
-        "Cambio de posiciones: {actor} arriba, {victim} a sufrir.",
-    ],
-    ("overtake", "sarcastico"): [
-        "Vaya, mira quién se ha decidido a aparecer: {actor} pasa a {victim}.",
-        "Sorprendente, sorprendente. {actor} delante de {victim}. Quién lo iba a decir.",
-        "{victim}, parece que {actor} tenía algo que decirte. Ya está dicho.",
-        "Cosas que pasan: {actor} acaba de adelantar a {victim}. Qué original.",
-        "Pues sí. {actor} ha decidido respirar y ha pasado a {victim} sin esforzarse.",
-        "{actor} pasa a {victim}. Lo raro habría sido que no.",
-    ],
-    ("overtake", "meme"): [
-        "{actor} +1 puesto. {victim} -1 en autoestima.",
-        "POV: {victim} viendo a {actor} adelantarle. Carita triste.",
-        "{actor} habiendo sido invitada al podio antes que {victim}. Cringe.",
-        "{victim}: 'no puede ser'. {actor}: 'pues sí'.",
-        "{actor} acaba de adelantar a {victim}. Speedrun any%.",
-        "{victim} mainstream, {actor} indie. {actor} arriba.",
-    ],
     ("overtake", "residuos"): [
-        "{actor} tira a {victim} al contenedor del rechazo.",
-        "Trasvase entre cubetas: {actor} delante de {victim}.",
-        "{actor} compacta a {victim} como palet de cartón.",
-        "{victim} queda lixiviando en el fondo, {actor} ya está en el azul.",
-        "{actor} aplica inertización a {victim}. Material neutralizado.",
-        "{actor} le ha pasado por encima como camión cisterna a {victim}.",
-        "Báscula descalibrada para {victim}: ajuste a la baja, {actor} sube.",
-        "DCS firmado y sellado de {actor}, {victim} se queda sin tramitar.",
+        "{actor} firma el albarán de retirada antes que {victim}. Recogida pendiente para {victim}.",
+        "Cliente VIP para {actor}: contrato sellado. {victim} pasa a tarifa estándar.",
+        "{actor} tramita el DCS en cinco minutos. {victim} todavía persiguiendo firma del productor.",
+        "{actor} cobra factura del mes. {victim} reclamando segundo aviso.",
+        "{actor} gana la licitación. {victim} se queda con la propuesta no aceptada.",
+        "Pase de báscula limpio para {actor}. Tara mal declarada de {victim}.",
+        "{actor} presenta certificado ISO en regla. {victim} caducado.",
+        "{actor} tramita CER al primer intento. {victim} devuelto a producción.",
+        "Visita comercial cerrada para {actor}. {victim} reagenda.",
+        "Cliente histórico se queda con {actor}. {victim} pierde la cartera.",
+        "{actor} pasa el control de calidad. {victim} se queda en cuarentena.",
+        "{actor} carga camión completo. {victim} esperando segunda vuelta.",
+        "{actor} tiene la planta a punto. {victim} con avería en el compactador.",
+        "{actor} presenta memoria anual. {victim} todavía redactando.",
+        "{actor} liquida pago a 30 días. {victim} con factura impagada.",
+        "{actor} cierra el cuadre del mes. {victim} todavía con descuadres.",
+        "Trasvase de cisterna sin incidencias para {actor}. {victim} a limpieza interna.",
+        "{actor} pasa la inspección sin observaciones. {victim} con periodo de subsanación.",
+        "DCS sellado de {actor}. {victim} esperando respuesta del productor.",
+        "{actor} compacta a {victim} como palet de cartón. Bala lista.",
+        "{actor} aplica inertización. {victim} a la balsa de lixiviados.",
         "{actor} factura el adelantamiento. {victim}, vencimiento ya.",
-        "Contrato de tratamiento ampliado para {actor}, {victim} pendiente de renovación.",
+        "{actor} libera muelle. {victim} cola para descarga.",
+        "Permiso ambiental renovado para {actor}. {victim} pendiente de Junta.",
+        "{actor} cierra ofertas del trimestre. {victim} sin presupuesto enviado.",
+        "{actor} entrega el lote en plazo. {victim} con incumplimiento de servicio.",
+        "{actor} consigue homologación. {victim} sigue con muestras en laboratorio.",
+        "Comercial de {actor} firma contrato. Comercial de {victim}, otro café.",
+        "{actor} liquida albarán pendiente. {victim} a regularizar saldo.",
+        "{actor} tramita Documento de Identificación. {victim} en periodo de subsanación.",
     ],
 
     # ============= BIG_UP (subida >=3) =============
-    ("big_up", "cuñao"): [
-        "¡Ojo cuidado! {actor} sube {delta} puestos del tirón. ¡Esto es lo que les digo!",
-        "Hala con {actor}, pega un salto de {delta} posiciones. ¿Esto cómo se hace?",
-        "Pero {actor}, ¿de dónde sales con esas? Te has plantado {delta} puestos arriba.",
-        "{actor} sube {delta} puestos. Si esto fuera el bar pagaba la siguiente ronda.",
-        "Madre del amor hermoso, {delta} puestos para {actor} en un parpadeo.",
-    ],
-    ("big_up", "cronista"): [
-        "¡Y se desata {actor}! Sube {delta} puestos de golpe.",
-        "¡Atención al sprint de {actor}: +{delta} en la tabla!",
-        "Esto es una locura, {actor} escala {delta} posiciones como si nada.",
-        "¡Y {actor} entra como un toro! +{delta} puestos.",
-        "Pumba, {actor} se planta {delta} puestos arriba.",
-    ],
-    ("big_up", "sarcastico"): [
-        "Mira por dónde, {actor} despierta y sube {delta} puestos. Tarde piaste.",
-        "Sí, claro, {actor} sube {delta} posiciones. Todo normal.",
-        "{actor} +{delta}. ¿Trampa? No nos atrevemos a decirlo.",
-        "Vaya, parece que {actor} se ha tomado un café. {delta} puestos arriba.",
-        "Pues {actor} ahí está, escalando {delta} puestos. Qué casualidad.",
-    ],
-    ("big_up", "meme"): [
-        "{actor} +{delta} puestos. ¿Información privilegiada o suerte cósmica?",
-        "{actor} subiendo {delta} puestos: speedrun activado.",
-        "POV: eres {actor} y has subido {delta} puestos del tirón. GG.",
-        "{actor} desbloqueando logro: +{delta} pos. Like si lo sabías.",
-        "{actor} +{delta}. El resto de la sala: 👀",
-    ],
     ("big_up", "residuos"): [
         "Pase de báscula exitoso: {actor} +{delta} toneladas de puntos.",
-        "{actor} sube {delta} puestos. Recogida selectiva impecable.",
-        "Compactador en marcha: {actor} +{delta} en bala lista para retirar.",
-        "Aceite usado bien valorizado: {actor} sube {delta}.",
-        "{actor} gana licitación de la jornada: +{delta} puestos.",
-        "Auditoría superada con nota: {actor} +{delta}.",
-        "Inertización exitosa: {actor} sube {delta} sin manchar.",
+        "{actor} gana 3 licitaciones en una semana. +{delta} puestos.",
+        "Auditoría ISO superada sin objeciones: {actor} +{delta}.",
+        "Camión cargado y facturado el mismo día: {actor} +{delta}.",
+        "Nuevo cliente para {actor}. Cartera ampliada. +{delta}.",
+        "{actor} presenta informe anual antes de plazo. Inspector contento. +{delta}.",
+        "Cobro adelantado de facturación: {actor} +{delta} puestos.",
+        "{actor} consigue homologación nueva. +{delta}.",
+        "Liquidación de comisiones favorable: {actor} +{delta}.",
+        "Cierre contable sin descuadres: {actor} +{delta}.",
+        "{actor} pasa la inspección ambiental sin sanción. +{delta}.",
+        "Trasvase de cisterna récord: {actor} +{delta}.",
+        "{actor} consigue contrato marco con la administración. +{delta}.",
+        "{actor} cierra cartera completa del mes. +{delta} puestos.",
+        "{actor} pasa el CER al primer intento. +{delta}.",
+        "Compactador a pleno rendimiento: {actor} +{delta} balas, +{delta} puestos.",
+        "Recogida selectiva del año: {actor} +{delta}.",
+        "{actor} consigue renovación del permiso ambiental. +{delta}.",
+        "Inertización exitosa de lote completo: {actor} +{delta}.",
+        "{actor} factura por encima del objetivo trimestral. +{delta}.",
+        "Visita del inspector cerrada sin acta: {actor} +{delta}.",
+        "{actor} cobra deuda histórica pendiente. +{delta}.",
+        "{actor} cierra ronda comercial: {delta} contratos nuevos. +{delta} puestos.",
+        "Pase limpio en báscula sin tara errónea: {actor} +{delta}.",
+        "Bonificación de cumplimiento ambiental para {actor}. +{delta}.",
     ],
 
     # ============= BIG_DOWN (caida >=3) =============
-    ("big_down", "cuñao"): [
-        "¡Anda que {actor}! Pierde {delta} puestos. Habrá que llamar al médico.",
-        "{actor} se pega un trompazo de {delta} posiciones. ¡Madre mía!",
-        "{actor} -{delta}. ¿Pero qué le pasa al chaval?",
-        "Esto no se hace, {actor}. -{delta} puestos del tirón.",
-        "Hala, {actor} para abajo {delta} puestos. Tira pa'l bar.",
-    ],
-    ("big_down", "cronista"): [
-        "¡Caída brutal de {actor}! -{delta} en la clasificación.",
-        "¡Hundimiento! {actor} pierde {delta} posiciones de golpe.",
-        "Y {actor} se viene abajo: {delta} puestos menos.",
-        "Catástrofe para {actor}: cae {delta} puestos en una jornada.",
-        "¡Adiós a las alturas de {actor}! Pierde {delta} puestos sin remedio.",
-    ],
-    ("big_down", "sarcastico"): [
-        "Vaya por Dios. {actor} pierde {delta} puestos. Quién lo iba a decir.",
-        "Sorpresa: {actor} se ha desinflado. -{delta} posiciones.",
-        "{actor} -{delta}. Bueno, mejor no comentar.",
-        "Pues {actor} ahí, perdiendo {delta} puestos. Era previsible.",
-        "Mira tú dónde estaba {actor} y dónde está ahora. {delta} puestos menos.",
-    ],
-    ("big_down", "meme"): [
-        "{actor} -{delta}. F.",
-        "{actor} pierde {delta} puestos. Speedrun al fondo any%.",
-        "POV: eres {actor} y has bajado {delta} puestos. 🥲",
-        "{actor} desbloqueando logro: pérdida masiva. -{delta} pos.",
-        "{actor} -{delta}. El bote te dice adiós con la manita.",
-    ],
     ("big_down", "residuos"): [
-        "{actor} directo a la balsa de lixiviados. -{delta} puestos.",
-        "Sellado de bentonita sobre {actor}: cae {delta} posiciones.",
-        "{actor} -{delta}. Material no inertizable.",
-        "Esto no se composta. {actor} al vertedero, {delta} puestos abajo.",
-        "Bidón con fuga para {actor}: -{delta} en la tabla.",
-        "Inspección sorpresa: {actor} -{delta} por incumplimientos.",
-        "Sanción firme a {actor}: -{delta} puestos preventivos.",
-        "Factura impagada: {actor} cae {delta} puestos hasta saldar.",
+        "Auditoría con incidencias para {actor}: -{delta} puestos.",
+        "Factura impagada del mes: {actor} -{delta} puestos.",
+        "Camión averiado en ruta: {actor} -{delta}.",
+        "Cliente reclama: {actor} -{delta} hasta resolver.",
+        "Cisterna con fuga en almacén: {actor} -{delta}.",
+        "Inspección sorpresa con incumplimientos: {actor} -{delta}.",
+        "{actor} olvida tramitar DCS de la semana: -{delta}.",
+        "Cierre de mes con descuadre: {actor} -{delta}.",
+        "Sanción administrativa firme: {actor} -{delta} puestos preventivos.",
+        "Cliente histórico se va a la competencia: {actor} -{delta}.",
+        "Báscula descalibrada para {actor}: -{delta} en la liquidación.",
+        "Albarán perdido en producción: {actor} -{delta}.",
+        "Conductor de baja médica: {actor} paralizado, -{delta}.",
+        "{actor} no llega al objetivo del trimestre: -{delta}.",
+        "Devolución de factura por error: {actor} -{delta}.",
+        "Vertido fuera de autorización: {actor} -{delta}.",
+        "Bidón con fuga olvidado en almacén: {actor} -{delta}.",
+        "{actor} pierde la licitación. -{delta} puestos.",
+        "Multa por exceso de stock no autorizado: {actor} -{delta}.",
+        "Servicio rechazado por el cliente: {actor} -{delta}.",
+        "Compactador averiado: {actor} para tres días, -{delta}.",
+        "Sellado de bentonita sobre {actor}: -{delta}, directo al fondo.",
+        "Falta documentación ADR: ruta paralizada. {actor} -{delta}.",
+        "{actor} pierde permiso ambiental: -{delta} hasta renovación.",
+        "Reclamación judicial de cliente: {actor} -{delta} puestos preventivos.",
     ],
 
-    # ============= NEW_LEADER (cambio de #1) =============
-    ("new_leader", "cuñao"): [
-        "¡Atención al nuevo jefe! {actor} le pisa el podio a {prev_leader}.",
-        "Hala, ha cambiado el cabeza de mesa. Ahora manda {actor}, {prev_leader} a comer aparte.",
-        "{actor} jefe nuevo. {prev_leader}, hala, a hacer cola.",
-        "¡Cambio en la cabeza! {actor} arrebata el liderato a {prev_leader}.",
-    ],
-    ("new_leader", "cronista"): [
-        "¡Y SE HACE CON EL LIDERATO! {actor} desbanca a {prev_leader} en la cabeza de la tabla.",
-        "¡Histórico! {actor} arrebata el primer puesto a {prev_leader}.",
-        "Atención que esto no se ve todos los días: {actor} líder, {prev_leader} a segundo.",
-        "¡Nuevo número uno! {actor} firma su mejor jornada, {prev_leader} queda relegado.",
-    ],
-    ("new_leader", "sarcastico"): [
-        "Pues mira, {actor} ahora es líder. {prev_leader}, a hacer cola.",
-        "Cosas que pasan: {actor} líder. {prev_leader} se queda con cara de bobo.",
-        "{actor} primero. {prev_leader} segundo. Quién lo iba a decir.",
-        "Sorpresa moderada: {actor} es nuevo líder. {prev_leader}, tira para abajo.",
-    ],
-    ("new_leader", "meme"): [
-        "{actor} nuevo líder. {prev_leader} en shock. 👑",
-        "POV: eras {prev_leader} y ahora {actor} está donde estabas tú.",
-        "{actor} desbanca a {prev_leader}: rey destronado.",
-        "{actor} entra al chat como líder. {prev_leader} ha salido.",
-    ],
+    # ============= NEW_LEADER =============
     ("new_leader", "residuos"): [
-        "Cambio de capataz: {actor} se hace con la cuadrilla, {prev_leader} releva turno.",
+        "Cambio de capataz: {actor} se hace con la cuadrilla. {prev_leader}, a relevo de turno.",
         "{actor} gana la licitación esta semana. {prev_leader}, recurso desestimado.",
-        "Nuevo jefe de planta: {actor}. {prev_leader}, a mantenimiento.",
-        "{actor} firma el contrato gordo. {prev_leader}, a tramitar deuda.",
+        "Nuevo jefe de planta de tratamiento: {actor}. {prev_leader}, a mantenimiento.",
+        "{actor} firma el contrato gordo con la administración. {prev_leader}, a tramitar deuda pendiente.",
         "Concesión municipal para {actor}. {prev_leader}, contrato no renovado.",
+        "{actor} factura más que toda la sala junta. {prev_leader} al segundo puesto.",
+        "Renovación de licencia ambiental para {actor}. {prev_leader} caducada.",
+        "{actor} consigue ISO 14001. {prev_leader} en periodo de adaptación.",
+        "Inspector certifica planta de {actor}. {prev_leader} bajo revisión.",
+        "Nuevo gestor autorizado: {actor}. {prev_leader} pierde la categoría.",
+        "{actor} se queda con el contrato marco. {prev_leader}, a buscar nuevos clientes.",
+        "Bono anual de gestión para {actor}. {prev_leader}, descuento por incumplimiento.",
+        "{actor} cierra balance positivo del año. {prev_leader} en pérdidas.",
+        "Adjudicación directa a {actor}. {prev_leader}, propuesta archivada.",
     ],
 
     # ============= NEW_LAST (nuevo farolillo) =============
-    ("new_last", "cuñao"): [
-        "Hala, {actor}, ahora el farolillo lo llevas tú. {prev_last} respira tranquilo.",
-        "{prev_last} pasa el testigo a {actor}: bienvenido al sótano.",
-        "{actor}, tranquilo, esto le pasa a cualquiera. Pero le pasa a ti.",
-    ],
-    ("new_last", "cronista"): [
-        "Y por el final de la tabla aparece {actor}, relevando a {prev_last} en el farolillo rojo.",
-        "Cambio en el sótano: {actor} pasa a ser el último, {prev_last} consigue salir del fondo.",
-        "{actor} hereda el último puesto de {prev_last}. ¡Bienvenido al club!",
-    ],
-    ("new_last", "sarcastico"): [
-        "Enhorabuena {actor}, eres el nuevo último. {prev_last} te lo agradece.",
-        "{actor}, has llegado a lo más bajo. {prev_last} ya respira.",
-        "Pues {actor} ya tiene su pegatina de farolillo rojo. {prev_last}, libre.",
-    ],
-    ("new_last", "meme"): [
-        "{actor} ahora último. {prev_last} liberado. 🦴",
-        "Cambio de farolillo: {actor} entra, {prev_last} sale.",
-        "{actor} desbloquea: 'Eres el último'. Achievement unlocked.",
-    ],
     ("new_last", "residuos"): [
         "{actor} al rechazo. {prev_last} pasa a tratamiento.",
         "{actor} hereda el cubo gris de {prev_last}. Bienvenido al fondo.",
         "Material no separado: {actor} al fondo. {prev_last}, has subido al amarillo.",
         "{actor}, bidón con fuga heredado de {prev_last}.",
-    ],
-
-    # ============= DEBUT (primera vez en el ranking) =============
-    ("debut", "cuñao"): [
-        "¡Ojo, que ha llegado {actor}! Bienvenido al barro.",
-        "{actor} estrena ranking. ¡Suerte, chaval!",
-        "Nuevo en la sala: {actor}. A ver qué tal se le da.",
-    ],
-    ("debut", "cronista"): [
-        "¡Recibimos a {actor} en la clasificación! Aquí empieza su historia.",
-        "Hace su aparición {actor}. La afición espera grandes cosas.",
-        "{actor} entra en escena. Todos los ojos puestos en su debut.",
-    ],
-    ("debut", "sarcastico"): [
-        "Bienvenido, {actor}. Disfruta mientras puedas.",
-        "Estrena ranking {actor}. Veremos cuánto le dura la sonrisa.",
-        "{actor} se une a la fiesta. Tarde, pero se une.",
-    ],
-    ("debut", "meme"): [
-        "{actor} ha entrado al chat. 🎮",
-        "Nuevo participante: {actor}. Tutorial en marcha.",
-        "{actor} unlocked: clasificación.",
-    ],
-    ("debut", "residuos"): [
-        "{actor} entra en planta. Primera pesada en báscula.",
-        "Alta nueva: {actor}. DCS pendiente de tramitar.",
-        "Nuevo cliente: {actor}. Contrato de tratamiento por firmar.",
+        "Factura impagada para {actor}. {prev_last}, al fin liquidaste.",
+        "Inspección pendiente para {actor}. {prev_last}, periodo cerrado.",
+        "{actor} se queda con la deuda. {prev_last}, libre de cargas.",
+        "{actor}, contrato no renovado. {prev_last} consigue prórroga.",
+        "{actor} pasa a estado de subsanación. {prev_last}, sale del trámite.",
+        "{actor} olvidó la auditoría. {prev_last} ya pasó la suya.",
+        "{actor}, código CER por confirmar. {prev_last} aclarado.",
+        "{actor} hereda el expediente sancionador de {prev_last}.",
+        "{actor} al periodo de prueba forzoso. {prev_last} renovado.",
     ],
 }
 
@@ -468,20 +425,25 @@ def update_feed_for_room(room_label, scoreboard_path, feed_path, weights_key):
 def main():
     FEED_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Bolilla: por sala
+    # Solo procesamos las salas habilitadas (oficina). El resto no recibe feed.
     rooms_doc = load_json(ROOMS_FILE, {"rooms": []})
     for room in rooms_doc.get("rooms", []):
         rid = room["id"]
+        if rid not in BOT_ENABLED_ROOMS:
+            print(f"[feed] sala '{rid}': bot deshabilitado")
+            continue
         rname = room.get("name", rid)
         sb_path = DATA / "rooms" / rid / "scoreboard.json"
         feed_path = FEED_DIR / f"{rid}.json"
         n = update_feed_for_room(rname, sb_path, feed_path, rid)
         print(f"[feed] sala '{rid}': {n} eventos nuevos")
 
-    # Porra
-    feed_porra = FEED_DIR / "porra.json"
-    n = update_feed_for_room("Porra", PORRA_SCOREBOARD, feed_porra, "_porra")
-    print(f"[feed] porra: {n} eventos nuevos")
+    if BOT_ENABLED_PORRA:
+        feed_porra = FEED_DIR / "porra.json"
+        n = update_feed_for_room("Porra", PORRA_SCOREBOARD, feed_porra, "_porra")
+        print(f"[feed] porra: {n} eventos nuevos")
+    else:
+        print("[feed] porra: bot deshabilitado")
 
 
 if __name__ == "__main__":

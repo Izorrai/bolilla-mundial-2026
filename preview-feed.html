@@ -46,14 +46,6 @@
 <header>
   <h1>🤖 Preview Crónica del Bot</h1>
   <span class="warn">privado · no compartas el link</span>
-  <div class="select-wrap">
-    <label for="feedSelect">Feed</label>
-    <select id="feedSelect">
-      <option value="data/feed/grupoagaleus.json">GrupoAgaleus (bolilla)</option>
-      <option value="data/feed/deustobarakaultimate.json">DeustoBarakaUltimate (bolilla)</option>
-      <option value="data/feed/porra.json">Porra</option>
-    </select>
-  </div>
 </header>
 
 <main>
@@ -128,12 +120,12 @@ async function loadFeed(url) {
   }
 }
 
-document.getElementById("feedSelect").addEventListener("change", e => loadFeed(e.target.value));
-document.getElementById("btnRefresh").addEventListener("click", () => loadFeed(document.getElementById("feedSelect").value));
-loadFeed(document.getElementById("feedSelect").value);
-setInterval(() => loadFeed(document.getElementById("feedSelect").value), 60000);
+const FEED_URL = "data/feed/grupoagaleus.json";
+document.getElementById("btnRefresh").addEventListener("click", () => loadFeed(FEED_URL));
+loadFeed(FEED_URL);
+setInterval(() => loadFeed(FEED_URL), 60000);
 document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") loadFeed(document.getElementById("feedSelect").value);
+  if (document.visibilityState === "visible") loadFeed(FEED_URL);
 });
 </script>
 </body>
