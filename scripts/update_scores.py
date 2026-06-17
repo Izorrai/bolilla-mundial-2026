@@ -406,21 +406,21 @@ def main():
 
         ranking = compute_room_scoreboard(room_id, participants_doc, team_stats, teams)
 
-        # Si el sticky_previous es stale (no tiene los mismos participantes que
-        # el ranking actual — tipicamente porque viene de cuando habia menos
-        # gente) lo reseteamos a la ultima foto persistida. Asi evitamos badges
-        # "NEW" falsos masivos tras anadir participantes o tras un deploy.
-        if sticky_previous:
-            prev_names = {e.get("name") for e in sticky_previous}
-            cur_names  = {e.get("name") for e in ranking}
-            if prev_names != cur_names:
-                sticky_previous = last_persisted_ranking or ranking
-
-        # Snapshot del "previous_ranking" SOLO cuando ha terminado un partido nuevo.
-        # Asi las flechas (▲/▼) y los deltas reflejan: "desde el ultimo partido
-        # terminado", que es lo que la gente espera ver. Si el cron corre 100 veces
-        # sin nuevos partidos (live bonus, refresco, etc.) el previo no se mueve.
-        if len(matches) > prev_finished_count:
+        # Decision del "previous_ranking" usado para calcular deltas:
+        # 1. Si el previo guardado esta stale (distintos participantes que el
+        #    ranking actual, p.ej. tras un deploy o tras anadir gente) → RESET
+        #    a la foto actual. Sin deltas este run, las flechas se quedan en
+        #    blanco hasta que termine un partido nuevo.
+        # 2. Si ha terminado un partido nuevo (len matches subio) → la ultima
+        #    foto persistida pasa a ser el previo, generando deltas reales.
+        # 3. Si no hay novedad → mantenemos el previo de la ultima rotacion,
+        #    asi los deltas no se mueven entre crons.
+        prev_compatible = bool(sticky_previous) and (
+            {e.get("name") for e in sticky_previous} == {e.get("name") for e in ranking}
+        )
+        if not prev_compatible:
+            chosen_prev = ranking  # reset duro → todo a 0
+        elif len(matches) > prev_finished_count:
             chosen_prev = last_persisted_ranking
         else:
             chosen_prev = sticky_previous
