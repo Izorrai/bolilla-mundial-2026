@@ -7,9 +7,30 @@
 (function () {
   const FIXTURES_URL = "data/fixtures.json";
   const TEAMS_URL = "data/teams.json";
-  const REFRESH_MS = 60000;
+  const REFRESH_MS = 30000;  // refresco cada 30s (antes 60s) para bajar el lag percibido
   const LIVE_STATUSES = ["IN_PLAY", "PAUSED"];
   const FINISHED_STATUSES = ["FINISHED"];
+
+  // Heuristica para distinguir el "limbo" post-partido: football-data marca el
+  // partido como PAUSED durante revisiones VAR / cierre antes de FINISHED. Si
+  // estamos en PAUSED y han pasado ya >= 100 min desde el kickoff, lo tratamos
+  // como "Finalizando" en lugar de "En directo".
+  function isProbablyEnding(f) {
+    if (f.status !== "PAUSED") return false;
+    // Si el minuto del partido es >= 90, casi seguro es cierre de partido
+    if (typeof f.minute === "number" && f.minute >= 90) return true;
+    // Fallback temporal: si pasaron mas de 100 min desde el kickoff
+    if (f.utcDate) {
+      const startMs = new Date(f.utcDate).getTime();
+      if (!isNaN(startMs) && Date.now() - startMs > 100 * 60 * 1000) return true;
+    }
+    return false;
+  }
+  // Pausa que SI es de descanso real (no de fin)
+  function isHalftimeBreak(f) {
+    if (f.status !== "PAUSED") return false;
+    return !isProbablyEnding(f);
+  }
   const GROUP_LABELS = { GROUP_A: "Grupo A", GROUP_B: "Grupo B", GROUP_C: "Grupo C", GROUP_D: "Grupo D", GROUP_E: "Grupo E", GROUP_F: "Grupo F", GROUP_G: "Grupo G", GROUP_H: "Grupo H" };
   const STAGE_LABELS = {
     GROUP_STAGE: "Fase de grupos",
@@ -34,15 +55,21 @@
   }
 
   function renderMatchCard(f) {
-    const isLive = LIVE_STATUSES.includes(f.status);
+    const ending = isProbablyEnding(f);
+    const halftime = isHalftimeBreak(f);
+    const isLive = LIVE_STATUSES.includes(f.status) && !ending;
     const isFinished = FINISHED_STATUSES.includes(f.status);
     const home = teamName(f.home_team);
     const away = teamName(f.away_team);
-    const homeScore = (isLive || isFinished) ? (f.home_goals ?? 0) : "";
-    const awayScore = (isLive || isFinished) ? (f.away_goals ?? 0) : "";
+    const showScore = LIVE_STATUSES.includes(f.status) || isFinished;
+    const homeScore = showScore ? (f.home_goals ?? 0) : "";
+    const awayScore = showScore ? (f.away_goals ?? 0) : "";
     let footer;
-    if (isLive) {
-      footer = `<span class="mc-badge-live">${f.minute ? f.minute + "'" : "En directo"}</span>`;
+    if (ending) {
+      footer = `<div class="mc-time" title="Pendiente del FINISHED oficial">Finalizando…</div>`;
+    } else if (isLive) {
+      const label = halftime ? "Descanso" : (f.minute ? f.minute + "'" : "En directo");
+      footer = `<span class="mc-badge-live">${label}</span>`;
     } else if (isFinished) {
       footer = `<div class="mc-time">Finalizado</div>`;
     } else {
