@@ -301,6 +301,12 @@ def main():
     last_persisted_ranking = prev_doc.get("ranking", [])
     sticky_previous = prev_doc.get("previous_ranking", [])
     prev_finished_count = prev_doc.get("finished_matches_count", len(matches))
+    # Si el sticky_previous es stale (diferentes jugadores) lo reseteamos
+    if sticky_previous:
+        prev_names = {e.get("name") for e in sticky_previous}
+        cur_names  = {e.get("name") for e in ranking}
+        if prev_names != cur_names:
+            sticky_previous = last_persisted_ranking or ranking
     if len(matches) > prev_finished_count:
         chosen_prev = last_persisted_ranking
     else:

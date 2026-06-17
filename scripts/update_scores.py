@@ -406,6 +406,16 @@ def main():
 
         ranking = compute_room_scoreboard(room_id, participants_doc, team_stats, teams)
 
+        # Si el sticky_previous es stale (no tiene los mismos participantes que
+        # el ranking actual — tipicamente porque viene de cuando habia menos
+        # gente) lo reseteamos a la ultima foto persistida. Asi evitamos badges
+        # "NEW" falsos masivos tras anadir participantes o tras un deploy.
+        if sticky_previous:
+            prev_names = {e.get("name") for e in sticky_previous}
+            cur_names  = {e.get("name") for e in ranking}
+            if prev_names != cur_names:
+                sticky_previous = last_persisted_ranking or ranking
+
         # Snapshot del "previous_ranking" SOLO cuando ha terminado un partido nuevo.
         # Asi las flechas (▲/▼) y los deltas reflejan: "desde el ultimo partido
         # terminado", que es lo que la gente espera ver. Si el cron corre 100 veces
