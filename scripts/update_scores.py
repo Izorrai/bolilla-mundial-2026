@@ -399,16 +399,21 @@ def main():
         prev_scoreboard = load_json(scoreboard_file, {})
         last_persisted_ranking = prev_scoreboard.get("ranking", [])
         sticky_previous = prev_scoreboard.get("previous_ranking", [])
+        # Cuantos partidos FINISHED habia la ultima vez que actualizamos el
+        # scoreboard. Si no esta (primera ejecucion con esta logica),
+        # inicializamos al numero actual para no generar deltas "fantasma".
+        prev_finished_count = prev_scoreboard.get("finished_matches_count", len(matches))
 
         ranking = compute_room_scoreboard(room_id, participants_doc, team_stats, teams)
 
-        # "Previous" sticky: si el ranking actual coincide con el ultimo persistido,
-        # mantenemos como previous el que ya teniamos (asi los deltas no desaparecen
-        # entre runs sin cambios). Si el ranking cambio, el persistido pasa a ser previous.
-        if rankings_equal(last_persisted_ranking, ranking):
-            chosen_prev = sticky_previous
-        else:
+        # Snapshot del "previous_ranking" SOLO cuando ha terminado un partido nuevo.
+        # Asi las flechas (▲/▼) y los deltas reflejan: "desde el ultimo partido
+        # terminado", que es lo que la gente espera ver. Si el cron corre 100 veces
+        # sin nuevos partidos (live bonus, refresco, etc.) el previo no se mueve.
+        if len(matches) > prev_finished_count:
             chosen_prev = last_persisted_ranking
+        else:
+            chosen_prev = sticky_previous
 
         annotate_changes(ranking, chosen_prev)
 
@@ -416,6 +421,7 @@ def main():
             "last_updated": now_iso,
             "ranking": ranking,
             "previous_ranking": chosen_prev,
+            "finished_matches_count": len(matches),
             "team_stats": team_stats,
             "champion": champ,
             "room_id": room_id,

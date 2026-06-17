@@ -295,14 +295,16 @@ def main():
 
     ranking.sort(key=lambda x: (-x["total"], x["name"].lower()))
 
-    # Sticky previous + anotacion de movimientos
+    # Previous_ranking solo se actualiza cuando termina un partido nuevo
+    # (asi las flechas reflejan "puestos ganados desde el ultimo partido").
     prev_doc = load_json(PORRA / "porra_scoreboard.json", {})
     last_persisted_ranking = prev_doc.get("ranking", [])
     sticky_previous = prev_doc.get("previous_ranking", [])
-    if rankings_equal(last_persisted_ranking, ranking):
-        chosen_prev = sticky_previous
-    else:
+    prev_finished_count = prev_doc.get("finished_matches_count", len(matches))
+    if len(matches) > prev_finished_count:
         chosen_prev = last_persisted_ranking
+    else:
+        chosen_prev = sticky_previous
     annotate_changes(ranking, chosen_prev)
 
     save_json(PORRA / "porra_scoreboard.json", {
@@ -311,6 +313,7 @@ def main():
         "champion": champion,
         "ranking": ranking,
         "previous_ranking": chosen_prev,
+        "finished_matches_count": len(matches),
     })
     print(f"[ok] porra: {len(ranking)} jugadores procesados (campeon={champion})")
 
