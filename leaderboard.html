@@ -242,7 +242,7 @@ const REPO_TEAMS_URL = "data/teams.json";
 const REPO_ROOMS_URL = "data/rooms.json";
 const REPO_FIXTURES_URL = "data/fixtures.json";
 const LIVE_STATUSES = ["IN_PLAY", "PAUSED"];
-const LIVE_REFRESH_MS = 60000;
+const LIVE_REFRESH_MS = 30000;  // navegador refresca scoreboard cada 30s (antes 60s) para reducir lag percibido
 
 let TEAMS = null, PARTICIPANTS = null, SCOREBOARD = null;
 let ROOMS_DATA = null, CURRENT_ROOM = null;

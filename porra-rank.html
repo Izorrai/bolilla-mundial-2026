@@ -313,7 +313,7 @@ document.getElementById("detailBg").addEventListener("click", e => {
   if (e.target.id === "detailBg") e.target.classList.remove("open");
 });
 
-const REFRESH_MS = 60000;
+const REFRESH_MS = 30000;  // navegador refresca cada 30s (antes 60s)
 
 async function refreshPorra() {
   try {
