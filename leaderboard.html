@@ -73,6 +73,24 @@
   @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
   tr.row-new-leader { background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.18), transparent); animation: shineBg 2s ease-in-out 2; }
   @keyframes shineBg { 0%, 100% { background-position: -200% 0; } 50% { background-position: 200% 0; } }
+
+  /* ===== Crónica del bot ===== */
+  .feed-widget { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+  .feed-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+  .feed-head h2 { margin: 0; font-size: 16px; color: var(--green-dark); }
+  .feed-open { background: transparent; color: var(--green-dark); border: 1px solid var(--green); padding: 4px 11px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .feed-open:hover { background: var(--green-light); }
+  .feed-list { display: flex; flex-direction: column; gap: 8px; }
+  .feed-item { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: start; padding: 8px 4px; border-bottom: 1px dashed var(--border); font-size: 14px; }
+  .feed-item:last-child { border-bottom: 0; }
+  .feed-dot { width: 9px; height: 9px; border-radius: 50%; background: #2ecc71; margin-top: 6px; box-shadow: 0 0 8px rgba(46,204,113,0.55); }
+  .feed-text { line-height: 1.4; }
+  .feed-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+  /* Modal completo */
+  .feed-modal { max-width: 720px; width: 100%; position: relative; max-height: 80vh; display: flex; flex-direction: column; }
+  .feed-modal-list { overflow-y: auto; flex: 1; padding-right: 4px; }
+  .feed-modal-list .feed-item { padding: 10px 4px; }
   .delta-badge { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green-dark); background: var(--green-light); border-radius: 10px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
   .delta-badge.live-delta { background: #fff3cd; color: #856404; animation: liveDotPulse 1.6s infinite; }
   .pick-card.is-live { border-color: #e8b4b0; background: #fff8f7; }
@@ -142,6 +160,23 @@
     <h2>Partidos de hoy</h2>
     <div class="carousel" id="todayCarousel"></div>
   </section>
+
+  <!-- Crónica del bot — solo visible si ?feed=1 y la sala tiene feed -->
+  <section class="feed-widget" id="feedWidget" style="display:none;">
+    <div class="feed-head">
+      <h2>🤖 Crónica</h2>
+      <button class="feed-open" id="feedOpenModal" type="button">Ver todos →</button>
+    </div>
+    <div class="feed-list" id="feedList"></div>
+  </section>
+
+  <div class="modal-bg" id="feedModalBg">
+    <div class="modal feed-modal">
+      <button class="modal-close" id="feedModalClose" type="button">×</button>
+      <h2 style="margin-top:0;">🤖 Crónica completa</h2>
+      <div class="feed-modal-list" id="feedModalList"></div>
+    </div>
+  </div>
 
   <div class="tabs">
     <div class="tab active" data-tab="ranking">Ranking</div>
@@ -505,7 +540,63 @@ async function loadRoomData(roomId) {
 
   renderRanking();
   renderTeams();
+  loadFeed(roomId);
 }
+
+// ===== Crónica del bot =====
+// Solo se muestra si la URL lleva ?feed=1 (preview) y la sala tiene feed disponible.
+const FEED_PREVIEW = new URLSearchParams(location.search).get("feed") === "1";
+const FEED_ROOMS = new Set(["grupoagaleus"]);
+const FEED_VISIBLE_COUNT = 4;
+let FEED_DOC = null;
+
+async function loadFeed(roomId) {
+  const widget = document.getElementById("feedWidget");
+  if (!widget) return;
+  if (!FEED_PREVIEW || !FEED_ROOMS.has(roomId)) {
+    widget.style.display = "none";
+    return;
+  }
+  try {
+    FEED_DOC = await fetchJson(`data/feed/${roomId}.json`);
+  } catch {
+    widget.style.display = "none";
+    return;
+  }
+  const events = (FEED_DOC && FEED_DOC.events) || [];
+  if (events.length === 0) {
+    widget.style.display = "none";
+    return;
+  }
+  widget.style.display = "";
+  renderFeedList(events.slice(0, FEED_VISIBLE_COUNT));
+}
+
+function renderFeedItem(e) {
+  return `<div class="feed-item">
+    <span class="feed-dot" title="Crónica del bot"></span>
+    <div class="feed-text">${escapeHtml(e.text)}</div>
+    <span class="feed-time">${fmtDate(e.ts)}</span>
+  </div>`;
+}
+
+function renderFeedList(events) {
+  document.getElementById("feedList").innerHTML = events.map(renderFeedItem).join("");
+}
+
+function openFeedModal() {
+  const events = (FEED_DOC && FEED_DOC.events) || [];
+  document.getElementById("feedModalList").innerHTML = events.map(renderFeedItem).join("") || `<div class="empty">Sin eventos.</div>`;
+  document.getElementById("feedModalBg").classList.add("open");
+}
+function closeFeedModal() {
+  document.getElementById("feedModalBg").classList.remove("open");
+}
+document.getElementById("feedOpenModal").addEventListener("click", openFeedModal);
+document.getElementById("feedModalClose").addEventListener("click", closeFeedModal);
+document.getElementById("feedModalBg").addEventListener("click", e => {
+  if (e.target.id === "feedModalBg") closeFeedModal();
+});
 
 function buildFdToName() {
   const m = {};
