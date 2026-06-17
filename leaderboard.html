@@ -74,23 +74,46 @@
   tr.row-new-leader { background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.18), transparent); animation: shineBg 2s ease-in-out 2; }
   @keyframes shineBg { 0%, 100% { background-position: -200% 0; } 50% { background-position: 200% 0; } }
 
-  /* ===== Crónica del bot ===== */
-  .feed-widget { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
-  .feed-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
-  .feed-head h2 { margin: 0; font-size: 16px; color: var(--green-dark); }
-  .feed-open { background: transparent; color: var(--green-dark); border: 1px solid var(--green); padding: 4px 11px; border-radius: 16px; font-size: 12px; font-weight: 700; cursor: pointer; }
-  .feed-open:hover { background: var(--green-light); }
-  .feed-list { display: flex; flex-direction: column; gap: 8px; }
-  .feed-item { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: start; padding: 8px 4px; border-bottom: 1px dashed var(--border); font-size: 14px; }
+  /* ===== Crónica del bot: chip flotante ===== */
+  .bot-fab {
+    position: fixed; bottom: 16px; right: 16px; z-index: 200;
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+    color: white; padding: 10px 16px 10px 14px; border-radius: 30px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+    cursor: grab; user-select: none; -webkit-user-select: none;
+    max-width: 320px; font-size: 13px; font-weight: 600;
+    transition: transform 0.15s, box-shadow 0.15s;
+    touch-action: none;
+  }
+  .bot-fab:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.28); }
+  .bot-fab.dragging { cursor: grabbing; opacity: 0.92; transition: none; }
+  .bot-fab-icon { font-size: 18px; line-height: 1; }
+  .bot-fab-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px; }
+  .bot-fab-pulse {
+    position: absolute; top: 6px; right: 10px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #66ff99;
+    box-shadow: 0 0 0 0 rgba(102,255,153,0.7);
+    animation: fabPulse 2s infinite;
+  }
+  @keyframes fabPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(102,255,153,0.7); }
+    70%  { box-shadow: 0 0 0 8px rgba(102,255,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(102,255,153,0); }
+  }
+  @media (max-width: 480px) {
+    .bot-fab-text { max-width: 160px; }
+  }
+
+  /* Modal de la crónica completa */
+  .feed-item { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: start; padding: 10px 4px; border-bottom: 1px dashed var(--border); font-size: 14px; }
   .feed-item:last-child { border-bottom: 0; }
   .feed-dot { width: 9px; height: 9px; border-radius: 50%; background: #2ecc71; margin-top: 6px; box-shadow: 0 0 8px rgba(46,204,113,0.55); }
   .feed-text { line-height: 1.4; }
   .feed-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
-
-  /* Modal completo */
   .feed-modal { max-width: 720px; width: 100%; position: relative; max-height: 80vh; display: flex; flex-direction: column; }
   .feed-modal-list { overflow-y: auto; flex: 1; padding-right: 4px; }
-  .feed-modal-list .feed-item { padding: 10px 4px; }
   .delta-badge { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green-dark); background: var(--green-light); border-radius: 10px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
   .delta-badge.live-delta { background: #fff3cd; color: #856404; animation: liveDotPulse 1.6s infinite; }
   .pick-card.is-live { border-color: #e8b4b0; background: #fff8f7; }
@@ -161,14 +184,12 @@
     <div class="carousel" id="todayCarousel"></div>
   </section>
 
-  <!-- Crónica del bot — solo visible si ?feed=1 y la sala tiene feed -->
-  <section class="feed-widget" id="feedWidget" style="display:none;">
-    <div class="feed-head">
-      <h2>🤖 Crónica</h2>
-      <button class="feed-open" id="feedOpenModal" type="button">Ver todos →</button>
-    </div>
-    <div class="feed-list" id="feedList"></div>
-  </section>
+  <!-- Crónica del bot: chip flotante arrastrable. Click → modal completo. -->
+  <div class="bot-fab" id="botFab" style="display:none;" role="button" aria-label="Abrir crónica completa">
+    <span class="bot-fab-pulse"></span>
+    <span class="bot-fab-icon">🤖</span>
+    <span class="bot-fab-text" id="botFabText">Crónica</span>
+  </div>
 
   <div class="modal-bg" id="feedModalBg">
     <div class="modal feed-modal">
@@ -543,33 +564,27 @@ async function loadRoomData(roomId) {
   loadFeed(roomId);
 }
 
-// ===== Crónica del bot =====
-// Solo se muestra si la URL lleva ?feed=1 (preview) y la sala tiene feed disponible.
-const FEED_PREVIEW = new URLSearchParams(location.search).get("feed") === "1";
+// ===== Crónica del bot (chip flotante arrastrable) =====
+// Solo activo en las salas con feed (GrupoAgaleus).
 const FEED_ROOMS = new Set(["grupoagaleus"]);
-const FEED_VISIBLE_COUNT = 4;
+const FAB_POS_KEY = "bot-fab-pos";
 let FEED_DOC = null;
 
 async function loadFeed(roomId) {
-  const widget = document.getElementById("feedWidget");
-  if (!widget) return;
-  if (!FEED_PREVIEW || !FEED_ROOMS.has(roomId)) {
-    widget.style.display = "none";
-    return;
-  }
+  const fab = document.getElementById("botFab");
+  if (!fab) return;
+  if (!FEED_ROOMS.has(roomId)) { fab.style.display = "none"; return; }
   try {
     FEED_DOC = await fetchJson(`data/feed/${roomId}.json`);
   } catch {
-    widget.style.display = "none";
+    fab.style.display = "none";
     return;
   }
   const events = (FEED_DOC && FEED_DOC.events) || [];
-  if (events.length === 0) {
-    widget.style.display = "none";
-    return;
-  }
-  widget.style.display = "";
-  renderFeedList(events.slice(0, FEED_VISIBLE_COUNT));
+  if (events.length === 0) { fab.style.display = "none"; return; }
+  fab.style.display = "flex";
+  // Mostramos el último mensaje como peek en el chip
+  document.getElementById("botFabText").textContent = events[0].text || "Crónica";
 }
 
 function renderFeedItem(e) {
@@ -580,10 +595,6 @@ function renderFeedItem(e) {
   </div>`;
 }
 
-function renderFeedList(events) {
-  document.getElementById("feedList").innerHTML = events.map(renderFeedItem).join("");
-}
-
 function openFeedModal() {
   const events = (FEED_DOC && FEED_DOC.events) || [];
   document.getElementById("feedModalList").innerHTML = events.map(renderFeedItem).join("") || `<div class="empty">Sin eventos.</div>`;
@@ -592,11 +603,80 @@ function openFeedModal() {
 function closeFeedModal() {
   document.getElementById("feedModalBg").classList.remove("open");
 }
-document.getElementById("feedOpenModal").addEventListener("click", openFeedModal);
 document.getElementById("feedModalClose").addEventListener("click", closeFeedModal);
 document.getElementById("feedModalBg").addEventListener("click", e => {
   if (e.target.id === "feedModalBg") closeFeedModal();
 });
+
+// ===== Drag & drop del chip flotante =====
+(function setupFabDrag() {
+  const fab = document.getElementById("botFab");
+  if (!fab) return;
+  let dragging = false, moved = false;
+  let startX = 0, startY = 0, elemX = 0, elemY = 0;
+
+  // Restaurar posicion guardada
+  try {
+    const saved = JSON.parse(localStorage.getItem(FAB_POS_KEY) || "null");
+    if (saved && typeof saved.x === "number" && typeof saved.y === "number") {
+      fab.style.left = clamp(saved.x, 0, window.innerWidth - 50) + "px";
+      fab.style.top  = clamp(saved.y, 0, window.innerHeight - 50) + "px";
+      fab.style.right = "auto";
+      fab.style.bottom = "auto";
+    }
+  } catch {}
+
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  function getXY(e) {
+    if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    return { x: e.clientX, y: e.clientY };
+  }
+
+  function onDown(e) {
+    dragging = true; moved = false;
+    const p = getXY(e);
+    startX = p.x; startY = p.y;
+    const r = fab.getBoundingClientRect();
+    elemX = r.left; elemY = r.top;
+  }
+  function onMove(e) {
+    if (!dragging) return;
+    const p = getXY(e);
+    const dx = p.x - startX, dy = p.y - startY;
+    if (!moved && Math.hypot(dx, dy) > 5) {
+      moved = true;
+      fab.classList.add("dragging");
+    }
+    if (moved) {
+      if (e.cancelable) e.preventDefault();
+      const maxX = window.innerWidth - fab.offsetWidth;
+      const maxY = window.innerHeight - fab.offsetHeight;
+      fab.style.left = clamp(elemX + dx, 0, maxX) + "px";
+      fab.style.top  = clamp(elemY + dy, 0, maxY) + "px";
+      fab.style.right = "auto";
+      fab.style.bottom = "auto";
+    }
+  }
+  function onUp() {
+    if (!dragging) return;
+    dragging = false;
+    if (moved) {
+      fab.classList.remove("dragging");
+      const r = fab.getBoundingClientRect();
+      try { localStorage.setItem(FAB_POS_KEY, JSON.stringify({ x: r.left, y: r.top })); } catch {}
+    } else {
+      // click sin arrastre → abrir el modal
+      openFeedModal();
+    }
+  }
+
+  fab.addEventListener("mousedown",  onDown);
+  fab.addEventListener("touchstart", onDown, { passive: true });
+  window.addEventListener("mousemove", onMove);
+  window.addEventListener("touchmove", onMove, { passive: false });
+  window.addEventListener("mouseup",  onUp);
+  window.addEventListener("touchend", onUp);
+})();
 
 function buildFdToName() {
   const m = {};
