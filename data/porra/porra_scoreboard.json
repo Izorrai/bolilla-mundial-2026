@@ -1,15 +1,15 @@
 {
   "_comment": "Generado por scripts/update_porra.py. No editar a mano.",
-  "last_updated": "2026-06-15T12:22:22.106293+00:00",
+  "last_updated": "2026-06-18T19:50:39.086887+00:00",
   "champion": null,
   "ranking": [
     {
       "name": "Gorka",
-      "total": 21,
+      "total": 29,
       "breakdown": {
         "initial": 0,
         "selections": 15,
-        "group_stage": 6,
+        "group_stage": 14,
         "knockouts": 0
       },
       "details": {
@@ -52,8 +52,8 @@
           }
         },
         "group_stage": {
-          "correct": 6,
-          "answered": 12
+          "correct": 14,
+          "answered": 25
         },
         "knockouts": {
           "exact": 0,
@@ -62,19 +62,19 @@
         }
       },
       "has_submitted": true,
-      "new_in_ranking": true,
-      "previous_position": null,
+      "new_in_ranking": false,
+      "previous_position": 1,
       "delta_position": 0,
-      "delta_total": 21,
+      "delta_total": 0,
       "overtook": []
     },
     {
       "name": "Jon",
-      "total": 12,
+      "total": 21,
       "breakdown": {
         "initial": 0,
         "selections": 5,
-        "group_stage": 7,
+        "group_stage": 16,
         "knockouts": 0
       },
       "details": {
@@ -117,8 +117,8 @@
           }
         },
         "group_stage": {
-          "correct": 7,
-          "answered": 12
+          "correct": 16,
+          "answered": 25
         },
         "knockouts": {
           "exact": 0,
@@ -127,10 +127,10 @@
         }
       },
       "has_submitted": true,
-      "new_in_ranking": true,
-      "previous_position": null,
+      "new_in_ranking": false,
+      "previous_position": 2,
       "delta_position": 0,
-      "delta_total": 12,
+      "delta_total": 0,
       "overtook": []
     },
     {
@@ -156,8 +156,8 @@
         }
       },
       "has_submitted": false,
-      "new_in_ranking": true,
-      "previous_position": null,
+      "new_in_ranking": false,
+      "previous_position": 3,
       "delta_position": 0,
       "delta_total": 0,
       "overtook": []
@@ -185,8 +185,8 @@
         }
       },
       "has_submitted": false,
-      "new_in_ranking": true,
-      "previous_position": null,
+      "new_in_ranking": false,
+      "previous_position": 4,
       "delta_position": 0,
       "delta_total": 0,
       "overtook": []
@@ -214,8 +214,8 @@
         }
       },
       "has_submitted": false,
-      "new_in_ranking": true,
-      "previous_position": null,
+      "new_in_ranking": false,
+      "previous_position": 5,
       "delta_position": 0,
       "delta_total": 0,
       "overtook": []
@@ -243,8 +243,8 @@
         }
       },
       "has_submitted": false,
-      "new_in_ranking": true,
-      "previous_position": null,
+      "new_in_ranking": false,
+      "previous_position": 6,
       "delta_position": 0,
       "delta_total": 0,
       "overtook": []
@@ -272,12 +272,289 @@
         }
       },
       "has_submitted": false,
-      "new_in_ranking": true,
-      "previous_position": null,
+      "new_in_ranking": false,
+      "previous_position": 7,
       "delta_position": 0,
       "delta_total": 0,
       "overtook": []
     }
   ],
-  "previous_ranking": []
+  "previous_ranking": [
+    {
+      "name": "Gorka",
+      "total": 29,
+      "breakdown": {
+        "initial": 0,
+        "selections": 15,
+        "group_stage": 14,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {
+          "España": {
+            "predicted": "Final",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Francia": {
+            "predicted": "Ganador",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Inglaterra": {
+            "predicted": "Grupos",
+            "actual": "Grupos",
+            "points": 5
+          },
+          "Argentina": {
+            "predicted": "Grupos",
+            "actual": "Grupos",
+            "points": 5
+          },
+          "Brasil": {
+            "predicted": "16avos",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Portugal": {
+            "predicted": "Grupos",
+            "actual": "Grupos",
+            "points": 5
+          },
+          "Alemania": {
+            "predicted": "Cuartos",
+            "actual": "Grupos",
+            "points": 0
+          }
+        },
+        "group_stage": {
+          "correct": 14,
+          "answered": 25
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": true,
+      "new_in_ranking": false,
+      "previous_position": 1,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
+    },
+    {
+      "name": "Jon",
+      "total": 21,
+      "breakdown": {
+        "initial": 0,
+        "selections": 5,
+        "group_stage": 16,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {
+          "España": {
+            "predicted": "Grupos",
+            "actual": "Grupos",
+            "points": 5
+          },
+          "Francia": {
+            "predicted": "Final",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Inglaterra": {
+            "predicted": "Semifinal",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Argentina": {
+            "predicted": "Semifinal",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Brasil": {
+            "predicted": "Final",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Portugal": {
+            "predicted": "Semifinal",
+            "actual": "Grupos",
+            "points": 0
+          },
+          "Alemania": {
+            "predicted": "Semifinal",
+            "actual": "Grupos",
+            "points": 0
+          }
+        },
+        "group_stage": {
+          "correct": 16,
+          "answered": 25
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": true,
+      "new_in_ranking": false,
+      "previous_position": 2,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
+    },
+    {
+      "name": "Ander",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false,
+      "new_in_ranking": false,
+      "previous_position": 3,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
+    },
+    {
+      "name": "Eneko",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false,
+      "new_in_ranking": false,
+      "previous_position": 4,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
+    },
+    {
+      "name": "Julen",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false,
+      "new_in_ranking": false,
+      "previous_position": 5,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
+    },
+    {
+      "name": "Mikel",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false,
+      "new_in_ranking": false,
+      "previous_position": 6,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
+    },
+    {
+      "name": "Pablo",
+      "total": 0,
+      "breakdown": {
+        "initial": 0,
+        "selections": 0,
+        "group_stage": 0,
+        "knockouts": 0
+      },
+      "details": {
+        "initial": {},
+        "selections": {},
+        "group_stage": {
+          "correct": 0,
+          "answered": 0
+        },
+        "knockouts": {
+          "exact": 0,
+          "result_only": 0,
+          "wrong": 0
+        }
+      },
+      "has_submitted": false,
+      "new_in_ranking": false,
+      "previous_position": 7,
+      "delta_position": 0,
+      "delta_total": 0,
+      "overtook": []
+    }
+  ],
+  "finished_matches_count": 25
 }

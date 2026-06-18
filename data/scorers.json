@@ -1,7 +1,13 @@
 {
   "_comment": "Top goleadores generado por scripts/fetch_fixtures.py",
-  "last_updated": "2026-06-15T09:19:39.708942+00:00",
+  "last_updated": "2026-06-18T19:50:35.606549+00:00",
   "scorers": [
+    {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "nationality": "Argentina",
+      "goals": 3
+    },
     {
       "player": "Folarin Balogun",
       "team": "United States",
@@ -21,6 +27,30 @@
       "goals": 2
     },
     {
+      "player": "Elijah Just",
+      "team": "New Zealand",
+      "nationality": "New Zealand",
+      "goals": 2
+    },
+    {
+      "player": "Kylian Mbappé",
+      "team": "France",
+      "nationality": "France",
+      "goals": 2
+    },
+    {
+      "player": "Erling Haaland",
+      "team": "Norway",
+      "nationality": "Norway",
+      "goals": 2
+    },
+    {
+      "player": "Harry Kane",
+      "team": "England",
+      "nationality": "England",
+      "goals": 2
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "nationality": "Colombia",
@@ -30,36 +60,6 @@
       "player": "Raúl Jiménez",
       "team": "Mexico",
       "nationality": "Mexico",
-      "goals": 1
-    },
-    {
-      "player": "Ladislav Krejčí",
-      "team": "Czechia",
-      "nationality": "Czech Republic",
-      "goals": 1
-    },
-    {
-      "player": "In-beom Hwang",
-      "team": "South Korea",
-      "nationality": "South Korea",
-      "goals": 1
-    },
-    {
-      "player": "Hyun-Gyu Oh",
-      "team": "South Korea",
-      "nationality": "South Korea",
-      "goals": 1
-    },
-    {
-      "player": "Jovo Lukić",
-      "team": "Bosnia-Herzegovina",
-      "nationality": "Bosnia-Herzegovina",
-      "goals": 1
-    },
-    {
-      "player": "Cyle Larin",
-      "team": "Canada",
-      "nationality": "Canada",
       "goals": 1
     }
   ]
