@@ -286,6 +286,7 @@
 const REPO_TEAMS_URL = "data/teams.json";
 const REPO_ROOMS_URL = "data/rooms.json";
 const REPO_FIXTURES_URL = "data/fixtures.json";
+const REPO_MATCHES_URL = "data/matches.json";
 const LIVE_STATUSES = ["IN_PLAY", "PAUSED"];
 const LIVE_REFRESH_MS = 30000;  // navegador refresca scoreboard cada 30s (antes 60s) para reducir lag percibido
 
@@ -294,6 +295,7 @@ let ROOMS_DATA = null, CURRENT_ROOM = null;
 let LIVE_TEAMS = new Set();
 let LIVE_FIXTURES = [];
 let ALL_FIXTURES = [];
+let SCORED_IDS = new Set();
 let OPEN_MODAL_NAME = null;
 
 const LAST_ROOM_KEY = "bolilla2026_last_room";
@@ -721,12 +723,17 @@ function matchPtsForSide(gf, ga) {
 
 async function loadLiveTeams() {
   try {
-    const fixturesDoc = await fetchJson(REPO_FIXTURES_URL);
+    const [fixturesDoc, matchesDoc] = await Promise.all([
+      fetchJson(REPO_FIXTURES_URL),
+      fetchJson(REPO_MATCHES_URL).catch(() => null),
+    ]);
     ALL_FIXTURES = fixturesDoc.fixtures || [];
+    SCORED_IDS = new Set((matchesDoc && matchesDoc.matches || []).map(m => m.id));
     const liveFd = new Set();
     LIVE_FIXTURES = [];
     for (const f of ALL_FIXTURES) {
       if (!LIVE_STATUSES.includes(f.status)) continue;
+      if (SCORED_IDS.has(f.id)) continue;
       LIVE_FIXTURES.push(f);
       if (f.home_team) liveFd.add(f.home_team.toLowerCase());
       if (f.away_team) liveFd.add(f.away_team.toLowerCase());
