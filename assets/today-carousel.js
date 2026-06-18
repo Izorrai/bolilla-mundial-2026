@@ -7,6 +7,7 @@
 (function () {
   const FIXTURES_URL = "data/fixtures.json";
   const TEAMS_URL = "data/teams.json";
+  const MATCHES_URL = "data/matches.json";
   const REFRESH_MS = 30000;  // refresco cada 30s (antes 60s) para bajar el lag percibido
   const LIVE_STATUSES = ["IN_PLAY", "PAUSED"];
   const FINISHED_STATUSES = ["FINISHED"];
@@ -92,10 +93,13 @@
     if (!section || !carousel) return;
 
     try {
-      const [fixturesDoc, teamsDoc] = await Promise.all([
+      const [fixturesDoc, teamsDoc, matchesDoc] = await Promise.all([
         fetch(FIXTURES_URL + "?t=" + Date.now()).then(r => r.json()),
         fetch(TEAMS_URL + "?t=" + Date.now()).then(r => r.json()).catch(() => null),
+        fetch(MATCHES_URL + "?t=" + Date.now()).then(r => r.json()).catch(() => null),
       ]);
+
+      const scoredIds = new Set((matchesDoc && matchesDoc.matches || []).map(m => m.id));
 
       TEAM_NAMES = {};
       if (teamsDoc && teamsDoc.teams) {
@@ -105,7 +109,10 @@
       }
 
       const now = new Date();
-      const todayFixtures = (fixturesDoc.fixtures || []).filter(f => new Date(f.utcDate).toDateString() === now.toDateString());
+      const todayFixtures = (fixturesDoc.fixtures || []).filter(f => {
+        if (scoredIds.has(f.id) && !FINISHED_STATUSES.includes(f.status)) f.status = "FINISHED";
+        return new Date(f.utcDate).toDateString() === now.toDateString();
+      });
 
       if (todayFixtures.length === 0) {
         section.style.display = "none";
