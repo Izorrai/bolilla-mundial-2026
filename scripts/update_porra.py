@@ -30,10 +30,18 @@ PORRA = DATA / "porra"
 
 
 def load_json(path, default):
+    """Lee JSON tolerando archivos vacios o corruptos."""
     if not path.exists():
         return default
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+        if not content:
+            return default
+        return json.loads(content)
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"[warn] {path} corrupto/vacio ({e}); usando default")
+        return default
 
 
 def save_json(path, data):
