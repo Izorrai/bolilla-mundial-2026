@@ -11,7 +11,11 @@ services:
       - ../:/usr/share/nginx/html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost/ || exit 1"]
+      # wget --spider de busybox: solo comprueba que el endpoint responde,
+      # sin descargar el body (mucho mas ligero y fiable). Si no responde
+      # en 5s, el container se marca unhealthy y docker lo intentara reiniciar.
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost/ 2>/dev/null || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 3
+      start_period: 10s
