@@ -43,14 +43,13 @@ flock -n 200 || { log "Otro run en curso, salgo"; exit 0; }
 # desde alli desde que el server es la fuente de verdad). Si los scripts python
 # fallaran tras el reset, restauramos el snapshot — asi NUNCA volvemos al
 # scoreboard viejo de GitHub.
-# Limpiar cualquier marca skip-worktree que se hubiera puesto en runs
-# anteriores: era una idea que en la practica rompia el git reset --hard
-# si los archivos del server tenian cambios locales. La proteccion contra
-# la ventana de pisado la conseguimos via escritura atomica en save_json
-# (.tmp + rename) + snapshot/restore aqui mismo.
+# Limpiar marcas skip-worktree heredadas de versiones anteriores
 git ls-files -v 2>/dev/null | awk '/^S/ {print $2}' | xargs -r git update-index --no-skip-worktree 2>/dev/null || true
 
 # Snapshot de los JSON que regenera el server antes del reset.
+# IMPORTANTE: estos archivos estan ahora en .gitignore, asi que git reset
+# --hard ya no deberia tocarlos. El snapshot/restore queda como red de
+# seguridad por si quedaran algunos rastreados en la copia local.
 log "git fetch + reset + pull"
 SNAP=$(mktemp -d -t bolilla-XXXXXX)
 mkdir -p "$SNAP/data/rooms" "$SNAP/data/porra"

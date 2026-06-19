@@ -8,3 +8,12 @@ Thumbs.db
 .env
 deploy/cron.log
 
+# Archivos que regenera el server cada minuto: no deben rastrearse en git
+# para evitar el "baile" entre git reset y la regeneracion local.
+data/matches.json
+data/fixtures.json
+data/scorers.json
+data/porra/porra_scoreboard.json
+data/rooms/*/scoreboard.json
+data/feed/*.json
+
