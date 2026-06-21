@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados · Porra Mundial 2026</title>
+<link rel="stylesheet" href="assets/today-carousel.css">
+<style>
+  :root {
+    --blue: #1a5490;
+    --blue-light: #d9e7f5;
+    --blue-dark: #0f3a66;
+    --bg: #f5f5f1;
+    --card: #ffffff;
+    --border: #d8d8d2;
+    --text: #1a1a1a;
+    --muted: #6a6a64;
+    --live: #c0392b;
+    --live-light: #fbe2df;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+  header { background: var(--blue); color: white; padding: 14px 20px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+  header h1 { margin: 0; font-size: 21px; }
+  header .sub { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+  nav { padding: 6px 0 0 0; display: flex; gap: 0; margin-top: 8px; }
+  nav a { color: white; text-decoration: none; padding: 6px 12px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
+  nav a.active { opacity: 1; border-color: white; }
+  nav a:hover { opacity: 1; }
+  main { max-width: 900px; margin: 0 auto; padding: 18px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .card h2 { margin: 0; padding: 12px 14px; font-size: 15px; color: var(--blue-dark); border-bottom: 1px solid var(--border); background: var(--blue-light); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td, th { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+  tr:last-child td { border-bottom: none; }
+  .empty { padding: 24px 14px; text-align: center; color: var(--muted); font-style: italic; }
+  .match-row .teams { font-weight: 600; }
+  .match-row .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .score { font-weight: 800; font-size: 16px; text-align: right; white-space: nowrap; }
+  .badge-live { background: var(--live); color: white; font-size: 10px; font-weight: 800; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+  .live-row { background: var(--live-light); }
+  .pos { font-weight: 800; min-width: 24px; }
+  .num { text-align: right; font-weight: 800; }
+  .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--border); margin-bottom: 16px; flex-wrap: wrap; }
+  .tab { padding: 9px 16px; cursor: pointer; font-weight: 600; font-size: 14px; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; }
+  .tab.active { color: var(--blue-dark); border-color: var(--blue); }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .tab-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--live); margin-left: 6px; vertical-align: middle; animation: pulse 1.5s infinite; }
+  .groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+  .group-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .group-card h3 { margin: 0; padding: 8px 12px; background: var(--blue-light); color: var(--blue-dark); font-size: 14px; border-bottom: 1px solid var(--border); }
+  .group-card table { font-size: 12.5px; }
+  .group-card th, .group-card td { padding: 6px 8px; }
+  .group-card thead th { background: #fafaf6; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.3px; font-weight: 700; border-bottom: 1px solid var(--border); }
+  .group-card td.team-name { font-weight: 700; }
+  .group-card td.num { text-align: right; font-weight: 600; width: 28px; }
+  .group-card td.pts { font-weight: 800; color: var(--blue-dark); text-align: right; }
+  .group-card tr.qualified { background: rgba(26,84,144,0.06); }
+  .group-card tr.qualified td.team-name::before { content: "✓ "; color: var(--blue); }
+  .ko-stage { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+  .ko-stage h3 { margin: 0; padding: 9px 14px; background: var(--blue-light); color: var(--blue-dark); font-size: 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .ko-stage .count { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .ko-match { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--border); align-items: center; font-size: 13.5px; }
+  .ko-match:last-child { border-bottom: 0; }
+  .ko-match .teams { font-weight: 600; }
+  .ko-match .meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .ko-match .score { font-weight: 800; font-size: 15px; white-space: nowrap; }
+  .ko-match .pending { font-size: 12px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+</style>
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+
+<header>
+  <h1>⚽ Resultados · Porra Mundial 2026</h1>
+  <div class="sub" id="updated">Cargando…</div>
+  <nav>
+    <a href="porra.html">Pronósticos</a>
+    <a href="porra-rank.html">Clasificación</a>
+    <a href="porra-results.html" class="active">Resultados</a>
+  </nav>
+</header>
+
+<main>
+  <section class="today-section" id="todaySection" style="display:none;">
+    <h2>Partidos de hoy</h2>
+    <div class="carousel" id="todayCarousel"></div>
+  </section>
+
+  <div class="tabs">
+    <div class="tab" data-tab="live">🔴 En directo<span class="tab-dot" id="liveDot" style="display:none;"></span></div>
+    <div class="tab active" data-tab="results">Resultados</div>
+    <div class="tab" data-tab="groups">📊 Grupos</div>
+    <div class="tab" data-tab="knockouts">🏆 Eliminatorias</div>
+    <div class="tab" data-tab="scorers">⚽ Goleadores</div>
+  </div>
+
+  <div class="panel" id="panel-live">
+    <div class="card">
+      <h2>🔴 En directo</h2>
+      <table><tbody id="liveBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <div class="panel active" id="panel-results">
+    <div class="card">
+      <h2>Resultados</h2>
+      <table><tbody id="resultsBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+    </div>
+
+    <div class="card">
+      <h2>Próximos partidos</h2>
+      <table><tbody id="upcomingBody"><tr><td class="empty">Cargando…</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-groups">
+    <div class="groups-grid" id="groupsGrid"></div>
+  </div>
+
+  <div class="panel" id="panel-knockouts">
+    <div id="knockoutsList"></div>
+  </div>
+
+  <div class="panel" id="panel-scorers">
+    <div class="card">
+      <h2>⚽ Goleadores</h2>
+      <table>
+        <thead><tr><th>#</th><th>Jugador</th><th>Selección</th><th class="num">Goles</th></tr></thead>
+        <tbody id="scorersBody"><tr><td colspan="4" class="empty">Cargando…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script>
+const REPO_FIXTURES_URL = "data/fixtures.json";
+const REPO_SCORERS_URL = "data/scorers.json";
+const REPO_TEAMS_URL = "data/teams.json";
+const REFRESH_MS = 60000;
+
+const STAGE_LABELS = {
+  GROUP_STAGE: "Fase de grupos",
+  LAST_32: "Dieciseisavos",
+  ROUND_OF_32: "Dieciseisavos",
+  LAST_16: "Octavos de final",
+  ROUND_OF_16: "Octavos de final",
+  QUARTER_FINALS: "Cuartos de final",
+  SEMI_FINALS: "Semifinales",
+  FINAL: "Final",
+};
+const GROUP_LABELS = {
+  GROUP_A: "Grupo A", GROUP_B: "Grupo B", GROUP_C: "Grupo C", GROUP_D: "Grupo D",
+  GROUP_E: "Grupo E", GROUP_F: "Grupo F", GROUP_G: "Grupo G", GROUP_H: "Grupo H",
+  GROUP_I: "Grupo I", GROUP_J: "Grupo J", GROUP_K: "Grupo K", GROUP_L: "Grupo L",
+};
+const KO_STAGES = [
+  { key: "LAST_32",        label: "Dieciseisavos" },
+  { key: "ROUND_OF_32",    label: "Dieciseisavos" },
+  { key: "LAST_16",        label: "Octavos de final" },
+  { key: "ROUND_OF_16",    label: "Octavos de final" },
+  { key: "QUARTER_FINALS", label: "Cuartos de final" },
+  { key: "SEMI_FINALS",    label: "Semifinales" },
+  { key: "THIRD_PLACE",    label: "Tercer y cuarto puesto" },
+  { key: "FINAL",          label: "Final" },
+];
+const LIVE_STATUSES = ["IN_PLAY", "PAUSED"];
+const FINISHED_STATUSES = ["FINISHED"];
+
+let TEAM_NAMES = {};
+
+function escapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
+function teamName(fdName) { return TEAM_NAMES[(fdName || "").toLowerCase()] || fdName || "?"; }
+function stageGroupLabel(f) { return f.group ? GROUP_LABELS[f.group] || f.group : (STAGE_LABELS[f.stage] || f.stage || ""); }
+function fmtDate(iso) {
+  if (!iso) return "—";
+  try { return new Date(iso).toLocaleString("es-ES", { weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }); }
+  catch { return iso; }
+}
+
+async function fetchJson(url) {
+  const r = await fetch(url + "?t=" + Date.now());
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+
+function renderLive(fixtures) {
+  const body = document.getElementById("liveBody");
+  const live = fixtures.filter(f => LIVE_STATUSES.includes(f.status));
+  document.getElementById("liveDot").style.display = live.length > 0 ? "" : "none";
+  if (live.length === 0) {
+    body.innerHTML = `<tr><td class="empty">No hay partidos en directo en este momento.</td></tr>`;
+    return;
+  }
+  body.innerHTML = live.map(f => `
+    <tr class="match-row live-row">
+      <td>
+        <div class="teams">${escapeHtml(teamName(f.home_team))} – ${escapeHtml(teamName(f.away_team))}</div>
+        <div class="meta">${escapeHtml(stageGroupLabel(f))} <span class="badge-live">${f.minute ? f.minute + "'" : "En directo"}</span></div>
+      </td>
+      <td class="score">${f.home_goals ?? 0} – ${f.away_goals ?? 0}</td>
+    </tr>
+  `).join("");
+}
+
+function renderResults(fixtures) {
+  const body = document.getElementById("resultsBody");
+  const finished = fixtures
+    .filter(f => FINISHED_STATUSES.includes(f.status))
+    .sort((a, b) => new Date(b.utcDate) - new Date(a.utcDate));
+  if (finished.length === 0) {
+    body.innerHTML = `<tr><td class="empty">Todavía no se ha jugado ningún partido.</td></tr>`;
+    return;
+  }
+  body.innerHTML = finished.map(f => `
+    <tr class="match-row">
+      <td>
+        <div class="teams">${escapeHtml(teamName(f.home_team))} – ${escapeHtml(teamName(f.away_team))}</div>
+        <div class="meta">${escapeHtml(stageGroupLabel(f))} · ${fmtDate(f.utcDate)}</div>
+      </td>
+      <td class="score">${f.home_goals} – ${f.away_goals}</td>
+    </tr>
+  `).join("");
+}
+
+function renderUpcoming(fixtures) {
+  const body = document.getElementById("upcomingBody");
+  const now = Date.now();
+  const upcoming = fixtures
+    .filter(f => !LIVE_STATUSES.includes(f.status) && !FINISHED_STATUSES.includes(f.status) && new Date(f.utcDate).getTime() >= now)
+    .sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate))
+    .slice(0, 12);
+  if (upcoming.length === 0) {
+    body.innerHTML = `<tr><td class="empty">No hay más partidos programados.</td></tr>`;
+    return;
+  }
+  body.innerHTML = upcoming.map(f => `
+    <tr class="match-row">
+      <td>
+        <div class="teams">${escapeHtml(teamName(f.home_team))} – ${escapeHtml(teamName(f.away_team))}</div>
+        <div class="meta">${escapeHtml(stageGroupLabel(f))}</div>
+      </td>
+      <td class="score" style="font-size:13px; font-weight:600;">${fmtDate(f.utcDate)}</td>
+    </tr>
+  `).join("");
+}
+
+function computeGroupStandings(fixtures) {
+  const groups = {};
+  function ensure(g, name) {
+    if (!groups[g]) groups[g] = {};
+    if (!groups[g][name]) groups[g][name] = { name, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, pts: 0 };
+    return groups[g][name];
+  }
+  for (const f of fixtures) {
+    if (f.stage !== "GROUP_STAGE" || !f.group) continue;
+    if (!f.home_team || !f.away_team) continue;
+    const hs = ensure(f.group, f.home_team);
+    const as = ensure(f.group, f.away_team);
+    if (f.status !== "FINISHED") continue;
+    const hg = f.home_goals ?? 0;
+    const ag = f.away_goals ?? 0;
+    hs.played++; as.played++;
+    hs.gf += hg; hs.ga += ag;
+    as.gf += ag; as.ga += hg;
+    if (hg > ag)      { hs.won++;   hs.pts += 3; as.lost++; }
+    else if (hg < ag) { as.won++;   as.pts += 3; hs.lost++; }
+    else              { hs.drawn++; hs.pts += 1; as.drawn++; as.pts += 1; }
+  }
+  const out = {};
+  for (const [g, teams] of Object.entries(groups)) {
+    out[g] = Object.values(teams).sort((a, b) =>
+      b.pts - a.pts ||
+      (b.gf - b.ga) - (a.gf - a.ga) ||
+      b.gf - a.gf ||
+      a.name.localeCompare(b.name, "es")
+    );
+  }
+  return out;
+}
+
+function renderGroups(fixtures) {
+  const grid = document.getElementById("groupsGrid");
+  const standings = computeGroupStandings(fixtures);
+  const groupKeys = Object.keys(standings).sort();
+  if (groupKeys.length === 0) {
+    grid.innerHTML = `<div class="empty">Aún no hay datos de grupos.</div>`;
+    return;
+  }
+  const html = groupKeys.map(g => {
+    const teams = standings[g];
+    const rows = teams.map((t, i) => `
+      <tr class="${i < 2 ? "qualified" : ""}">
+        <td>${i + 1}</td>
+        <td class="team-name">${escapeHtml(teamName(t.name))}</td>
+        <td class="num">${t.played}</td>
+        <td class="num">${t.won}</td>
+        <td class="num">${t.drawn}</td>
+        <td class="num">${t.lost}</td>
+        <td class="num">${t.gf}</td>
+        <td class="num">${t.ga}</td>
+        <td class="num">${t.gf - t.ga >= 0 ? "+" + (t.gf - t.ga) : (t.gf - t.ga)}</td>
+        <td class="pts">${t.pts}</td>
+      </tr>
+    `).join("");
+    return `
+      <div class="group-card">
+        <h3>${escapeHtml(GROUP_LABELS[g] || g)}</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Selección</th>
+              <th class="num">PJ</th><th class="num">V</th><th class="num">E</th><th class="num">D</th>
+              <th class="num">GF</th><th class="num">GC</th><th class="num">DG</th>
+              <th class="num">Pts</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    `;
+  }).join("");
+  grid.innerHTML = html;
+}
+
+function renderKnockouts(fixtures) {
+  const container = document.getElementById("knockoutsList");
+  const byLabel = {};
+  for (const stage of KO_STAGES) {
+    byLabel[stage.label] = byLabel[stage.label] || [];
+  }
+  for (const f of fixtures) {
+    const stage = KO_STAGES.find(s => s.key === f.stage);
+    if (!stage) continue;
+    byLabel[stage.label].push(f);
+  }
+  const order = [...new Set(KO_STAGES.map(s => s.label))];
+  const html = order
+    .filter(label => byLabel[label] && byLabel[label].length > 0)
+    .map(label => {
+      const matches = byLabel[label].sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate));
+      const rows = matches.map(f => {
+        const finished = FINISHED_STATUSES.includes(f.status);
+        const live = LIVE_STATUSES.includes(f.status);
+        const homeName = teamName(f.home_team) === "?" ? "?" : teamName(f.home_team);
+        const awayName = teamName(f.away_team) === "?" ? "?" : teamName(f.away_team);
+        let right;
+        if (live) {
+          right = `<span class="badge-live">${f.minute ? f.minute + "'" : "En vivo"}</span> <span class="score">${f.home_goals ?? 0} – ${f.away_goals ?? 0}</span>`;
+        } else if (finished) {
+          right = `<span class="score">${f.home_goals} – ${f.away_goals}</span>`;
+        } else if (f.home_team && f.away_team) {
+          right = `<span class="pending">${fmtDate(f.utcDate)}</span>`;
+        } else {
+          right = `<span class="pending">Por definir</span>`;
+        }
+        return `
+          <div class="ko-match">
+            <div>
+              <div class="teams">${escapeHtml(homeName)} <span style="color:var(--muted);font-weight:400;">vs</span> ${escapeHtml(awayName)}</div>
+              ${(finished || live) ? `<div class="meta">${fmtDate(f.utcDate)}</div>` : ""}
+            </div>
+            <div>${right}</div>
+          </div>
+        `;
+      }).join("");
+      return `
+        <div class="ko-stage">
+          <h3>${escapeHtml(label)} <span class="count">${matches.length} partido${matches.length === 1 ? "" : "s"}</span></h3>
+          ${rows}
+        </div>
+      `;
+    }).join("");
+  container.innerHTML = html || `<div class="empty">Las eliminatorias aún no están en el calendario.</div>`;
+}
+
+function renderScorers(doc) {
+  const body = document.getElementById("scorersBody");
+  const scorers = doc && doc.scorers || [];
+  if (scorers.length === 0) {
+    body.innerHTML = `<tr><td colspan="4" class="empty">Todavía no hay datos de goleadores.</td></tr>`;
+    return;
+  }
+  body.innerHTML = scorers.map((s, i) => `
+    <tr>
+      <td class="pos">${i + 1}</td>
+      <td>${escapeHtml(s.player)}</td>
+      <td>${escapeHtml(teamName(s.team) !== "?" ? teamName(s.team) : s.team)}</td>
+      <td class="num">${s.goals}</td>
+    </tr>
+  `).join("");
+}
+
+async function load() {
+  try {
+    const [fixturesDoc, scorersResult, teamsDoc] = await Promise.all([
+      fetchJson(REPO_FIXTURES_URL),
+      fetchJson(REPO_SCORERS_URL).catch(() => null),
+      fetchJson(REPO_TEAMS_URL).catch(() => null),
+    ]);
+
+    TEAM_NAMES = {};
+    if (teamsDoc && teamsDoc.teams) {
+      for (const t of teamsDoc.teams) {
+        if (t.fd_name) TEAM_NAMES[t.fd_name.toLowerCase()] = t.name;
+      }
+    }
+
+    const fixtures = fixturesDoc.fixtures || [];
+    renderLive(fixtures);
+    renderResults(fixtures);
+    renderUpcoming(fixtures);
+    renderGroups(fixtures);
+    renderKnockouts(fixtures);
+    renderScorers(scorersResult);
+
+    const ts = fixturesDoc.last_updated;
+    document.getElementById("updated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "";
+  } catch (err) {
+    document.getElementById("resultsBody").innerHTML = `<tr><td class="empty">Error: ${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
+  });
+});
+
+load();
+setInterval(load, REFRESH_MS);
+</script>
+<script src="assets/today-carousel.js"></script>
+</body>
+</html>
