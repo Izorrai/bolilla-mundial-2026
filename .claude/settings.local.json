@@ -7,7 +7,16 @@
       "Bash(git -C \"C:\\\\Users\\\\latxi\\\\Desktop\\\\programas\\\\worldCup\\\\bolilla-mundial-2026\" push origin main)",
       "Bash(git -C \"C:\\\\Users\\\\latxi\\\\Desktop\\\\programas\\\\worldCup\\\\bolilla-mundial-2026\" add leaderboard.html results.html)",
       "Bash(git -C \"C:\\\\Users\\\\latxi\\\\Desktop\\\\programas\\\\worldCup\\\\bolilla-mundial-2026\" stash)",
-      "Bash(git -C \"C:\\\\Users\\\\latxi\\\\Desktop\\\\programas\\\\worldCup\\\\bolilla-mundial-2026\" stash pop)"
+      "Bash(git -C \"C:\\\\Users\\\\latxi\\\\Desktop\\\\programas\\\\worldCup\\\\bolilla-mundial-2026\" stash pop)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git pull *)",
+      "Bash(git push *)",
+      "Bash(git stash *)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); live=[f for f in d['fixtures'] if f['status'] not in \\('FINISHED','SCHEDULED','TIMED','POSTPONED','CANCELLED'\\)]; print\\(json.dumps\\(live, indent=2\\)\\)\")",
+      "Bash(python3 -c ' *)",
+      "PowerShell($d = Get-Content \"data\\\\fixtures.json\" | ConvertFrom-Json; $statuses = $d.fixtures | ForEach-Object { $_.status } | Sort-Object -Unique; Write-Host \"Estados:\" $statuses; $live = $d.fixtures | Where-Object { $_.status -notin @\\('FINISHED','SCHEDULED','TIMED','POSTPONED','CANCELLED'\\) }; Write-Host \"En directo/otros:\" \\($live | ForEach-Object { \"$\\($_.home_team\\) vs $\\($_.away_team\\) [$\\($_.status\\)]\" }\\))",
+      "PowerShell(gh workflow run update_scores.yml --repo Izorrai/bolilla-mundial-2026)"
     ]
   }
 }
