@@ -115,24 +115,47 @@ STAGE_TO_LABEL = {
 LABEL_ORDER = ["Grupos", "16avos", "Octavos", "Cuartos", "Semifinal", "Final", "Ganador"]
 
 
+def _team_in_match(team_name, m):
+    home = (m.get("home_team") or "").strip().lower()
+    away = (m.get("away_team") or "").strip().lower()
+    return team_name.strip().lower() in (home, away)
+
+
 def team_reached_stage(team_name, matches, champion_name):
     """Calcula la ronda mas avanzada a la que llego un equipo, usando label de stage_options."""
     reached = "Grupos"
     has_match = False
     for m in matches:
-        home = (m.get("home_team") or "").strip()
-        away = (m.get("away_team") or "").strip()
-        if team_name.strip().lower() not in (home.lower(), away.lower()):
+        if not _team_in_match(team_name, m):
             continue
         has_match = True
         st = m.get("stage")
         label = STAGE_TO_LABEL.get(st, "Grupos")
-        # If the team played a match in stage X, it means they reached that stage
         if LABEL_ORDER.index(label) > LABEL_ORDER.index(reached):
             reached = label
     if eq(team_name, champion_name):
         reached = "Ganador"
     return reached if has_match else "Grupos"
+
+
+def team_is_eliminated(team_name, matches, fixtures):
+    """Devuelve True si el equipo ya ha sido eliminado del torneo."""
+    tn = team_name.strip().lower()
+
+    # Si tiene algun partido pendiente (TIMED/SCHEDULED/IN_PLAY/PAUSED), sigue vivo
+    for f in fixtures:
+        if not _team_in_match(team_name, f):
+            continue
+        if f.get("status") not in ("FINISHED",):
+            return False
+
+    # Si no tiene ningun partido en absoluto, no podemos saber -> no eliminado aun
+    team_matches = [m for m in matches if _team_in_match(team_name, m)]
+    if not team_matches:
+        return False
+
+    # Tiene partidos y todos estan FINISHED (ningun pendiente) -> eliminado
+    return True
 
 
 def champion_team(matches):
@@ -182,7 +205,7 @@ def score_initial(prediction, results, scoring, matches):
 
 
 # ---------- 2) Selections progression ----------
-def score_selections(prediction, scoring, predicted_selections, matches, champion):
+def score_selections(prediction, scoring, predicted_selections, matches, champion, fixtures):
     selections = prediction.get("selections") or {}
     per = scoring["per_correct"]
     pts = 0
@@ -192,11 +215,10 @@ def score_selections(prediction, scoring, predicted_selections, matches, champio
         if not predicted:
             continue
         actual_label = team_reached_stage(team, matches, champion)
-        # Only score if the team has finished its run (we score "exact stage reached")
-        # For now we score progressively: if predicted matches reached label exactly.
-        # Note: a team is "done" only after eliminated. While still playing, we don't
-        # know the final ronda. We score whatever its current furthest stage is, but
-        # if the actual exceeds predicted, the prediction is already wrong.
+        eliminated = team_is_eliminated(team, matches, fixtures)
+        if not eliminated:
+            details[team] = {"predicted": predicted, "actual": "En juego", "points": 0}
+            continue
         if predicted == actual_label:
             pts += per; details[team] = {"predicted": predicted, "actual": actual_label, "points": per}
         else:
@@ -271,6 +293,8 @@ def main():
     results = load_json(PORRA / "initial_results.json", {})
     matches_doc = load_json(DATA / "matches.json", {"matches": []})
     matches = matches_doc.get("matches", [])
+    fixtures_doc = load_json(DATA / "fixtures.json", {"fixtures": []})
+    fixtures = fixtures_doc.get("fixtures", [])
 
     scoring = config.get("scoring") or {}
     champion = champion_team(matches)
@@ -279,7 +303,7 @@ def main():
     for player_name in config.get("players", []):
         pred = predictions_doc.get("predictions", {}).get(player_name) or {}
         pts_init, bd_init = score_initial(pred, results, scoring.get("initial", {}), matches)
-        pts_sel,  bd_sel  = score_selections(pred, scoring.get("selections_progression", {}), config.get("predicted_selections", []), matches, champion)
+        pts_sel,  bd_sel  = score_selections(pred, scoring.get("selections_progression", {}), config.get("predicted_selections", []), matches, champion, fixtures)
         pts_gs,   bd_gs   = score_group_stage(pred, scoring.get("group_stage", {}), matches)
         pts_ko,   bd_ko   = score_knockouts(pred, scoring.get("knockouts", {}), matches)
         total = round(pts_init + pts_sel + pts_gs + pts_ko, 1)
