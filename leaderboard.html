@@ -780,10 +780,14 @@ function getMatchDelta(participantEntry) {
   }
 
   // Partido en directo: prioridad (puede haber varios simultaneos)
+    let liveTotal = 0;
+  let anyLive = false;
   for (const f of LIVE_FIXTURES) {
     const d = calcForFixture(f);
-    if (d !== null) return { delta: d, live: true };
+    if (d !== null) { liveTotal += d; anyLive = true; }
   }
+  if (anyLive) return { delta: Math.round(liveTotal * 10) / 10, live: true };
+
 
   // Sin partidos en directo: solo el ultimo partido finalizado del torneo
   // (no el ultimo partido en el que jugo este participante)
