@@ -6,6 +6,9 @@ Lee:
   - data/teams.json                              (catalogo compartido de 48 selecciones)
   - data/rooms.json                              (listado de salas)
   - data/rooms/<room_id>/participants.json       (inscripciones de cada sala)
+  - data/fixtures.json                           (calendario completo, incluidos partidos
+                                                    programados/en directo, generado por
+                                                    fetch_fixtures.py)
 
 Llama a football-data.org /v4/competitions/WC/matches (una sola vez por ejecucion) y:
   - Guarda los partidos finalizados en data/matches.json
@@ -16,6 +19,14 @@ Reglas (recordatorio):
   Solo cuentan los 90 minutos (score.fullTime). Sin prorroga ni penaltis (excepto campeon).
   gol 0.5  victoria 3  empate 1  derrota 0
   bonus acumulado por ronda alcanzada: 16avos 5 / octavos 7 / cuartos 10 / semis 15 / final 25 / campeon 50
+
+  IMPORTANTE: el bonus de ronda se concede en cuanto se CONFIRMA el cruce
+  (el equipo tiene un partido asignado en esa fase en fixtures.json, aunque
+  ese partido concreto todavia no se haya jugado), no cuando termina el
+  partido de esa fase. Se usa scheduled_stage_reached() para esto, combinado
+  con stage_reached() (que mira solo partidos FINISHED) por si fixtures.json
+  no estuviera disponible en algun momento.
+
   extras (pichichi/mvp/portero): 30 c/u si coinciden con tournament_extras (case-insensitive)
 """
 
@@ -45,6 +56,7 @@ DATA = ROOT / "data"
 TEAMS_FILE = DATA / "teams.json"
 ROOMS_FILE = DATA / "rooms.json"
 MATCHES_FILE = DATA / "matches.json"
+FIXTURES_FILE = DATA / "fixtures.json"
 
 API_BASE = "https://api.football-data.org/v4"
 COMPETITION = "WC"
@@ -139,6 +151,9 @@ def team_match_outcome(team_name, m, fd_lookup):
 
 
 def stage_reached(team_name, matches, fd_lookup):
+    """Fase mas avanzada en la que el equipo tiene un partido FINALIZADO.
+    Se mantiene tal cual para los stats de PJ/V/E/D y goles, que solo deben
+    contar partidos ya jugados."""
     reached = "GROUP_STAGE"
     has_match = False
     for m in matches:
@@ -149,6 +164,35 @@ def stage_reached(team_name, matches, fd_lookup):
         if st in STAGE_ORDER and STAGE_ORDER.index(st) > STAGE_ORDER.index(reached):
             reached = st
     return reached if has_match else None
+
+
+def scheduled_stage_reached(team_name, all_fixtures, fd_lookup):
+    """A diferencia de stage_reached() (que solo mira partidos FINISHED),
+    esta funcion mira TODOS los fixtures (incluidos programados/en directo,
+    es decir data/fixtures.json completo) para detectar la fase mas avanzada
+    en la que el equipo tiene un partido ASIGNADO, aunque ese partido en
+    concreto aun no se haya jugado.
+
+    Esto permite que el bonus de ronda se conceda en cuanto se confirma el
+    cruce (p.ej. el calendario de dieciseisavos sale publicado), en vez de
+    esperar a que termine ese partido."""
+    reached = "GROUP_STAGE"
+    has_any = False
+    t = fd_lookup.get(team_name.lower())
+    if not t:
+        return None
+    target_fd = (t.get("fd_name") or "").lower()
+    target_name = team_name.lower()
+    for f in all_fixtures:
+        home = (f.get("home_team") or "").lower()
+        away = (f.get("away_team") or "").lower()
+        if home not in (target_fd, target_name) and away not in (target_fd, target_name):
+            continue
+        has_any = True
+        st = f.get("stage")
+        if st in STAGE_ORDER and STAGE_ORDER.index(st) > STAGE_ORDER.index(reached):
+            reached = st
+    return reached if has_any else None
 
 
 def champion_team(matches):
@@ -177,7 +221,7 @@ def team_round_bonus(stage_reached_value):
     return bonuses.get(stage_reached_value, 0)
 
 
-def compute_team_stats(team_name, matches, fd_lookup, is_champion):
+def compute_team_stats(team_name, matches, fd_lookup, is_champion, all_fixtures=None):
     goals_for = goals_against = wins = draws = losses = matches_played = 0
     for m in matches:
         outcome, gf, ga = team_match_outcome(team_name, m, fd_lookup)
@@ -189,10 +233,27 @@ def compute_team_stats(team_name, matches, fd_lookup, is_champion):
         if outcome == "win":   wins += 1
         elif outcome == "draw": draws += 1
         else:                   losses += 1
-    stage = stage_reached(team_name, matches, fd_lookup)
+
+    # Fase para mostrar en stats (PJ/V/E/D ya jugados): la "jugada" tal cual.
+    played_stage = stage_reached(team_name, matches, fd_lookup)
+
+    # Fase para el BONUS de ronda: la mas avanzada entre "jugada" y
+    # "confirmada por calendario" (fixtures.json incluye partidos futuros).
+    # Asi el bonus se concede en cuanto se confirma el cruce, no cuando
+    # termina ese partido.
+    bonus_stage = played_stage
+    if all_fixtures:
+        sched_stage = scheduled_stage_reached(team_name, all_fixtures, fd_lookup)
+        if sched_stage and (
+            not bonus_stage
+            or STAGE_ORDER.index(sched_stage) > STAGE_ORDER.index(bonus_stage)
+        ):
+            bonus_stage = sched_stage
+
     if is_champion:
-        stage = "WINNER"
-    rb = team_round_bonus(stage)
+        bonus_stage = "WINNER"
+
+    rb = team_round_bonus(bonus_stage)
     pts_goals = 0.5 * goals_for
     pts_results = 3 * wins + 1 * draws
     return {
@@ -200,7 +261,7 @@ def compute_team_stats(team_name, matches, fd_lookup, is_champion):
         "goals_for": goals_for,
         "goals_against": goals_against,
         "wins": wins, "draws": draws, "losses": losses,
-        "stage_reached": stage or "—",
+        "stage_reached": bonus_stage or played_stage or "—",
         "round_bonuses": rb,
         "goals_pts": round(pts_goals, 1),
         "results_pts": pts_results,
@@ -353,6 +414,12 @@ def main():
     rooms_doc = load_json(ROOMS_FILE, {"rooms": [{"id": "default", "name": "Default"}]})
     rooms = rooms_doc.get("rooms", [])
 
+    # Calendario completo (incluye partidos programados/en directo), generado
+    # por fetch_fixtures.py. Se usa SOLO para detectar la fase "confirmada"
+    # de cada equipo (scheduled_stage_reached), no para calcular goles/resultados.
+    fixtures_doc = load_json(FIXTURES_FILE, {"fixtures": []})
+    all_fixtures = fixtures_doc.get("fixtures", [])
+
     raw = fetch_matches(api_key)
     cached_doc = load_json(MATCHES_FILE, {"matches": []})
     cached_matches = cached_doc.get("matches", [])
@@ -397,7 +464,9 @@ def main():
             t["name"].lower() == (champ or "").lower() or
             (t.get("fd_name") or "").lower() == (champ or "").lower()
         )
-        team_stats[t["name"]] = compute_team_stats(t["name"], matches, fd_lookup, is_champ)
+        team_stats[t["name"]] = compute_team_stats(
+            t["name"], matches, fd_lookup, is_champ, all_fixtures
+        )
 
     now_iso = datetime.now(timezone.utc).isoformat()
     for room in rooms:
