@@ -57,6 +57,7 @@ TEAMS_FILE = DATA / "teams.json"
 ROOMS_FILE = DATA / "rooms.json"
 MATCHES_FILE = DATA / "matches.json"
 FIXTURES_FILE = DATA / "fixtures.json"
+STAGE_LOCK_FILE = DATA / "stage_lock.json"
 
 API_BASE = "https://api.football-data.org/v4"
 COMPETITION = "WC"
@@ -195,6 +196,88 @@ def scheduled_stage_reached(team_name, all_fixtures, fd_lookup):
     return reached if has_any else None
 
 
+def apply_stage_lock(team_name, candidate_stage, stage_lock):
+    """Candado MONOTONICO sobre la fase confirmada de cada equipo, igual que
+    ya se hace con matches.json para los partidos finalizados.
+
+    football-data.org puede "titubear" mientras regenera el cuadro de
+    eliminatorias (a veces devuelve fixtures.json con el cruce ya asignado,
+    a veces lo vuelve a devolver como "? vs ?" / SCHEDULED sin equipos).
+    Sin este candado, el bonus de ronda aparece y desaparece del ranking
+    entre ejecuciones del cron, lo cual es muy confuso para la gente.
+
+    stage_lock es un dict {team_name: stage} persistido en disco
+    (data/stage_lock.json). Esta funcion compara la fase candidata de esta
+    ejecucion con la maxima ya registrada y SOLO deja que suba, nunca que
+    baje. Devuelve la fase final a usar y muta stage_lock in-place."""
+    if not candidate_stage:
+        # Sin dato esta vez: nos quedamos con lo que ya teniamos bloqueado
+        # (o GROUP_STAGE si es la primera vez que vemos a este equipo).
+        return stage_lock.get(team_name, "GROUP_STAGE")
+    locked = stage_lock.get(team_name, "GROUP_STAGE")
+    if candidate_stage in STAGE_ORDER and locked in STAGE_ORDER:
+        if STAGE_ORDER.index(candidate_stage) > STAGE_ORDER.index(locked):
+            stage_lock[team_name] = candidate_stage
+            return candidate_stage
+        return locked
+    # Valor de fase desconocido (no deberia pasar): no tocamos el candado.
+    return locked
+
+
+def stages_fully_confirmed(all_fixtures):
+    """Devuelve el set de fases (de STAGE_ORDER) cuyo cuadro esta COMPLETO:
+    todos los partidos de esa fase en fixtures.json tienen ya home_team y
+    away_team asignados (ningun "? vs ?" / null pendiente de sorteo o de que
+    termine la fase anterior).
+
+    Esto se usa para decidir si el bonus de ronda de una fase eliminatoria
+    se reparte ya o se espera. La idea: en vez de ir dando el bonus equipo
+    a equipo a medida que la API confirma cruces sueltos (lo cual genera
+    parpadeos cuando la API titubea a medio confirmar), esperamos a que
+    los 16/8/4/2 cruces de la fase estén completos y entonces se conceden
+    todos los bonus de esa fase de golpe, a la vez, para todo el mundo.
+
+    GROUP_STAGE no se incluye aqui: la fase de grupos siempre se considera
+    "confirmada" desde el principio (no tiene cruces por definir)."""
+    by_stage = {}
+    for f in all_fixtures:
+        st = f.get("stage")
+        if st not in STAGE_ORDER or st in ("GROUP_STAGE", "WINNER"):
+            continue
+        by_stage.setdefault(st, []).append(f)
+
+    confirmed = set()
+    for st, fixtures_in_stage in by_stage.items():
+        if not fixtures_in_stage:
+            continue
+        complete = all(
+            (f.get("home_team") or "").strip() and (f.get("away_team") or "").strip()
+            for f in fixtures_in_stage
+        )
+        if complete:
+            confirmed.add(st)
+    return confirmed
+
+
+def highest_fully_confirmed_stage(stage_value, confirmed_stages):
+    """Recorta una fase candidata hacia abajo hasta la fase mas alta que
+    este totalmente confirmada. P.ej. si un equipo tiene partido asignado
+    en QUARTER_FINALS pero esa fase aun no esta completa para todos los
+    cruces (solo se conocen algunos), bajamos su fase a la ultima que si
+    este completa (p.ej. LAST_16), para no soltar el bonus de cuartos antes
+    de tiempo. GROUP_STAGE siempre se considera valida (no requiere
+    confirmacion de cruces)."""
+    if not stage_value or stage_value not in STAGE_ORDER:
+        return stage_value
+    idx = STAGE_ORDER.index(stage_value)
+    while idx > 0:
+        candidate = STAGE_ORDER[idx]
+        if candidate in ("GROUP_STAGE", "WINNER") or candidate in confirmed_stages:
+            return candidate
+        idx -= 1
+    return STAGE_ORDER[0]
+
+
 def champion_team(matches):
     finals = [m for m in matches if m.get("stage") == "FINAL"]
     if not finals:
@@ -221,7 +304,7 @@ def team_round_bonus(stage_reached_value):
     return bonuses.get(stage_reached_value, 0)
 
 
-def compute_team_stats(team_name, matches, fd_lookup, is_champion, all_fixtures=None):
+def compute_team_stats(team_name, matches, fd_lookup, is_champion, all_fixtures=None, stage_lock=None, confirmed_stages=None):
     goals_for = goals_against = wins = draws = losses = matches_played = 0
     for m in matches:
         outcome, gf, ga = team_match_outcome(team_name, m, fd_lookup)
@@ -237,10 +320,8 @@ def compute_team_stats(team_name, matches, fd_lookup, is_champion, all_fixtures=
     # Fase para mostrar en stats (PJ/V/E/D ya jugados): la "jugada" tal cual.
     played_stage = stage_reached(team_name, matches, fd_lookup)
 
-    # Fase para el BONUS de ronda: la mas avanzada entre "jugada" y
-    # "confirmada por calendario" (fixtures.json incluye partidos futuros).
-    # Asi el bonus se concede en cuanto se confirma el cruce, no cuando
-    # termina ese partido.
+    # Fase candidata para el BONUS de ronda: la mas avanzada entre "jugada"
+    # y "confirmada por calendario" (fixtures.json incluye partidos futuros).
     bonus_stage = played_stage
     if all_fixtures:
         sched_stage = scheduled_stage_reached(team_name, all_fixtures, fd_lookup)
@@ -250,8 +331,25 @@ def compute_team_stats(team_name, matches, fd_lookup, is_champion, all_fixtures=
         ):
             bonus_stage = sched_stage
 
+    # TODO O NADA POR FASE: recortamos la fase candidata a la ultima fase
+    # eliminatoria que este COMPLETAMENTE confirmada (los 16/8/4/2 cruces
+    # con ambos equipos ya asignados). Asi el bonus de una fase se reparte
+    # a todo el mundo de golpe, en vez de ir goteando equipo a equipo
+    # mientras la API aun esta confirmando cruces sueltos.
+    if confirmed_stages is not None:
+        bonus_stage = highest_fully_confirmed_stage(bonus_stage, confirmed_stages)
+
+    # CANDADO: si la API titubea y esta vez "bonus_stage" sale mas bajo que
+    # lo que ya teniamos confirmado en una ejecucion anterior, nos quedamos
+    # con el valor bloqueado. Asi el bonus de ronda nunca desaparece del
+    # ranking una vez concedido.
+    if stage_lock is not None and not is_champion:
+        bonus_stage = apply_stage_lock(team_name, bonus_stage, stage_lock)
+
     if is_champion:
         bonus_stage = "WINNER"
+        if stage_lock is not None:
+            stage_lock[team_name] = "WINNER"
 
     rb = team_round_bonus(bonus_stage)
     pts_goals = 0.5 * goals_for
@@ -420,6 +518,18 @@ def main():
     fixtures_doc = load_json(FIXTURES_FILE, {"fixtures": []})
     all_fixtures = fixtures_doc.get("fixtures", [])
 
+    # Candado monotonico de fases confirmadas por equipo (ver apply_stage_lock).
+    # Persiste entre ejecuciones del cron para que el bonus de ronda nunca
+    # desaparezca si la API titubea con el cuadro de eliminatorias.
+    stage_lock = load_json(STAGE_LOCK_FILE, {})
+
+    # Fases eliminatorias cuyo cuadro esta completo (todos los cruces ya
+    # tienen ambos equipos asignados). Se usa para repartir el bonus de
+    # ronda de golpe a todos los equipos de esa fase, no equipo a equipo.
+    confirmed_stages = stages_fully_confirmed(all_fixtures)
+    if confirmed_stages:
+        print(f"[info] fases eliminatorias completamente confirmadas: {sorted(confirmed_stages, key=STAGE_ORDER.index)}")
+
     raw = fetch_matches(api_key)
     cached_doc = load_json(MATCHES_FILE, {"matches": []})
     cached_matches = cached_doc.get("matches", [])
@@ -465,8 +575,11 @@ def main():
             (t.get("fd_name") or "").lower() == (champ or "").lower()
         )
         team_stats[t["name"]] = compute_team_stats(
-            t["name"], matches, fd_lookup, is_champ, all_fixtures
+            t["name"], matches, fd_lookup, is_champ, all_fixtures, stage_lock, confirmed_stages
         )
+
+    # Persistimos el candado actualizado para la siguiente ejecucion.
+    save_json(STAGE_LOCK_FILE, stage_lock)
 
     now_iso = datetime.now(timezone.utc).isoformat()
     for room in rooms:
