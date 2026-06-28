@@ -129,8 +129,9 @@
 const REPO_CONFIG_URL = "data/porra/config.json";
 const REPO_SCORE_URL = "data/porra/porra_scoreboard.json";
 const REPO_PRED_URL = "data/porra/predictions.json";
+const REPO_FIXTURES_URL = "data/fixtures.json";
 
-let CONFIG = null, SCOREBOARD = null, PREDICTIONS = null;
+let CONFIG = null, SCOREBOARD = null, PREDICTIONS = null, FIXTURES = [];
 
 function escapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
 function fmtPts(n) { if (typeof n !== "number") return "0"; return Number.isInteger(n) ? n.toString() : n.toFixed(1).replace(".", ","); }
@@ -299,18 +300,46 @@ const KO_STAGE_LABELS = {
   THIRD_PLACE: "3er puesto", FINAL: "Final",
 };
 
-function renderKnockoutsDetail(d) {
+function renderKnockoutsDetail(d, playerName) {
   d = d || {};
   const exact = d.exact || 0, resultOnly = d.result_only || 0, wrong = d.wrong || 0;
-  const matches = d.matches || [];
-  if (exact + resultOnly + wrong === 0 && matches.length === 0) {
-    return detailSection("Eliminatorias", `<p class="muted-note">Todavía no hay partidos de eliminatorias jugados.</p>`);
+  const scoredMatches = d.matches || [];
+  const scoredIds = new Set(scoredMatches.map(m => String(m.id)));
+
+  const pred = PREDICTIONS && PREDICTIONS.predictions ? PREDICTIONS.predictions[playerName] : null;
+  const ko = (pred && pred.knockouts) || {};
+
+  const KO_STAGES_SET = new Set(["LAST_32","ROUND_OF_32","LAST_16","ROUND_OF_16","QUARTER_FINALS","SEMI_FINALS","THIRD_PLACE","FINAL"]);
+  const pendingRows = [];
+  for (const f of FIXTURES) {
+    if (!KO_STAGES_SET.has(f.stage)) continue;
+    const mid = String(f.id);
+    if (scoredIds.has(mid)) continue;
+    const pick = ko[mid] || ko[parseInt(mid)];
+    if (!pick) continue;
+    const home = f.home_team || "Por definir";
+    const away = f.away_team || "Por definir";
+    const finished = f.status === "FINISHED";
+    pendingRows.push({
+      home_team: home, away_team: away,
+      stage: f.stage,
+      pick_home: pick.home, pick_away: pick.away,
+      actual_home: finished ? (f.home_goals ?? "–") : "–",
+      actual_away: finished ? (f.away_goals ?? "–") : "–",
+      pending: !finished,
+    });
   }
-  if (matches.length === 0) {
-    return detailSection("Eliminatorias", `<p>Resultado exacto: <strong>${exact}</strong> · Solo 1X2: <strong>${resultOnly}</strong> · Fallados: <strong>${wrong}</strong></p>`);
+
+  const allEmpty = scoredMatches.length === 0 && pendingRows.length === 0;
+  if (allEmpty && Object.keys(ko).length === 0) {
+    return detailSection("Eliminatorias", `<p class="muted-note">No ha enviado pronósticos de eliminatorias.</p>`);
   }
-  let rows = `<tr class="head"><td>Partido</td><td>Ronda</td><td>Real</td><td>Tu pronóstico</td><td class="pts">Pts</td></tr>`;
-  rows += matches.map(m => {
+  if (allEmpty) {
+    return detailSection("Eliminatorias", `<p class="muted-note">Todavía no hay partidos de eliminatorias en el calendario.</p>`);
+  }
+
+  let rows = `<tr class="head"><td>Partido</td><td>Ronda</td><td>Real</td><td>Pronóstico</td><td class="pts">Pts</td></tr>`;
+  rows += scoredMatches.map(m => {
     const cls = m.verdict === "exact" ? "ok" : m.verdict === "result_only" ? "ok" : "fail";
     const label = m.verdict === "exact" ? "✅ Exacto" : m.verdict === "result_only" ? "☑️ 1X2" : "❌";
     return `<tr class="${cls}" title="${label}">
@@ -321,7 +350,18 @@ function renderKnockoutsDetail(d) {
       <td class="pts">${m.points > 0 ? "+" + fmtPts(m.points) : "0"}</td>
     </tr>`;
   }).join("");
-  return detailSection(`Eliminatorias (${exact} exactos · ${resultOnly} 1X2 · ${wrong} fallados)`, `<table class="detail-table">${rows}</table>`);
+  rows += pendingRows.map(m => `<tr style="opacity:0.6">
+      <td>${escapeHtml(m.home_team)} – ${escapeHtml(m.away_team)}</td>
+      <td>${KO_STAGE_LABELS[m.stage] || m.stage}</td>
+      <td>${m.actual_home}–${m.actual_away}</td>
+      <td>${m.pick_home}–${m.pick_away}</td>
+      <td class="pts">–</td>
+    </tr>`).join("");
+
+  const summary = (exact + resultOnly + wrong) > 0
+    ? `${exact} exactos · ${resultOnly} 1X2 · ${wrong} fallados`
+    : "sin partidos jugados aún";
+  return detailSection(`Eliminatorias (${summary})`, `<table class="detail-table">${rows}</table>`);
 }
 
 window.showDetail = name => {
@@ -341,7 +381,7 @@ window.showDetail = name => {
     ${renderInitialDetail(det.initial)}
     ${renderSelectionsDetail(det.selections)}
     ${renderGroupStageDetail(det.group_stage)}
-    ${renderKnockoutsDetail(det.knockouts)}
+    ${renderKnockoutsDetail(det.knockouts, name)}
   `;
   document.getElementById("detailBg").classList.add("open");
 };
@@ -357,9 +397,11 @@ async function refreshPorra() {
     const results = await Promise.allSettled([
       fetchJson(REPO_SCORE_URL),
       fetchJson(REPO_PRED_URL),
+      fetchJson(REPO_FIXTURES_URL),
     ]);
     if (results[0].status === "fulfilled") SCOREBOARD = results[0].value;
     if (results[1].status === "fulfilled") PREDICTIONS = results[1].value;
+    if (results[2].status === "fulfilled") FIXTURES = (results[2].value || {}).fixtures || [];
 
     const ts = SCOREBOARD && SCOREBOARD.last_updated ? SCOREBOARD.last_updated : null;
     document.getElementById("updated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "Mundial aún no comenzado";
