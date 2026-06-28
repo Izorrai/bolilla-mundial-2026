@@ -272,19 +272,56 @@ function renderSelectionsDetail(d) {
 function renderGroupStageDetail(d) {
   d = d || {};
   const correct = d.correct || 0, answered = d.answered || 0;
+  const matches = d.matches || [];
   if (answered === 0) {
     return detailSection("Fase de grupos (1 pt por 1X2 acertado)", `<p class="muted-note">Todavía no se ha jugado ningún partido de grupos.</p>`);
   }
-  return detailSection("Fase de grupos (1 pt por 1X2 acertado)", `<p>${correct} de ${answered} partidos acertados.</p>`);
+  if (matches.length === 0) {
+    return detailSection("Fase de grupos (1 pt por 1X2 acertado)", `<p>${correct} de ${answered} partidos acertados.</p>`);
+  }
+  let rows = `<tr class="head"><td>Partido</td><td>Resultado</td><td>Tu 1X2</td><td class="pts">Pts</td></tr>`;
+  rows += matches.map(m => {
+    const ok = m.ok;
+    return `<tr class="${ok ? "ok" : "fail"}">
+      <td>${escapeHtml(m.home_team)} – ${escapeHtml(m.away_team)}</td>
+      <td>${m.actual_home}–${m.actual_away}</td>
+      <td>${escapeHtml(m.pick)}</td>
+      <td class="pts">${ok ? "+1" : "0"}</td>
+    </tr>`;
+  }).join("");
+  return detailSection(`Fase de grupos (${correct} de ${answered} acertados)`, `<table class="detail-table">${rows}</table>`);
 }
+
+const KO_STAGE_LABELS = {
+  LAST_32: "16avos", ROUND_OF_32: "16avos",
+  LAST_16: "Octavos", ROUND_OF_16: "Octavos",
+  QUARTER_FINALS: "Cuartos", SEMI_FINALS: "Semis",
+  THIRD_PLACE: "3er puesto", FINAL: "Final",
+};
 
 function renderKnockoutsDetail(d) {
   d = d || {};
   const exact = d.exact || 0, resultOnly = d.result_only || 0, wrong = d.wrong || 0;
-  if (exact + resultOnly + wrong === 0) {
+  const matches = d.matches || [];
+  if (exact + resultOnly + wrong === 0 && matches.length === 0) {
     return detailSection("Eliminatorias", `<p class="muted-note">Todavía no hay partidos de eliminatorias jugados.</p>`);
   }
-  return detailSection("Eliminatorias", `<p>Resultado exacto: <strong>${exact}</strong> · Solo 1X2: <strong>${resultOnly}</strong> · Fallados: <strong>${wrong}</strong></p>`);
+  if (matches.length === 0) {
+    return detailSection("Eliminatorias", `<p>Resultado exacto: <strong>${exact}</strong> · Solo 1X2: <strong>${resultOnly}</strong> · Fallados: <strong>${wrong}</strong></p>`);
+  }
+  let rows = `<tr class="head"><td>Partido</td><td>Ronda</td><td>Real</td><td>Tu pronóstico</td><td class="pts">Pts</td></tr>`;
+  rows += matches.map(m => {
+    const cls = m.verdict === "exact" ? "ok" : m.verdict === "result_only" ? "ok" : "fail";
+    const label = m.verdict === "exact" ? "✅ Exacto" : m.verdict === "result_only" ? "☑️ 1X2" : "❌";
+    return `<tr class="${cls}" title="${label}">
+      <td>${escapeHtml(m.home_team)} – ${escapeHtml(m.away_team)}</td>
+      <td>${KO_STAGE_LABELS[m.stage] || m.stage}</td>
+      <td>${m.actual_home}–${m.actual_away}</td>
+      <td>${m.pick_home}–${m.pick_away}</td>
+      <td class="pts">${m.points > 0 ? "+" + fmtPts(m.points) : "0"}</td>
+    </tr>`;
+  }).join("");
+  return detailSection(`Eliminatorias (${exact} exactos · ${resultOnly} 1X2 · ${wrong} fallados)`, `<table class="detail-table">${rows}</table>`);
 }
 
 window.showDetail = name => {

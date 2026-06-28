@@ -239,6 +239,7 @@ def score_group_stage(prediction, scoring, matches):
     correct = 0
     total = 0
     pt = scoring["result_1x2"]
+    match_list = []
     for m in matches:
         if m.get("stage") != "GROUP_STAGE":
             continue
@@ -247,17 +248,28 @@ def score_group_stage(prediction, scoring, matches):
         if not pick:
             continue
         total += 1
-        actual = result_1x2(m.get("home_goals_90", 0), m.get("away_goals_90", 0))
-        if pick == actual:
+        ah = m.get("home_goals_90", 0)
+        aa = m.get("away_goals_90", 0)
+        actual = result_1x2(ah, aa)
+        ok = pick == actual
+        if ok:
             pts += pt; correct += 1
-    return round(pts, 1), {"correct": correct, "answered": total}
+        match_list.append({
+            "id": mid,
+            "home_team": m.get("home_team"),
+            "away_team": m.get("away_team"),
+            "actual_home": ah, "actual_away": aa,
+            "pick": pick, "actual": actual,
+            "ok": ok, "points": pt if ok else 0,
+        })
+    return round(pts, 1), {"correct": correct, "answered": total, "matches": match_list}
 
 
 # ---------- 4) Knockouts ----------
 def score_knockouts(prediction, scoring, matches):
     ko = prediction.get("knockouts") or {}
     pts = 0
-    details = {"exact": 0, "result_only": 0, "wrong": 0}
+    details = {"exact": 0, "result_only": 0, "wrong": 0, "matches": []}
     for m in matches:
         st = m.get("stage")
         if st not in scoring:
@@ -276,14 +288,29 @@ def score_knockouts(prediction, scoring, matches):
         pick_res = result_1x2(ph, pa)
         actual_res = result_1x2(ah, aa)
         rules = scoring[st]
+        match_pts = 0
         if ph == ah and pa == aa:
-            pts += rules["result_1x2"] + rules["exact_bonus"]
+            match_pts = rules["result_1x2"] + rules["exact_bonus"]
             details["exact"] += 1
+            verdict = "exact"
         elif pick_res == actual_res:
-            pts += rules["result_1x2"]
+            match_pts = rules["result_1x2"]
             details["result_only"] += 1
+            verdict = "result_only"
         else:
             details["wrong"] += 1
+            verdict = "wrong"
+        pts += match_pts
+        details["matches"].append({
+            "id": mid,
+            "home_team": m.get("home_team"),
+            "away_team": m.get("away_team"),
+            "pick_home": ph, "pick_away": pa,
+            "actual_home": ah, "actual_away": aa,
+            "points": match_pts,
+            "verdict": verdict,
+            "stage": st,
+        })
     return round(pts, 1), details
 
 
