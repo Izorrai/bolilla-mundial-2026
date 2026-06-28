@@ -73,7 +73,10 @@
   @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
   tr.row-new-leader { background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.18), transparent); }
   .detail-section { margin-top: 16px; }
-  .detail-section h3 { margin: 0 0 6px 0; font-size: 13px; color: var(--blue-dark); border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  .detail-section h3 { margin: 0; font-size: 13px; color: var(--blue-dark); border-bottom: 1px solid var(--border); padding: 8px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .detail-section h3::after { content: "▼"; font-size: 10px; color: var(--muted); transition: transform 0.2s; }
+  .detail-section.collapsed h3::after { transform: rotate(-90deg); }
+  .detail-section.collapsed .detail-body { display: none; }
   .detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .detail-table td { padding: 5px 6px; border-bottom: 1px solid var(--border); }
   .detail-table tr.head td { font-weight: 700; color: var(--muted); font-size: 10px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
@@ -232,7 +235,7 @@ function fallbackRank() {
 }
 
 function detailSection(title, body) {
-  return `<div class="detail-section"><h3>${escapeHtml(title)}</h3>${body}</div>`;
+  return `<div class="detail-section collapsed"><h3 onclick="this.parentElement.classList.toggle('collapsed')">${escapeHtml(title)}</h3><div class="detail-body">${body}</div></div>`;
 }
 
 function renderInitialDetail(d) {
