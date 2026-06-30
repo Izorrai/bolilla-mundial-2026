@@ -105,8 +105,20 @@ def normalize_matches(raw_matches):
         if m.get("status") != "FINISHED":
             continue
         score = m.get("score") or {}
+        # IMPORTANTE: en football-data.org v4, para partidos con prorroga o
+        # penaltis, "fullTime" contiene el resultado GLOBAL acumulado
+        # (90' + prorroga + penaltis), mientras que "regularTime" contiene
+        # el marcador SOLO de los 90 minutos. Como nuestras reglas dicen que
+        # solo cuentan los 90 minutos, usamos regularTime cuando existe y
+        # caemos a fullTime para los partidos normales (fase de grupos, donde
+        # regularTime no aparece).
+        rt = score.get("regularTime") or {}
         ft = score.get("fullTime") or {}
-        if ft.get("home") is None or ft.get("away") is None:
+        if rt.get("home") is not None and rt.get("away") is not None:
+            home_90, away_90 = rt["home"], rt["away"]
+        elif ft.get("home") is not None and ft.get("away") is not None:
+            home_90, away_90 = ft["home"], ft["away"]
+        else:
             continue
         keep.append({
             "id": m.get("id"),
@@ -116,8 +128,8 @@ def normalize_matches(raw_matches):
             "matchday": m.get("matchday"),
             "home_team": (m.get("homeTeam") or {}).get("name"),
             "away_team": (m.get("awayTeam") or {}).get("name"),
-            "home_goals_90": ft["home"],
-            "away_goals_90": ft["away"],
+            "home_goals_90": home_90,
+            "away_goals_90": away_90,
             "duration": score.get("duration"),
             "winner_overall": score.get("winner"),
         })
@@ -634,3 +646,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
