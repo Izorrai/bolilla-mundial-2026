@@ -70,7 +70,17 @@ def fetch_fixtures(key):
     fixtures = []
     for m in raw:
         score = m.get("score") or {}
+        # IMPORTANTE: igual que en update_scores.py, en partidos con prorroga o
+        # penaltis "fullTime" trae el resultado GLOBAL acumulado, mientras que
+        # "regularTime" trae el marcador SOLO de los 90 minutos. Usamos
+        # regularTime cuando existe y caemos a fullTime para partidos normales
+        # (fase de grupos, donde regularTime no aparece).
+        regular_time = score.get("regularTime") or {}
         full_time = score.get("fullTime") or {}
+        if regular_time.get("home") is not None and regular_time.get("away") is not None:
+            home_goals, away_goals = regular_time["home"], regular_time["away"]
+        else:
+            home_goals, away_goals = full_time.get("home"), full_time.get("away")
         home_team = m.get("homeTeam") or {}
         away_team = m.get("awayTeam") or {}
         fixtures.append({
@@ -85,8 +95,8 @@ def fetch_fixtures(key):
             "away_team": away_team.get("name"),
             "home_crest": home_team.get("crest"),
             "away_crest": away_team.get("crest"),
-            "home_goals": full_time.get("home"),
-            "away_goals": full_time.get("away"),
+            "home_goals": home_goals,
+            "away_goals": away_goals,
         })
     return fixtures
 
