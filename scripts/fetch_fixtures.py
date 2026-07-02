@@ -71,6 +71,37 @@ def api_get(url, key, retries=4, backoff=3):
             time.sleep(wait)
 
 
+def _infer_live_status(raw_status, utc_date, now):
+    """Workaround para bug de football-data.org: a veces el status se queda
+    congelado en TIMED/SCHEDULED aunque el partido lleve un rato en juego
+    (visto 50min+ con marcador ya actualizado pero status=TIMED).
+    Si ha pasado el kickoff y no supera un limite razonable, forzamos IN_PLAY."""
+    if raw_status not in ("TIMED", "SCHEDULED"):
+        return raw_status, None
+    if not utc_date:
+        return raw_status, None
+    try:
+        kickoff = datetime.fromisoformat(utc_date.replace("Z", "+00:00"))
+    except (ValueError, AttributeError):
+        return raw_status, None
+    elapsed_min = (now - kickoff).total_seconds() / 60.0
+    # Ventana [5min, 150min] tras kickoff: asumimos IN_PLAY. Antes de 5 min
+    # dejamos SCHEDULED (aun no ha empezado o no llevan casi nada). Despues de
+    # 150 min ya podria ser FINISHED con delay, no queremos inventar.
+    if 5 <= elapsed_min <= 150:
+        # minuto aproximado: 1a parte [0-45], descanso "congelado" en 45,
+        # 2a parte descuenta los 15 min de descanso
+        if elapsed_min <= 45:
+            minute = int(elapsed_min)
+        elif elapsed_min <= 60:
+            minute = 45   # descanso
+        else:
+            minute = int(elapsed_min - 15)
+        minute = min(minute, 90)
+        return "IN_PLAY", minute
+    return raw_status, None
+
+
 def _map_match(m):
     """Convierte un match crudo de football-data.org al formato que usamos en fixtures.json."""
     score = m.get("score") or {}
@@ -92,11 +123,17 @@ def _map_match(m):
         home_goals, away_goals = full_time.get("home"), full_time.get("away")
     home_team = m.get("homeTeam") or {}
     away_team = m.get("awayTeam") or {}
+    # Workaround bug football-data.org: si dice TIMED con kickoff en el pasado,
+    # forzamos IN_PLAY y calculamos el minuto nosotros.
+    raw_status = m.get("status")
+    raw_minute = m.get("minute")
+    status, inferred_minute = _infer_live_status(raw_status, m.get("utcDate"), datetime.now(timezone.utc))
+    minute = raw_minute if raw_minute is not None else inferred_minute
     return {
         "id": m.get("id"),
         "utcDate": m.get("utcDate"),
-        "status": m.get("status"),
-        "minute": m.get("minute"),
+        "status": status,
+        "minute": minute,
         "stage": m.get("stage"),
         "group": m.get("group"),
         "matchday": m.get("matchday"),
