@@ -77,8 +77,13 @@ def fetch_fixtures(key):
         # (fase de grupos, donde regularTime no aparece).
         regular_time = score.get("regularTime") or {}
         full_time = score.get("fullTime") or {}
+        extra_time = score.get("extraTime") or {}
         if regular_time.get("home") is not None and regular_time.get("away") is not None:
             home_goals, away_goals = regular_time["home"], regular_time["away"]
+        elif extra_time.get("home") is not None and extra_time.get("away") is not None and full_time.get("home") is not None:
+            # EXTRA_TIME sin penaltis: fullTime acumula 90' + prorroga, restamos extraTime
+            home_goals = full_time["home"] - extra_time["home"]
+            away_goals = full_time["away"] - extra_time["away"]
         else:
             home_goals, away_goals = full_time.get("home"), full_time.get("away")
         home_team = m.get("homeTeam") or {}

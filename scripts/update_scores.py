@@ -114,8 +114,13 @@ def normalize_matches(raw_matches):
         # regularTime no aparece).
         rt = score.get("regularTime") or {}
         ft = score.get("fullTime") or {}
+        et = score.get("extraTime") or {}
         if rt.get("home") is not None and rt.get("away") is not None:
             home_90, away_90 = rt["home"], rt["away"]
+        elif et.get("home") is not None and et.get("away") is not None and ft.get("home") is not None:
+            # EXTRA_TIME sin penaltis: fullTime acumula 90' + prorroga, restamos extraTime
+            home_90 = ft["home"] - et["home"]
+            away_90 = ft["away"] - et["away"]
         elif ft.get("home") is not None and ft.get("away") is not None:
             home_90, away_90 = ft["home"], ft["away"]
         else:
