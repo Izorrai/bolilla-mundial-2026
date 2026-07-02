@@ -23,7 +23,7 @@ import os
 import socket
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.error import URLError
@@ -44,7 +44,14 @@ FIXTURES_FILE = ROOT / "data" / "fixtures.json"
 SCORERS_FILE = ROOT / "data" / "scorers.json"
 API_BASE = "https://api.football-data.org/v4"
 MATCHES_API = f"{API_BASE}/competitions/WC/matches"
+MATCH_BY_ID_API = f"{API_BASE}/matches/{{id}}"
 SCORERS_API = f"{API_BASE}/competitions/WC/scorers?limit=10"
+
+# Ventana en la que consideramos que un partido esta "vivo o a punto":
+# desde 15 min antes del kickoff hasta 3h despues. Estos se refrescan
+# individualmente porque el endpoint de coleccion va con caches de hasta ~1h.
+LIVE_WINDOW_BEFORE = timedelta(minutes=15)
+LIVE_WINDOW_AFTER = timedelta(hours=3)
 
 
 def api_get(url, key, retries=4, backoff=3):
@@ -64,46 +71,91 @@ def api_get(url, key, retries=4, backoff=3):
             time.sleep(wait)
 
 
+def _map_match(m):
+    """Convierte un match crudo de football-data.org al formato que usamos en fixtures.json."""
+    score = m.get("score") or {}
+    # IMPORTANTE: igual que en update_scores.py, en partidos con prorroga o
+    # penaltis "fullTime" trae el resultado GLOBAL acumulado, mientras que
+    # "regularTime" trae el marcador SOLO de los 90 minutos. Usamos
+    # regularTime cuando existe y caemos a fullTime para partidos normales
+    # (fase de grupos, donde regularTime no aparece).
+    regular_time = score.get("regularTime") or {}
+    full_time = score.get("fullTime") or {}
+    extra_time = score.get("extraTime") or {}
+    if regular_time.get("home") is not None and regular_time.get("away") is not None:
+        home_goals, away_goals = regular_time["home"], regular_time["away"]
+    elif extra_time.get("home") is not None and extra_time.get("away") is not None and full_time.get("home") is not None:
+        # EXTRA_TIME sin penaltis: fullTime acumula 90' + prorroga, restamos extraTime
+        home_goals = full_time["home"] - extra_time["home"]
+        away_goals = full_time["away"] - extra_time["away"]
+    else:
+        home_goals, away_goals = full_time.get("home"), full_time.get("away")
+    home_team = m.get("homeTeam") or {}
+    away_team = m.get("awayTeam") or {}
+    return {
+        "id": m.get("id"),
+        "utcDate": m.get("utcDate"),
+        "status": m.get("status"),
+        "minute": m.get("minute"),
+        "stage": m.get("stage"),
+        "group": m.get("group"),
+        "matchday": m.get("matchday"),
+        "home_team": home_team.get("name"),
+        "away_team": away_team.get("name"),
+        "home_crest": home_team.get("crest"),
+        "away_crest": away_team.get("crest"),
+        "home_goals": home_goals,
+        "away_goals": away_goals,
+    }
+
+
 def fetch_fixtures(key):
     payload = api_get(MATCHES_API, key)
     raw = payload.get("matches", [])
-    fixtures = []
-    for m in raw:
-        score = m.get("score") or {}
-        # IMPORTANTE: igual que en update_scores.py, en partidos con prorroga o
-        # penaltis "fullTime" trae el resultado GLOBAL acumulado, mientras que
-        # "regularTime" trae el marcador SOLO de los 90 minutos. Usamos
-        # regularTime cuando existe y caemos a fullTime para partidos normales
-        # (fase de grupos, donde regularTime no aparece).
-        regular_time = score.get("regularTime") or {}
-        full_time = score.get("fullTime") or {}
-        extra_time = score.get("extraTime") or {}
-        if regular_time.get("home") is not None and regular_time.get("away") is not None:
-            home_goals, away_goals = regular_time["home"], regular_time["away"]
-        elif extra_time.get("home") is not None and extra_time.get("away") is not None and full_time.get("home") is not None:
-            # EXTRA_TIME sin penaltis: fullTime acumula 90' + prorroga, restamos extraTime
-            home_goals = full_time["home"] - extra_time["home"]
-            away_goals = full_time["away"] - extra_time["away"]
-        else:
-            home_goals, away_goals = full_time.get("home"), full_time.get("away")
-        home_team = m.get("homeTeam") or {}
-        away_team = m.get("awayTeam") or {}
-        fixtures.append({
-            "id": m.get("id"),
-            "utcDate": m.get("utcDate"),
-            "status": m.get("status"),
-            "minute": m.get("minute"),
-            "stage": m.get("stage"),
-            "group": m.get("group"),
-            "matchday": m.get("matchday"),
-            "home_team": home_team.get("name"),
-            "away_team": away_team.get("name"),
-            "home_crest": home_team.get("crest"),
-            "away_crest": away_team.get("crest"),
-            "home_goals": home_goals,
-            "away_goals": away_goals,
-        })
-    return fixtures
+    return [_map_match(m) for m in raw]
+
+
+def _is_live_window(fx, now):
+    """True si el partido esta en la ventana [-15min, +3h] del kickoff.
+    Estos son los que hay que refrescar individualmente porque la coleccion
+    puede ir con caches de hasta ~1h."""
+    utc = fx.get("utcDate")
+    if not utc:
+        return False
+    # FINISHED ya es final, no vale la pena refrescar (ademas update_scores.py
+    # cuenta con matches.json monotonico y no queremos revertir un FINISHED a IN_PLAY).
+    if fx.get("status") == "FINISHED":
+        return False
+    try:
+        kickoff = datetime.fromisoformat(utc.replace("Z", "+00:00"))
+    except (ValueError, AttributeError):
+        return False
+    return (kickoff - LIVE_WINDOW_BEFORE) <= now <= (kickoff + LIVE_WINDOW_AFTER)
+
+
+def refresh_live_matches(fixtures, key):
+    """Segunda pasada: pega a /v4/matches/{id} para cada partido en ventana live.
+    El endpoint individual es real-time, la coleccion no."""
+    now = datetime.now(timezone.utc)
+    live = [fx for fx in fixtures if _is_live_window(fx, now)]
+    if not live:
+        return fixtures, 0
+    by_id = {fx["id"]: fx for fx in fixtures}
+    refreshed = 0
+    for fx in live:
+        mid = fx["id"]
+        try:
+            payload = api_get(MATCH_BY_ID_API.format(id=mid), key, retries=2, backoff=2)
+        except TRANSIENT_NET_ERRORS as e:
+            print(f"[warn] no se pudo refrescar match {mid} individual ({type(e).__name__}: {e}); se mantiene el de la coleccion")
+            continue
+        # /matches/{id} devuelve un objeto con la key "match" o directamente el match
+        m = payload.get("match") or payload
+        if not isinstance(m, dict) or not m.get("id"):
+            continue
+        by_id[mid] = _map_match(m)
+        refreshed += 1
+    return list(by_id.values()), refreshed
 
 
 def fetch_scorers(key):
@@ -140,6 +192,9 @@ def main():
 
     try:
         fixtures = fetch_fixtures(key)
+        # Segunda pasada: refresca los partidos "vivos o a punto" con el endpoint
+        # individual, que es real-time. La coleccion tiene un cache de hasta ~1h.
+        fixtures, n_refreshed = refresh_live_matches(fixtures, key)
         save_json(FIXTURES_FILE, {
             "_comment": "Calendario completo del Mundial 2026 generado por scripts/fetch_fixtures.py",
             "last_updated": now_iso,
@@ -148,7 +203,7 @@ def main():
         by_status = {}
         for f in fixtures:
             by_status[f["status"]] = by_status.get(f["status"], 0) + 1
-        print(f"[ok] {len(fixtures)} partidos guardados en {FIXTURES_FILE.relative_to(ROOT)}")
+        print(f"[ok] {len(fixtures)} partidos guardados en {FIXTURES_FILE.relative_to(ROOT)} ({n_refreshed} refrescados individualmente)")
         for status, n in sorted(by_status.items()):
             print(f"  {status}: {n}")
     except TRANSIENT_NET_ERRORS as e:
