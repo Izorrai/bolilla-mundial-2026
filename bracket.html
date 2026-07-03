@@ -7,73 +7,71 @@
 <style>
   :root {
     --green: #2f7a3a;
-    --green-light: #d4ecd6;
-    --green-dark: #1d4e25;
     --bg: #f5f5f1;
     --card: #ffffff;
     --border: #d8d8d2;
     --text: #1a1a1a;
     --muted: #6a6a64;
     --live: #c0392b;
-    --conn: #c8c8c0;
-    --winner-bg: #d4ecd6;
-    --winner-text: #1d4e25;
-    --unit: 46px;
+    --conn: #bdbdb5;
+    --wbg: #d4ecd6;
+    --wtx: #1d4e25;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
   header { background: var(--green); color: white; padding: 14px 20px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-  header h1 { margin: 0; font-size: 20px; }
+  header h1 { font-size: 20px; }
   header .sub { font-size: 13px; opacity: 0.85; margin-top: 3px; }
   nav { display: flex; margin-top: 8px; }
   nav a { color: white; text-decoration: none; padding: 5px 13px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
   nav a.active { opacity: 1; border-color: white; }
   nav a:hover { opacity: 1; }
-
-  .updated { font-size: 11px; color: var(--muted); text-align: right; padding: 6px 16px 0; }
+  .updated { font-size: 11px; color: var(--muted); text-align: right; padding: 6px 14px 0; }
   #loading { padding: 60px; text-align: center; color: var(--muted); font-style: italic; }
-  #err { padding: 40px; text-align: center; color: var(--live); display: none; }
-
+  #err { padding: 40px; text-align: center; color: var(--live); }
   .wrap { overflow-x: auto; padding: 16px 12px 40px; }
 
-  /* === BRACKET LAYOUT === */
-  .bracket { display: flex; align-items: flex-start; gap: 0; min-width: max-content; }
+  /* ── BRACKET LAYOUT ── */
+  .bracket { display: flex; align-items: flex-start; min-width: max-content; }
+  .round-col { display: flex; flex-direction: column; flex-shrink: 0; }
+  .round-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); padding: 0 6px 8px; white-space: nowrap; }
+  .slots { position: relative; }
 
-  .round-col { display: flex; flex-direction: column; }
-  .round-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); padding: 0 6px 8px 6px; white-space: nowrap; }
-  .slots { display: flex; flex-direction: column; }
+  /* each slot is exactly UNIT×N px tall; card is vertically centered */
   .slot { display: flex; align-items: center; }
 
-  /* === MATCH CARD === */
-  .mc { background: var(--card); border: 1px solid var(--border); border-radius: 6px; width: 158px; overflow: hidden; flex-shrink: 0; }
-  .mc.live-card { border-color: var(--live); }
-  .tr { display: flex; align-items: center; padding: 0 8px; height: 36px; gap: 7px; border-bottom: 1px solid var(--border); }
+  /* ── MATCH CARD ── */
+  .mc { background: var(--card); border: 1px solid var(--border); border-radius: 6px; width: 154px; overflow: hidden; flex-shrink: 0; }
+  .mc.live-c { border-color: var(--live); }
+  .tr { display: flex; align-items: center; padding: 0 7px; height: 30px; gap: 6px; border-bottom: 1px solid var(--border); }
   .tr:last-of-type { border-bottom: none; }
-  .tr.w { background: var(--winner-bg); }
-  .tr img { width: 20px; height: 14px; object-fit: contain; flex-shrink: 0; border: 0.5px solid #e0e0d8; }
-  .tr .tn { flex: 1; font-size: 12px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
-  .tr.w .tn { color: var(--winner-text); font-weight: 700; }
-  .tr .sc { font-size: 14px; font-weight: 800; min-width: 16px; text-align: right; }
-  .tr.w .sc { color: var(--winner-text); }
-  .mc-meta { font-size: 10px; color: var(--muted); padding: 3px 8px; border-top: 1px solid var(--border); background: #fafaf8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--live); margin-right: 3px; vertical-align: middle; animation: blink 1.2s infinite; }
+  .tr.w { background: var(--wbg); }
+  .tr img { width: 18px; height: 13px; object-fit: contain; flex-shrink: 0; border: 0.5px solid #ddd; border-radius: 1px; }
+  .tr .tn { flex: 1; font-size: 11.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
+  .tr.w .tn { color: var(--wtx); font-weight: 700; }
+  .tr .sc { font-size: 13px; font-weight: 800; min-width: 14px; text-align: right; flex-shrink: 0; }
+  .tr.w .sc { color: var(--wtx); }
+  .mc-meta { font-size: 9.5px; color: var(--muted); padding: 3px 7px 3px; border-top: 1px solid var(--border); background: #fafaf8; white-space: nowrap; overflow: hidden; }
+  .live-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--live); margin-right: 3px; vertical-align: middle; animation: blink 1.2s infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
   /* TBD card */
-  .tbd { background: var(--card); border: 1px dashed var(--border); border-radius: 6px; width: 158px; flex-shrink: 0; }
-  .tbd-r { display: flex; align-items: center; padding: 0 8px; height: 36px; gap: 7px; border-bottom: 1px dashed var(--border); }
+  .tbd { background: var(--card); border: 1px dashed var(--border); border-radius: 6px; width: 154px; flex-shrink: 0; }
+  .tbd-r { display: flex; align-items: center; padding: 0 7px; height: 30px; gap: 6px; border-bottom: 1px dashed var(--border); }
   .tbd-r:last-child { border-bottom: none; }
-  .tbd-flag { width: 20px; height: 14px; background: #e8e8e2; border-radius: 2px; flex-shrink: 0; }
-  .tbd-n { font-size: 12px; color: var(--muted); font-style: italic; }
+  .tbd-flag { width: 18px; height: 13px; background: #e8e8e2; border-radius: 1px; flex-shrink: 0; }
+  .tbd-n { font-size: 11px; color: var(--muted); font-style: italic; }
 
-  /* connector lines */
-  .conn-col { display: flex; flex-direction: column; flex-shrink: 0; width: 18px; }
-  .conn-pair { display: flex; flex-direction: column; flex: 1; }
-  .conn-pair .top { flex: 1; border-right: 2px solid var(--conn); border-bottom: 2px solid var(--conn); border-bottom-right-radius: 3px; }
-  .conn-pair .bot { flex: 1; border-right: 2px solid var(--conn); border-top: 2px solid var(--conn); border-top-right-radius: 3px; }
-  .conn-entry { width: 12px; height: 2px; background: var(--conn); flex-shrink: 0; margin-right: 0; }
+  /* ── CONNECTORS ── */
+  /* connector column sits between two round columns */
+  .conn-col { display: flex; flex-direction: column; flex-shrink: 0; width: 16px; }
+  /* each connector pair spans 2 input slots */
+  .cp { display: flex; flex-direction: column; flex-shrink: 0; }
+  .cp .a { flex: 1; border-right: 2px solid var(--conn); border-bottom: 2px solid var(--conn); border-bottom-right-radius: 3px; }
+  .cp .b { flex: 1; border-right: 2px solid var(--conn); border-top: 2px solid var(--conn); border-top-right-radius: 3px; }
+  /* entry stub on the left of each card (for rounds after first) */
+  .stub { width: 14px; height: 2px; background: var(--conn); flex-shrink: 0; }
 
-  .trophy { font-size: 36px; align-self: center; padding: 0 10px; margin-top: 26px; }
+  .trophy { font-size: 34px; align-self: center; padding: 0 8px; }
 </style>
 </head>
 <body>
@@ -89,24 +87,60 @@
   </nav>
 </header>
 <div id="loading">Cargando cuadro...</div>
-<div id="err"></div>
+<div id="err" style="display:none"></div>
 <div id="upd" class="updated" style="display:none"></div>
-<div class="wrap" id="wrap" style="display:none"><div class="bracket" id="bracket"></div></div>
+<div class="wrap" id="wrap" style="display:none">
+  <div class="bracket" id="bracket"></div>
+</div>
 
 <script>
-const FIXTURES_URL = "data/fixtures.json";
-const TEAMS_URL    = "data/teams.json";
-const REFRESH_MS   = 60000;
+// ── BRACKET TOPOLOGY ─────────────────────────────────────────────
+// Defines the correct top-to-bottom visual order and connections.
+// Each array lists match IDs in visual order (top → bottom).
+// Pairs of consecutive IDs in LAST_32 feed into the corresponding LAST_16 match.
+//
+// LAST_32 pairs → LAST_16:
+//   537417+537418 → 537376 (Oct 1)   Oct 1+2 → 537383 (Q1)   Q1+Q2 → 537387 (SF1) → 537389 (Final)
+//   537415+537416 → 537375 (Oct 2)   Oct 5+6 → 537384 (Q2)
+//   537419+537420 → 537381 (Oct 5)   Oct 3+4 → 537385 (Q3)   Q3+Q4 → 537388 (SF2)
+//   537421+537422 → 537380 (Oct 6)   Oct 7+8 → 537386 (Q4)
+//   537423+537424 → 537377 (Oct 3)
+//   537425+537426 → 537378 (Oct 4)
+//   537427+537428 → 537379 (Oct 7)
+//   537429+537430 → 537382 (Oct 8)
 
-const STAGES = [
-  {keys:["LAST_32","ROUND_OF_32"],    label:"Dieciseisavos", n:16},
-  {keys:["LAST_16","ROUND_OF_16"],    label:"Octavos",       n:8},
-  {keys:["QUARTER_FINALS"],           label:"Cuartos",       n:4},
-  {keys:["SEMI_FINALS"],              label:"Semifinal",     n:2},
-  {keys:["FINAL"],                    label:"Final",         n:1},
+const ROUNDS = [
+  {
+    label: "Dieciseisavos",
+    keys: ["LAST_32","ROUND_OF_32"],
+    ids: [537417,537418, 537415,537416, 537419,537420, 537421,537422,
+          537423,537424, 537425,537426, 537427,537428, 537429,537430],
+  },
+  {
+    label: "Octavos",
+    keys: ["LAST_16","ROUND_OF_16"],
+    ids: [537376, 537375, 537381, 537380, 537377, 537378, 537379, 537382],
+  },
+  {
+    label: "Cuartos",
+    keys: ["QUARTER_FINALS"],
+    ids: [537383, 537384, 537385, 537386],
+  },
+  {
+    label: "Semifinal",
+    keys: ["SEMI_FINALS"],
+    ids: [537387, 537388],
+  },
+  {
+    label: "Final",
+    keys: ["FINAL"],
+    ids: [537389],
+  },
 ];
-const LIVE_ST     = ["IN_PLAY","PAUSED"];
-const FINISHED_ST = ["FINISHED"];
+
+const UNIT = 74; // px — height of one LAST_32 slot (≈ card height + gap)
+const FINISHED = ["FINISHED"];
+const LIVE     = ["IN_PLAY","PAUSED"];
 
 let NAMES = {};
 
@@ -117,14 +151,11 @@ function fmtDate(iso){
   try{ return new Date(iso).toLocaleString("es-ES",{weekday:"short",day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}); }
   catch{ return iso; }
 }
+function img(url,alt){ return `<img src="${esc(url)}" alt="${esc(alt)}" loading="lazy">`; }
+function blankFlag(){ return `<div class="tbd-flag"></div>`; }
 
-function crestImg(url, alt){
-  if(!url) return `<div class="tbd-flag"></div>`;
-  return `<img src="${esc(url)}" alt="${esc(alt)}" loading="lazy">`;
-}
-
-function matchWinner(f){
-  if(!FINISHED_ST.includes(f.status)) return null;
+function winner(f){
+  if(!FINISHED.includes(f.status)) return null;
   if(f.winner) return f.winner;
   if(f.home_goals != null && f.away_goals != null){
     if(f.home_goals > f.away_goals) return f.home_team;
@@ -133,142 +164,138 @@ function matchWinner(f){
   return null;
 }
 
-function buildCard(f){
-  if(!f || (!f.home_team && !f.away_team && !FINISHED_ST.includes(f.status) && !LIVE_ST.includes(f.status))){
-    return `<div class="tbd"><div class="tbd-r"><div class="tbd-flag"></div><span class="tbd-n">Por definir</span></div><div class="tbd-r"><div class="tbd-flag"></div><span class="tbd-n">Por definir</span></div></div>`;
+function buildCard(f, hasStub){
+  const stub = hasStub ? '<div class="stub"></div>' : '';
+  if(!f){
+    return `${stub}<div class="tbd"><div class="tbd-r">${blankFlag()}<span class="tbd-n">Por definir</span></div><div class="tbd-r">${blankFlag()}<span class="tbd-n">Por definir</span></div></div>`;
   }
-  const fin  = FINISHED_ST.includes(f.status);
-  const live = LIVE_ST.includes(f.status);
-  const winner = matchWinner(f);
-  const hw = winner && winner === f.home_team;
-  const aw = winner && winner === f.away_team;
+  const fin  = FINISHED.includes(f.status);
+  const live = LIVE.includes(f.status);
+  const w    = winner(f);
+  const hw   = w && w === f.home_team;
+  const aw   = w && w === f.away_team;
 
-  const homeName = f.home_team ? tname(f.home_team) : "Por definir";
-  const awayName = f.away_team ? tname(f.away_team) : "Por definir";
-  const homeImg  = crestImg(f.home_crest, homeName);
-  const awayImg  = crestImg(f.away_crest, awayName);
+  // If neither team known and not finished/live → full TBD
+  if(!f.home_team && !f.away_team && !fin && !live){
+    return `${stub}<div class="tbd"><div class="tbd-r">${blankFlag()}<span class="tbd-n">Por definir</span></div><div class="tbd-r">${blankFlag()}<span class="tbd-n">Por definir</span></div></div>`;
+  }
 
-  let hsc = "", asc = "";
-  if(fin || live){ hsc = f.home_goals ?? 0; asc = f.away_goals ?? 0; }
+  const hn  = f.home_team ? tname(f.home_team) : "Por definir";
+  const an  = f.away_team ? tname(f.away_team) : "Por definir";
+  const hi  = f.home_crest ? img(f.home_crest, hn) : blankFlag();
+  const ai  = f.away_crest ? img(f.away_crest, an) : blankFlag();
+  const hsc = (fin||live) ? (f.home_goals??0) : "";
+  const asc = (fin||live) ? (f.away_goals??0) : "";
+
+  let extra = "";
+  if(f.duration === "PENALTY_SHOOTOUT" && f.penalties_home != null) extra = ` · Pen ${f.penalties_home}–${f.penalties_away}`;
+  else if(f.duration === "EXTRA_TIME") extra = " · Pról.";
 
   let meta = "";
   if(live){
-    meta = `<div class="mc-meta"><span class="live-dot"></span>${f.minute ? f.minute+"'" : "En vivo"} · ${fmtDate(f.utcDate)}</div>`;
-  } else if(fin){
-    let extra = "";
-    if(f.duration === "PENALTY_SHOOTOUT" && f.penalties_home != null) extra = ` · Pen ${f.penalties_home}–${f.penalties_away}`;
-    else if(f.duration === "EXTRA_TIME") extra = " · Prórroga";
-    meta = `<div class="mc-meta">${fmtDate(f.utcDate)}${extra}</div>`;
+    meta = `<div class="mc-meta"><span class="live-dot"></span>${f.minute?f.minute+"' · ":""}${fmtDate(f.utcDate)}</div>`;
   } else {
-    meta = `<div class="mc-meta">${fmtDate(f.utcDate)}</div>`;
+    meta = `<div class="mc-meta">${fmtDate(f.utcDate)}${extra}</div>`;
   }
 
-  return `<div class="mc${live?" live-card":""}">
-    <div class="tr${hw?" w":""}">
-      ${homeImg}<span class="tn">${esc(homeName)}</span><span class="sc">${hsc}</span>
-    </div>
-    <div class="tr${aw?" w":""}">
-      ${awayImg}<span class="tn">${esc(awayName)}</span><span class="sc">${asc}</span>
-    </div>
+  return `${stub}<div class="mc${live?" live-c":""}">
+    <div class="tr${hw?" w":""}">${hi}<span class="tn">${esc(hn)}</span><span class="sc">${hsc}</span></div>
+    <div class="tr${aw?" w":""}">${ai}<span class="tn">${esc(an)}</span><span class="sc">${asc}</span></div>
     ${meta}
   </div>`;
 }
 
 function render(fixtures){
-  // Group by stage
-  const byStage = {};
+  // Build id→fixture lookup
+  const byId = {};
+  for(const f of fixtures) byId[f.id] = f;
+
+  // Build key→fixture lookup for rounds without explicit IDs (fallback)
+  const byKey = {};
   for(const f of fixtures){
-    for(const st of STAGES){
-      if(st.keys.includes(f.stage)){
-        if(!byStage[st.label]) byStage[st.label] = [];
-        byStage[st.label].push(f);
-        break;
-      }
-    }
+    if(!byKey[f.stage]) byKey[f.stage] = [];
+    byKey[f.stage].push(f);
   }
 
-  // Only render stages that exist in data
-  const activeStages = STAGES.filter(s => byStage[s.label] && byStage[s.label].length > 0);
-  if(!activeStages.length){
-    document.getElementById("bracket").innerHTML = "<div style='padding:40px;color:#888;font-style:italic;'>Las eliminatorias aún no comenzaron.</div>";
+  // Determine which rounds have data
+  const activeRounds = ROUNDS.filter(r => {
+    // Check if any of the round's IDs exist in the fixtures
+    return r.ids.some(id => byId[id]) ||
+           r.keys.some(k => byKey[k] && byKey[k].length > 0);
+  });
+  if(!activeRounds.length){
+    document.getElementById("bracket").innerHTML = '<div style="padding:40px;color:#888;font-style:italic;">Las eliminatorias aún no comenzaron.</div>';
     return;
   }
 
-  // Sort matches by date
-  for(const s of activeStages) byStage[s.label].sort((a,b)=>new Date(a.utcDate)-new Date(b.utcDate));
-
-  const maxN = activeStages[0].n; // 16 for round of 32
-  const UNIT = 46; // height per slot unit (px) - this is 1/16th of total bracket height
-
+  const maxN = activeRounds[0].ids.length; // should be 16
   const parts = [];
 
-  for(let ri = 0; ri < activeStages.length; ri++){
-    const st = activeStages[ri];
-    const matches = byStage[st.label];
-    const n = matches.length;
-    const slotsPerMatch = maxN / n; // e.g. 1 for R32, 2 for R16, 4 for QF...
-    const slotH = slotsPerMatch * UNIT; // px height for each match slot
-    const topPad = 26; // header height
+  for(let ri = 0; ri < activeRounds.length; ri++){
+    const round = activeRounds[ri];
+    const n = round.ids.length;
+    const slotsPerMatch = maxN / n;   // 1→2→4→8→16
+    const slotH = slotsPerMatch * UNIT; // px height of each slot
+    const totalH = maxN * UNIT;
+    const hasStub = ri > 0;
 
-    let col = `<div class="round-col"><div class="round-label">${esc(st.label)}</div><div class="slots" style="height:${maxN*UNIT}px;">`;
-
+    let col = `<div class="round-col"><div class="round-lbl">${esc(round.label)}</div><div class="slots" style="height:${totalH}px;">`;
     for(let mi = 0; mi < n; mi++){
-      const card = buildCard(matches[mi]);
-      // Entry connector (for rounds after first)
-      const entry = ri > 0 ? `<div class="conn-entry"></div>` : "";
-      col += `<div class="slot" style="height:${slotH}px;">${entry}${card}</div>`;
+      const id  = round.ids[mi];
+      const f   = byId[id] || null;
+      const card = buildCard(f, hasStub);
+      col += `<div class="slot" style="height:${slotH}px;">${card}</div>`;
     }
-
     col += `</div></div>`;
     parts.push(col);
 
     // Connector column before next round
-    if(ri < activeStages.length - 1){
-      const nextN = activeStages[ri+1].n;
-      const pairsPerConn = n / nextN; // usually 2
-      const connSlotH = pairsPerConn * slotH;
+    if(ri < activeRounds.length - 1){
+      const pairsCount = n / 2; // connectors = n/2
+      const connPairH  = slotH * 2; // each connector spans 2 input slots
+      const totalH2    = maxN * UNIT;
 
-      let connCol = `<div class="conn-col" style="height:${maxN*UNIT}px;margin-top:${topPad}px;">`;
-      for(let ci = 0; ci < nextN; ci++){
-        connCol += `<div class="conn-pair" style="height:${connSlotH}px;"><div class="top"></div><div class="bot"></div></div>`;
+      // We need connectors to start at the right vertical offset.
+      // First input slot starts at top of .slots. The connector column
+      // must be aligned with the .slots div (same top).
+      // We add margin-top equal to the round-lbl height to align with slots.
+      let connCol = `<div class="conn-col" style="margin-top:26px;height:${totalH2}px;">`;
+      for(let ci = 0; ci < pairsCount; ci++){
+        connCol += `<div class="cp" style="height:${connPairH}px;"><div class="a"></div><div class="b"></div></div>`;
       }
       connCol += `</div>`;
       parts.push(connCol);
     }
   }
 
-  parts.push(`<div class="trophy">🏆</div>`);
+  parts.push(`<div class="trophy" style="margin-top:26px;">🏆</div>`);
   document.getElementById("bracket").innerHTML = parts.join("");
 }
 
 async function load(){
   try{
     const [fd, td] = await Promise.all([
-      fetch(FIXTURES_URL+"?t="+Date.now()).then(r=>r.json()),
-      fetch(TEAMS_URL+"?t="+Date.now()).then(r=>r.json()).catch(()=>null),
+      fetch("data/fixtures.json?t="+Date.now()).then(r=>r.json()),
+      fetch("data/teams.json?t="+Date.now()).then(r=>r.json()).catch(()=>null),
     ]);
     NAMES = {};
-    if(td && td.teams) for(const t of td.teams) if(t.fd_name && t.name) NAMES[t.fd_name.toLowerCase()] = t.name;
+    if(td?.teams) for(const t of td.teams) if(t.fd_name && t.name) NAMES[t.fd_name.toLowerCase()] = t.name;
 
     render(fd.fixtures || []);
-
     document.getElementById("loading").style.display = "none";
     document.getElementById("wrap").style.display = "";
     if(fd.last_updated){
       const el = document.getElementById("upd");
-      el.style.display = "";
-      el.textContent = "Actualizado: "+new Date(fd.last_updated).toLocaleString("es-ES");
+      el.style.display = ""; el.textContent = "Actualizado: "+new Date(fd.last_updated).toLocaleString("es-ES");
     }
   } catch(e){
     document.getElementById("loading").style.display = "none";
     const el = document.getElementById("err");
-    el.style.display = "";
-    el.textContent = "Error: "+e.message;
+    el.style.display = ""; el.textContent = "Error: "+e.message;
   }
 }
-
 load();
-setInterval(load, REFRESH_MS);
+setInterval(load, 60000);
 </script>
 </body>
 </html>
