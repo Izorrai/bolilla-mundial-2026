@@ -129,6 +129,15 @@ def _map_match(m):
     raw_minute = m.get("minute")
     status, inferred_minute = _infer_live_status(raw_status, m.get("utcDate"), datetime.now(timezone.utc))
     minute = raw_minute if raw_minute is not None else inferred_minute
+    winner_raw = score.get("winner")  # "HOME_TEAM", "AWAY_TEAM", "DRAW", None
+    duration = score.get("duration")  # "REGULAR_TIME", "EXTRA_TIME", "PENALTY_SHOOTOUT"
+    if winner_raw == "HOME_TEAM":
+        winner = home_team.get("name")
+    elif winner_raw == "AWAY_TEAM":
+        winner = away_team.get("name")
+    else:
+        winner = None
+    penalties = score.get("penalties") or {}
     return {
         "id": m.get("id"),
         "utcDate": m.get("utcDate"),
@@ -143,6 +152,10 @@ def _map_match(m):
         "away_crest": away_team.get("crest"),
         "home_goals": home_goals,
         "away_goals": away_goals,
+        "winner": winner,
+        "duration": duration,
+        "penalties_home": penalties.get("home"),
+        "penalties_away": penalties.get("away"),
     }
 
 
