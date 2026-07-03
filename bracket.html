@@ -34,36 +34,38 @@
   /* ── BRACKET LAYOUT ── */
   .bracket { display: flex; align-items: flex-start; min-width: max-content; }
   .round-col { display: flex; flex-direction: column; flex-shrink: 0; }
-  .round-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); padding: 0 6px 8px; white-space: nowrap; }
-  .slots { position: relative; }
+  /* Label height must be a known fixed value — connector margin-top matches it */
+  .round-lbl { height: 22px; display: flex; align-items: flex-end; padding-bottom: 5px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); padding-left: 6px; white-space: nowrap; box-sizing: border-box; }
+  .slots { display: flex; flex-direction: column; }
 
   /* each slot is exactly UNIT×N px tall; card is vertically centered */
-  .slot { display: flex; align-items: center; }
+  .slot { display: flex; align-items: center; flex-shrink: 0; }
 
-  /* ── MATCH CARD ── */
+  /* ── MATCH CARD ──
+     Card must fit within UNIT px. Rows: 27px × 2 = 54px. Meta: ~14px. Total ≈ 68px < UNIT (74px). */
   .mc { background: var(--card); border: 1px solid var(--border); border-radius: 6px; width: 154px; overflow: hidden; flex-shrink: 0; }
   .mc.live-c { border-color: var(--live); }
-  .tr { display: flex; align-items: center; padding: 0 7px; height: 30px; gap: 6px; border-bottom: 1px solid var(--border); }
+  .tr { display: flex; align-items: center; padding: 0 7px; height: 27px; gap: 6px; border-bottom: 1px solid var(--border); }
   .tr:last-of-type { border-bottom: none; }
   .tr.w { background: var(--wbg); }
   .tr img { width: 18px; height: 13px; object-fit: contain; flex-shrink: 0; border: 0.5px solid #ddd; border-radius: 1px; }
-  .tr .tn { flex: 1; font-size: 11.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
+  .tr .tn { flex: 1; font-size: 11px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
   .tr.w .tn { color: var(--wtx); font-weight: 700; }
-  .tr .sc { font-size: 13px; font-weight: 800; min-width: 14px; text-align: right; flex-shrink: 0; }
+  .tr .sc { font-size: 12px; font-weight: 800; min-width: 14px; text-align: right; flex-shrink: 0; }
   .tr.w .sc { color: var(--wtx); }
-  .mc-meta { font-size: 9.5px; color: var(--muted); padding: 3px 7px 3px; border-top: 1px solid var(--border); background: #fafaf8; white-space: nowrap; overflow: hidden; }
+  .mc-meta { font-size: 9px; color: var(--muted); padding: 2px 7px; line-height: 14px; border-top: 1px solid var(--border); background: #fafaf8; white-space: nowrap; overflow: hidden; }
   .live-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--live); margin-right: 3px; vertical-align: middle; animation: blink 1.2s infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
   /* TBD card */
   .tbd { background: var(--card); border: 1px dashed var(--border); border-radius: 6px; width: 154px; flex-shrink: 0; }
-  .tbd-r { display: flex; align-items: center; padding: 0 7px; height: 30px; gap: 6px; border-bottom: 1px dashed var(--border); }
+  .tbd-r { display: flex; align-items: center; padding: 0 7px; height: 27px; gap: 6px; border-bottom: 1px dashed var(--border); }
   .tbd-r:last-child { border-bottom: none; }
   .tbd-flag { width: 18px; height: 13px; background: #e8e8e2; border-radius: 1px; flex-shrink: 0; }
   .tbd-n { font-size: 11px; color: var(--muted); font-style: italic; }
 
-  /* ── CONNECTORS ── */
-  /* connector column sits between two round columns */
-  .conn-col { display: flex; flex-direction: column; flex-shrink: 0; width: 16px; }
+  /* ── CONNECTORS ──
+     margin-top must equal .round-lbl height (22px) so the connector grid aligns with the slots grid */
+  .conn-col { display: flex; flex-direction: column; flex-shrink: 0; width: 16px; margin-top: 22px; }
   /* each connector pair spans 2 input slots */
   .cp { display: flex; flex-direction: column; flex-shrink: 0; }
   .cp .a { flex: 1; border-right: 2px solid var(--conn); border-bottom: 2px solid var(--conn); border-bottom-right-radius: 3px; }
@@ -138,7 +140,8 @@ const ROUNDS = [
   },
 ];
 
-const UNIT = 74; // px — height of one LAST_32 slot (≈ card height + gap)
+// UNIT must be >= card height. Card = 27px×2 rows + 14px meta = 68px. UNIT=74 gives 6px gap.
+const UNIT = 74;
 const FINISHED = ["FINISHED"];
 const LIVE     = ["IN_PLAY","PAUSED"];
 
@@ -259,7 +262,7 @@ function render(fixtures){
       // First input slot starts at top of .slots. The connector column
       // must be aligned with the .slots div (same top).
       // We add margin-top equal to the round-lbl height to align with slots.
-      let connCol = `<div class="conn-col" style="margin-top:26px;height:${totalH2}px;">`;
+      let connCol = `<div class="conn-col" style="height:${totalH2}px;">`;
       for(let ci = 0; ci < pairsCount; ci++){
         connCol += `<div class="cp" style="height:${connPairH}px;"><div class="a"></div><div class="b"></div></div>`;
       }
@@ -268,7 +271,7 @@ function render(fixtures){
     }
   }
 
-  parts.push(`<div class="trophy" style="margin-top:26px;">🏆</div>`);
+  parts.push(`<div class="trophy" style="margin-top:22px;">🏆</div>`);
   document.getElementById("bracket").innerHTML = parts.join("");
 }
 
