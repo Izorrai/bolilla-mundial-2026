@@ -60,11 +60,7 @@
   .tbd-flag { width: 18px; height: 13px; background: #e8e8e2; border-radius: 1px; flex-shrink: 0; }
   .tbd-n { font-size: 11px; color: var(--muted); font-style: italic; }
 
-  .conn-col { display: flex; flex-direction: column; flex-shrink: 0; width: 16px; margin-top: 22px; }
-  .cp { display: flex; flex-direction: column; flex-shrink: 0; }
-  .cp .a { flex: 1; border-right: 2px solid var(--conn); border-bottom: 2px solid var(--conn); border-bottom-right-radius: 3px; }
-  .cp .b { flex: 1; border-right: 2px solid var(--conn); border-top: 2px solid var(--conn); border-top-right-radius: 3px; }
-  .stub { width: 14px; height: 2px; background: var(--conn); flex-shrink: 0; }
+  .conn-svg { flex-shrink: 0; display: block; margin-top: 22px; }
   .trophy { font-size: 32px; align-self: center; padding: 0 8px; margin-top: 22px; }
 </style>
 <link rel="stylesheet" href="assets/theme.css">
@@ -115,10 +111,9 @@ function getWinner(f){
   }
   return null;
 }
-function buildCard(f,stub){
-  const s=stub?'<div class="stub"></div>':'';
+function buildCard(f){
   if(!f||(!f.home_team&&!f.away_team&&!FINISHED.includes(f.status)&&!LIVE.includes(f.status))){
-    return `${s}<div class="tbd"><div class="tbd-r"><div class="tbd-flag"></div><span class="tbd-n">Por definir</span></div><div class="tbd-r"><div class="tbd-flag"></div><span class="tbd-n">Por definir</span></div></div>`;
+    return `<div class="tbd"><div class="tbd-r"><div class="tbd-flag"></div><span class="tbd-n">Por definir</span></div><div class="tbd-r"><div class="tbd-flag"></div><span class="tbd-n">Por definir</span></div></div>`;
   }
   const fin=FINISHED.includes(f.status), live=LIVE.includes(f.status);
   const w=getWinner(f), hw=w&&w===f.home_team, aw=w&&w===f.away_team;
@@ -133,10 +128,21 @@ function buildCard(f,stub){
   const meta=live
     ?`<div class="mc-meta"><span class="live-dot"></span>${f.minute?f.minute+"' · ":""}${fmtDate(f.utcDate)}</div>`
     :`<div class="mc-meta">${fmtDate(f.utcDate)}${extra}</div>`;
-  return `${s}<div class="mc${live?" live-c":""}">
+  return `<div class="mc${live?" live-c":""}">
     <div class="tr${hw?" w":""}">${hi}<span class="tn">${esc(hn)}</span><span class="sc">${hsc}</span></div>
     <div class="tr${aw?" w":""}">${ai}<span class="tn">${esc(an)}</span><span class="sc">${asc}</span></div>
     ${meta}</div>`;
+}
+function buildConnectorSVG(n, slotH, totalH){
+  const W=20, midX=10;
+  let d='';
+  for(let p=0;p<n/2;p++){
+    const topY=p*2*slotH + slotH/2;
+    const midY=p*2*slotH + slotH;
+    const botY=p*2*slotH + 3*slotH/2;
+    d+=`M0 ${topY} H${midX} V${botY} H0 M${midX} ${midY} H${W} `;
+  }
+  return `<svg class="conn-svg" width="${W}" height="${totalH}" xmlns="http://www.w3.org/2000/svg"><path d="${d.trim()}" stroke="var(--conn)" stroke-width="2" fill="none" stroke-linejoin="miter" stroke-linecap="square"/></svg>`;
 }
 function render(fixtures){
   const byId={};
@@ -153,16 +159,12 @@ function render(fixtures){
     const slotH=(maxN/n)*UNIT, totalH=maxN*UNIT;
     let col=`<div class="round-col"><div class="round-lbl">${esc(round.label)}</div><div class="slots" style="height:${totalH}px;">`;
     for(let mi=0;mi<n;mi++){
-      col+=`<div class="slot" style="height:${slotH}px;">${buildCard(byId[round.ids[mi]]||null,ri>0)}</div>`;
+      col+=`<div class="slot" style="height:${slotH}px;">${buildCard(byId[round.ids[mi]]||null)}</div>`;
     }
     col+=`</div></div>`;
     parts.push(col);
     if(ri<active.length-1){
-      const nextN=active[ri+1].ids.length, connPairH=slotH*2, totalH2=maxN*UNIT;
-      let cc=`<div class="conn-col" style="height:${totalH2}px;">`;
-      for(let ci=0;ci<n/2;ci++) cc+=`<div class="cp" style="height:${connPairH}px;"><div class="a"></div><div class="b"></div></div>`;
-      cc+=`</div>`;
-      parts.push(cc);
+      parts.push(buildConnectorSVG(n, slotH, totalH));
     }
   }
   parts.push('<div class="trophy">🏆</div>');
