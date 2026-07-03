@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuadro · Bolilla Mundial 2026</title>
+<style>
+  :root {
+    --green: #2f7a3a;
+    --green-light: #d4ecd6;
+    --green-dark: #1d4e25;
+    --bg: #f5f5f1;
+    --card: #ffffff;
+    --border: #d8d8d2;
+    --text: #1a1a1a;
+    --muted: #6a6a64;
+    --live: #c0392b;
+    --live-light: #fbe2df;
+    --winner-bg: #eaf4eb;
+    --winner-text: #1d4e25;
+    --connector: #c4c4bc;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+  header { background: var(--green); color: white; padding: 14px 20px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+  header .row1 { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
+  header .sub { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+  nav { padding: 6px 0 0 0; display: flex; gap: 0; margin-top: 8px; }
+  nav a { color: white; text-decoration: none; padding: 6px 14px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
+  nav a.active { opacity: 1; border-color: white; }
+  nav a:hover { opacity: 1; }
+
+  .bracket-wrap { overflow-x: auto; padding: 20px 16px 40px; }
+  .bracket { display: flex; gap: 0; align-items: flex-start; min-width: 900px; }
+
+  .round { display: flex; flex-direction: column; flex-shrink: 0; }
+  .round-header { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); padding: 0 8px 10px; white-space: nowrap; }
+
+  .matches-col { display: flex; flex-direction: column; }
+  .match-slot { display: flex; align-items: center; }
+  .match-card { background: var(--card); border: 1px solid var(--border); border-radius: 7px; overflow: hidden; width: 162px; flex-shrink: 0; }
+  .match-card .team-row { display: flex; align-items: center; padding: 7px 9px; gap: 7px; font-size: 13px; font-weight: 600; border-bottom: 1px solid var(--border); line-height: 1.2; }
+  .match-card .team-row:last-child { border-bottom: none; }
+  .match-card .team-row.winner { background: var(--winner-bg); color: var(--winner-text); }
+  .match-card .flag { font-size: 16px; flex-shrink: 0; width: 20px; text-align: center; }
+  .match-card .tname { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; }
+  .match-card .tscore { font-weight: 800; font-size: 14px; min-width: 18px; text-align: right; }
+  .match-card .match-meta { font-size: 10px; color: var(--muted); padding: 4px 9px; border-top: 1px solid var(--border); background: #fafaf8; }
+  .match-card.live { border-color: var(--live); }
+  .match-card.live .team-row { border-color: #f5c6c2; }
+  .badge-live { background: var(--live); color: white; font-size: 9px; font-weight: 800; text-transform: uppercase; padding: 1px 4px; border-radius: 3px; letter-spacing: 0.4px; margin-left: 4px; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  .tbd-card { background: var(--card); border: 1px dashed var(--border); border-radius: 7px; width: 162px; padding: 10px 9px; flex-shrink: 0; }
+  .tbd-card .tbd-row { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); padding: 5px 0; border-bottom: 1px solid var(--border); font-style: italic; }
+  .tbd-card .tbd-row:last-child { border-bottom: none; }
+
+  /* connector lines */
+  .conn { display: flex; flex-direction: column; justify-content: center; flex-shrink: 0; }
+  .conn-inner { display: flex; flex-direction: column; }
+  .conn-top { border-right: 2px solid var(--connector); border-bottom: 2px solid var(--connector); border-bottom-right-radius: 4px; flex: 1; }
+  .conn-mid { width: 12px; height: 2px; background: var(--connector); }
+  .conn-bot { border-right: 2px solid var(--connector); border-top: 2px solid var(--connector); border-top-right-radius: 4px; flex: 1; }
+
+  .conn-entry { width: 12px; height: 2px; background: var(--connector); flex-shrink: 0; }
+
+  .trophy { font-size: 40px; align-self: center; margin-left: 14px; }
+
+  #loading { padding: 40px 20px; text-align: center; color: var(--muted); font-style: italic; }
+  #error { padding: 40px 20px; text-align: center; color: var(--live); }
+
+  .updated { font-size: 11px; color: var(--muted); text-align: right; padding: 0 16px 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="row1">
+    <h1>⚽ Bolilla Mundial 2026</h1>
+  </div>
+  <div class="sub">Fase final · Cuadro eliminatorio</div>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="results.html">Resultados</a>
+    <a href="bracket.html" class="active">Cuadro</a>
+    <a href="leaderboard.html">Clasificación</a>
+    <a href="porra-results.html">Porra</a>
+  </nav>
+</header>
+
+<div id="loading">Cargando cuadro...</div>
+<div id="error" style="display:none"></div>
+<div id="updated" class="updated" style="display:none"></div>
+<div class="bracket-wrap" id="bracketWrap" style="display:none">
+  <div class="bracket" id="bracket"></div>
+</div>
+
+<script>
+const FIXTURES_URL = "data/fixtures.json";
+const TEAMS_URL = "data/teams.json";
+const REFRESH_MS = 60000;
+
+const FLAGS = {
+  "Spain": "🇪🇸", "France": "🇫🇷", "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Argentina": "🇦🇷",
+  "Brazil": "🇧🇷", "Portugal": "🇵🇹", "Germany": "🇩🇪", "Netherlands": "🇳🇱",
+  "Norway": "🇳🇴", "Belgium": "🇧🇪", "Colombia": "🇨🇴", "United States": "🇺🇸",
+  "Japan": "🇯🇵", "Switzerland": "🇨🇭", "Uruguay": "🇺🇾", "Morocco": "🇲🇦",
+  "Mexico": "🇲🇽", "Sweden": "🇸🇪", "Croatia": "🇭🇷", "Ivory Coast": "🇨🇮",
+  "Turkey": "🇹🇷", "Ecuador": "🇪🇨", "Senegal": "🇸🇳", "Austria": "🇦🇹",
+  "Canada": "🇨🇦", "Paraguay": "🇵🇾", "Scotland": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "Czechia": "🇨🇿",
+  "Bosnia-Herzegovina": "🇧🇦", "Ghana": "🇬🇭", "Egypt": "🇪🇬",
+  "South Korea": "🇰🇷", "Algeria": "🇩🇿", "South Africa": "🇿🇦",
+  "Australia": "🇦🇺", "Tunisia": "🇹🇳", "Iran": "🇮🇷", "Congo DR": "🇨🇩",
+  "Qatar": "🇶🇦", "New Zealand": "🇳🇿", "Saudi Arabia": "🇸🇦", "Iraq": "🇮🇶",
+  "Cape Verde Islands": "🇨🇻", "Panama": "🇵🇦", "Uzbekistan": "🇺🇿",
+  "Haiti": "🇭🇹", "Curaçao": "🇨🇼", "Jordan": "🇯🇴",
+};
+
+const STAGE_ORDER = ["LAST_32","ROUND_OF_32","LAST_16","ROUND_OF_16","QUARTER_FINALS","SEMI_FINALS","FINAL"];
+const STAGE_LABELS = {
+  LAST_32: "Dieciseisavos", ROUND_OF_32: "Dieciseisavos",
+  LAST_16: "Octavos", ROUND_OF_16: "Octavos",
+  QUARTER_FINALS: "Cuartos", SEMI_FINALS: "Semifinal", FINAL: "Final"
+};
+const FINISHED = ["FINISHED"];
+const LIVE = ["IN_PLAY","PAUSED"];
+
+let NAMES = {};
+
+function flag(fdName) { return FLAGS[fdName] || "🏳️"; }
+function name(fdName) { return NAMES[(fdName||"").toLowerCase()] || fdName || "?"; }
+function esc(s) { return (s||"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function fmtDate(iso) {
+  if (!iso) return "";
+  try {
+    return new Date(iso).toLocaleString("es-ES",{weekday:"short",day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+  } catch { return iso; }
+}
+
+function buildMatchCard(f) {
+  if (!f) return buildTbd();
+  const finished = FINISHED.includes(f.status);
+  const live = LIVE.includes(f.status);
+  const noTeams = !f.home_team && !f.away_team;
+
+  if (noTeams && !finished && !live) return buildTbd();
+
+  const homeWin = finished && f.winner === f.home_team;
+  const awayWin = finished && f.winner === f.away_team;
+  const liveClass = live ? " live" : "";
+
+  const homeFlag = flag(f.home_team);
+  const awayFlag = flag(f.away_team);
+  const homeName = f.home_team ? esc(name(f.home_team)) : "Por definir";
+  const awayName = f.away_team ? esc(name(f.away_team)) : "Por definir";
+
+  let homeScore = "", awayScore = "";
+  let metaExtra = "";
+  if (live || finished) {
+    homeScore = f.home_goals ?? 0;
+    awayScore = f.away_goals ?? 0;
+    if (f.duration === "PENALTY_SHOOTOUT" && f.penalties_home != null) {
+      metaExtra = `Pen: ${f.penalties_home}–${f.penalties_away}`;
+    } else if (f.duration === "EXTRA_TIME") {
+      metaExtra = "Prórroga";
+    }
+  }
+
+  const liveBadge = live ? `<span class="badge-live">${f.minute ? f.minute+"'" : "vivo"}</span>` : "";
+  const meta = live ? fmtDate(f.utcDate) : (finished ? fmtDate(f.utcDate) : fmtDate(f.utcDate));
+
+  return `<div class="match-card${liveClass}">
+    <div class="team-row${homeWin?" winner":""}">
+      <span class="flag">${homeFlag}</span>
+      <span class="tname">${homeName}</span>
+      <span class="tscore">${homeScore}${live && !homeScore ? liveBadge : ""}</span>
+    </div>
+    <div class="team-row${awayWin?" winner":""}">
+      <span class="flag">${awayFlag}</span>
+      <span class="tname">${awayName}</span>
+      <span class="tscore">${awayScore}</span>
+    </div>
+    ${meta || metaExtra || live ? `<div class="match-meta">${meta}${metaExtra ? " · "+metaExtra : ""}${live ? liveBadge : ""}</div>` : ""}
+  </div>`;
+}
+
+function buildTbd() {
+  return `<div class="tbd-card">
+    <div class="tbd-row">🏳️ <span>Por definir</span></div>
+    <div class="tbd-row">🏳️ <span>Por definir</span></div>
+  </div>`;
+}
+
+function connector(slots) {
+  // slots = number of match pairs this connector spans vertically
+  // each slot has a card height of CARD_H + gap
+  return `<div class="conn" style="width:20px;align-self:stretch;display:flex;flex-direction:column;justify-content:space-around;">
+  </div>`;
+}
+
+function renderBracket(fixtures) {
+  // Group by stage
+  const rounds = {};
+  for (const f of fixtures) {
+    const s = STAGE_ORDER.includes(f.stage) ? f.stage : null;
+    if (!s) continue;
+    const label = STAGE_LABELS[s];
+    if (!rounds[label]) rounds[label] = [];
+    rounds[label].push(f);
+  }
+
+  // Deduplicate labels (LAST_32 and ROUND_OF_32 both → "Dieciseisavos")
+  const seen = new Set();
+  const orderedLabels = [];
+  for (const s of STAGE_ORDER) {
+    const label = STAGE_LABELS[s];
+    if (!seen.has(label)) { seen.add(label); orderedLabels.push(label); }
+  }
+
+  // Filter only rounds that have data or come after rounds with data
+  const activeLabels = orderedLabels.filter(l => rounds[l] && rounds[l].length > 0);
+
+  if (activeLabels.length === 0) {
+    document.getElementById("bracket").innerHTML = '<div style="padding:40px;color:#888;font-style:italic;">Las eliminatorias aún no comenzaron.</div>';
+    return;
+  }
+
+  // Sort matches within each round by utcDate
+  for (const l of activeLabels) {
+    rounds[l].sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate));
+  }
+
+  // Figure out the max matches (first round)
+  const maxMatches = Math.max(...activeLabels.map(l => rounds[l].length));
+
+  // Card dimensions for connector sizing
+  const CARD_H = 82; // approx px per card including border
+  const GAP = 8;     // gap between cards in same round
+
+  const parts = [];
+
+  for (let ri = 0; ri < activeLabels.length; ri++) {
+    const label = activeLabels[ri];
+    const matches = rounds[label];
+    const n = matches.length;
+    const ratio = maxMatches / n; // e.g., 16/8=2 for octavos
+    const slotH = ratio * CARD_H + (ratio - 1) * GAP; // height per match slot
+    const paddingTop = (slotH - CARD_H) / 2;
+
+    let roundHtml = `<div class="round">
+      <div class="round-header">${esc(label)}</div>
+      <div class="matches-col" style="gap:0;">`;
+
+    for (let mi = 0; mi < n; mi++) {
+      const f = matches[mi];
+      const cardHtml = buildMatchCard(f);
+      const pt = mi === 0 ? paddingTop : (GAP * ratio + paddingTop);
+      roundHtml += `<div class="match-slot" style="padding-top:${mi===0?paddingTop:GAP*ratio+paddingTop}px;">
+        ${ri > 0 ? `<div class="conn-entry"></div>` : ""}
+        ${cardHtml}
+      </div>`;
+    }
+
+    roundHtml += `</div></div>`;
+    parts.push(roundHtml);
+
+    // Add connector column between this round and next
+    if (ri < activeLabels.length - 1) {
+      const nextN = rounds[activeLabels[ri + 1]].length;
+      const pairsPerNext = n / nextN; // how many matches feed into each next match (usually 2)
+      const connH = pairsPerNext * slotH - (pairsPerNext > 1 ? GAP : 0);
+      const connPaddingTop = paddingTop + CARD_H / 2;
+
+      let connHtml = `<div style="display:flex;flex-direction:column;flex-shrink:0;margin-top:${Math.round(26 + connPaddingTop)}px;">`;
+      for (let ci = 0; ci < nextN; ci++) {
+        const h = Math.round(connH);
+        connHtml += `<div style="display:flex;flex-direction:column;height:${h}px;${ci>0?'margin-top:'+(Math.round(GAP*(maxMatches/nextN)))+'px;':''}">
+          <div style="flex:1;border-right:2px solid var(--connector);border-bottom:2px solid var(--connector);border-bottom-right-radius:4px;"></div>
+          <div style="flex:1;border-right:2px solid var(--connector);border-top:2px solid var(--connector);border-top-right-radius:4px;"></div>
+        </div>`;
+      }
+      connHtml += `</div>`;
+      parts.push(connHtml);
+    }
+  }
+
+  // Trophy after final
+  parts.push(`<div style="display:flex;flex-direction:column;justify-content:center;padding-left:8px;font-size:38px;align-self:stretch;padding-top:26px;">🏆</div>`);
+
+  document.getElementById("bracket").innerHTML = parts.join("");
+}
+
+async function load() {
+  try {
+    const [fd, td] = await Promise.all([
+      fetch(FIXTURES_URL + "?t=" + Date.now()).then(r => r.json()),
+      fetch(TEAMS_URL + "?t=" + Date.now()).then(r => r.json()).catch(() => null),
+    ]);
+
+    NAMES = {};
+    if (td && td.teams) {
+      for (const t of td.teams) {
+        if (t.fd_name && t.name) NAMES[t.fd_name.toLowerCase()] = t.name;
+      }
+    }
+
+    const fixtures = fd.fixtures || [];
+    renderBracket(fixtures);
+
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("bracketWrap").style.display = "";
+    if (fd.last_updated) {
+      const upd = document.getElementById("updated");
+      upd.style.display = "";
+      upd.textContent = "Actualizado: " + new Date(fd.last_updated).toLocaleString("es-ES");
+    }
+  } catch (e) {
+    document.getElementById("loading").style.display = "none";
+    const err = document.getElementById("error");
+    err.style.display = "";
+    err.textContent = "Error cargando datos: " + e.message;
+  }
+}
+
+load();
+setInterval(load, REFRESH_MS);
+</script>
+</body>
+</html>
