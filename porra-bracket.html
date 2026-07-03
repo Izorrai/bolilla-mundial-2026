@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cuadro · Bolilla Mundial 2026</title>
+<title>Cuadro · Porra Mundial 2026</title>
 <link rel="stylesheet" href="assets/today-carousel.css">
 <style>
   :root {
-    --green: #2f7a3a;
-    --green-light: #d4ecd6;
-    --green-dark: #1d4e25;
+    --blue: #1a5490;
+    --blue-light: #d9e7f5;
+    --blue-dark: #0f3a66;
     --bg: #f5f5f1;
     --card: #ffffff;
     --border: #d8d8d2;
@@ -17,21 +17,16 @@
     --muted: #6a6a64;
     --live: #c0392b;
     --conn: #c4c4bc;
-    --wbg: #d4ecd6;
-    --wtx: #1d4e25;
-    --accent: var(--green);
-    --accent-light: var(--green-light);
-    --accent-dark: var(--green-dark);
+    --wbg: #d9e7f5;
+    --wtx: #0f3a66;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
-  header { background: var(--green); color: white; padding: 14px 20px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-  header .row1 { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-  header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
-  header .room-logo { height: 26px; vertical-align: middle; }
+  header { background: var(--blue); color: white; padding: 14px 20px; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+  header h1 { margin: 0; font-size: 21px; }
   header .sub { font-size: 13px; opacity: 0.9; margin-top: 2px; }
   nav { padding: 6px 0 0 0; display: flex; gap: 0; margin-top: 8px; }
-  nav a { color: white; text-decoration: none; padding: 6px 14px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
+  nav a { color: white; text-decoration: none; padding: 6px 12px; font-size: 13px; font-weight: 600; opacity: 0.7; border-bottom: 2px solid transparent; }
   nav a.active { opacity: 1; border-color: white; }
   nav a:hover { opacity: 1; }
   .updated { font-size: 11px; color: var(--muted); text-align: right; padding: 6px 16px 0; }
@@ -46,7 +41,6 @@
   .slots { display: flex; flex-direction: column; }
   .slot { display: flex; align-items: center; flex-shrink: 0; }
 
-  /* Card — must fit within UNIT (74px). Rows 27px×2 + meta ~14px ≈ 68px */
   .mc { background: var(--card); border: 1px solid var(--border); border-radius: 6px; width: 156px; overflow: hidden; flex-shrink: 0; }
   .mc.live-c { border-color: var(--live); }
   .tr { display: flex; align-items: center; padding: 0 8px; height: 27px; gap: 6px; border-bottom: 1px solid var(--border); }
@@ -66,7 +60,6 @@
   .tbd-flag { width: 18px; height: 13px; background: #e8e8e2; border-radius: 1px; flex-shrink: 0; }
   .tbd-n { font-size: 11px; color: var(--muted); font-style: italic; }
 
-  /* Connectors — margin-top must equal .round-lbl height (22px) */
   .conn-col { display: flex; flex-direction: column; flex-shrink: 0; width: 16px; margin-top: 22px; }
   .cp { display: flex; flex-direction: column; flex-shrink: 0; }
   .cp .a { flex: 1; border-right: 2px solid var(--conn); border-bottom: 2px solid var(--conn); border-bottom-right-radius: 3px; }
@@ -78,16 +71,13 @@
 </head>
 <body>
 <header>
-  <div class="row1">
-    <div>
-      <h1><img class="room-logo" src="assets/agaleus-logo.png" alt="Grupo Agaleus"> <span>Cuadro · Bolilla Mundial 2026</span></h1>
-      <div class="sub">Fase final · Cuadro eliminatorio</div>
-    </div>
-  </div>
+  <h1>🏆 Cuadro · Porra Mundial 2026</h1>
+  <div class="sub">Fase final · Cuadro eliminatorio</div>
   <nav>
-    <a href="leaderboard.html">Clasificación</a>
-    <a href="results.html">Resultados</a>
-    <a href="bracket.html" class="active">Cuadro</a>
+    <a href="porra.html">Pronósticos</a>
+    <a href="porra-rank.html">Clasificación</a>
+    <a href="porra-results.html">Resultados</a>
+    <a href="porra-bracket.html" class="active">Cuadro</a>
   </nav>
 </header>
 <div id="loading">Cargando cuadro...</div>
