@@ -205,8 +205,9 @@ def score_initial(prediction, results, scoring, matches):
 
 
 # ---------- 2) Selections progression ----------
-def score_selections(prediction, scoring, predicted_selections, matches, champion, fixtures):
+def score_selections(prediction, scoring, predicted_selections, matches, champion, fixtures, name_to_fd=None):
     selections = prediction.get("selections") or {}
+    name_to_fd = name_to_fd or {}
     per = scoring["per_correct"]
     pts = 0
     details = {}
@@ -214,8 +215,12 @@ def score_selections(prediction, scoring, predicted_selections, matches, champio
         predicted = selections.get(team)
         if not predicted:
             continue
-        actual_label = team_reached_stage(team, matches, champion)
-        eliminated = team_is_eliminated(team, matches, fixtures)
+        # Las selecciones van en español (Alemania) pero los partidos vienen de
+        # la API en inglés (Germany). Traducimos antes de buscar los partidos,
+        # si no ningún equipo casa y todos salen "En juego" (incluidos eliminados).
+        team_fd = name_to_fd.get(team.strip().lower(), team)
+        actual_label = team_reached_stage(team_fd, matches, champion)
+        eliminated = team_is_eliminated(team_fd, matches, fixtures)
         if not eliminated:
             details[team] = {"predicted": predicted, "actual": "En juego", "points": 0}
             continue
@@ -322,6 +327,15 @@ def main():
     matches = matches_doc.get("matches", [])
     fixtures_doc = load_json(DATA / "fixtures.json", {"fixtures": []})
     fixtures = fixtures_doc.get("fixtures", [])
+    teams_doc = load_json(DATA / "teams.json", {"teams": []})
+    # Mapa nombre en español (name) -> nombre de la API (fd_name), para casar las
+    # selecciones (español) con los equipos de los partidos (inglés).
+    name_to_fd = {}
+    for t in teams_doc.get("teams", []):
+        es = (t.get("name") or "").strip().lower()
+        fd = t.get("fd_name")
+        if es and fd:
+            name_to_fd[es] = fd
 
     scoring = config.get("scoring") or {}
     champion = champion_team(matches)
@@ -330,7 +344,7 @@ def main():
     for player_name in config.get("players", []):
         pred = predictions_doc.get("predictions", {}).get(player_name) or {}
         pts_init, bd_init = score_initial(pred, results, scoring.get("initial", {}), matches)
-        pts_sel,  bd_sel  = score_selections(pred, scoring.get("selections_progression", {}), config.get("predicted_selections", []), matches, champion, fixtures)
+        pts_sel,  bd_sel  = score_selections(pred, scoring.get("selections_progression", {}), config.get("predicted_selections", []), matches, champion, fixtures, name_to_fd)
         pts_gs,   bd_gs   = score_group_stage(pred, scoring.get("group_stage", {}), matches)
         pts_ko,   bd_ko   = score_knockouts(pred, scoring.get("knockouts", {}), matches)
         total = round(pts_init + pts_sel + pts_gs + pts_ko, 1)
