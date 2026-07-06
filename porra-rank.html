@@ -134,8 +134,9 @@ const REPO_CONFIG_URL = "data/porra/config.json";
 const REPO_SCORE_URL = "data/porra/porra_scoreboard.json";
 const REPO_PRED_URL = "data/porra/predictions.json";
 const REPO_FIXTURES_URL = "data/fixtures.json";
+const REPO_TEAMS_URL = "data/teams.json";
 
-let CONFIG = null, SCOREBOARD = null, PREDICTIONS = null, FIXTURES = [];
+let CONFIG = null, SCOREBOARD = null, PREDICTIONS = null, FIXTURES = [], TEAMS = null;
 
 function escapeHtml(s) { return (s ?? "").toString().replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
 function fmtPts(n) { if (typeof n !== "number") return "0"; return Number.isInteger(n) ? n.toString() : n.toFixed(1).replace(".", ","); }
@@ -240,17 +241,25 @@ function detailSection(title, body) {
 }
 
 function getEliminatedTeams() {
-  const elim = new Set();
   const KO = new Set(["LAST_32","ROUND_OF_32","LAST_16","ROUND_OF_16","QUARTER_FINALS","SEMI_FINALS","THIRD_PLACE","FINAL"]);
+  const stillAlive = new Set();
+  let koStarted = false;
   for (const f of FIXTURES) {
-    if (!KO.has(f.stage) || f.status !== "FINISHED" || !f.winner) continue;
-    if (f.winner === f.home_team) elim.add(f.away_team);
-    else if (f.winner === f.away_team) elim.add(f.home_team);
+    if (!KO.has(f.stage)) continue;
+    if (f.status === "FINISHED") { koStarted = true; continue; }
+    if (f.home_team) stillAlive.add(f.home_team);
+    if (f.away_team) stillAlive.add(f.away_team);
   }
-  return elim;
+  // Mapa nombre español → fd_name (API en inglés)
+  const fdMap = {};
+  if (TEAMS && TEAMS.teams) for (const t of TEAMS.teams) if (t.name && t.fd_name) fdMap[t.name] = t.fd_name;
+  return { stillAlive, koStarted, fdMap };
 }
-function elimSpan(name, elim) {
-  if (elim.has(name)) return `<span style="color:#c0392b;text-decoration:line-through">${escapeHtml(name)}</span>`;
+function elimSpan(name, eliminated) {
+  const { stillAlive, koStarted, fdMap } = eliminated;
+  const fdName = fdMap[name] || name;
+  const isElim = koStarted && !stillAlive.has(fdName);
+  if (isElim) return `<span style="color:#c0392b;text-decoration:line-through;font-size:13px;font-weight:800">${escapeHtml(name)}</span>`;
   return escapeHtml(name);
 }
 
@@ -260,7 +269,8 @@ function renderInitialDetail(d) {
   const rows = [];
   if (d.winner_pick) {
     const pick = d.winner_pick.pick;
-    rows.push(`<tr class="${(d.winner_pick.points||0)>0?"ok":""}"><td>Campeón: ${elimSpan(pick, elim)}</td><td>${escapeHtml(d.winner_pick.note || "")}</td><td class="pts">${(d.winner_pick.points||0)>0?"+"+fmtPts(d.winner_pick.points):"–"}</td></tr>`);
+    const pts = d.winner_pick.points || 0;
+    rows.push(`<tr class="${pts>0?"ok":""}"><td>Campeón: ${elimSpan(pick, elim)}</td><td>${escapeHtml(d.winner_pick.note || "")}</td><td class="pts">${pts>0?"+"+fmtPts(pts):"–"}</td></tr>`);
   }
   if (d.top_scorer) rows.push(`<tr class="ok"><td>Máximo goleador (Pichichi)</td><td>Acertado</td><td class="pts">+${fmtPts(d.top_scorer)}</td></tr>`);
   if (d.best_player) rows.push(`<tr class="ok"><td>Mejor jugador (Balón de Oro)</td><td>Acertado</td><td class="pts">+${fmtPts(d.best_player)}</td></tr>`);
@@ -272,7 +282,7 @@ function renderInitialDetail(d) {
 }
 
 function renderSelectionsDetail(d) {
-  const elim = getEliminatedTeams();
+  const elim = getEliminatedTeams(); // {stillAlive, koStarted, fdMap}
   d = d || {};
   const teams = Object.keys(d);
   if (teams.length === 0) {
@@ -420,10 +430,12 @@ async function refreshPorra() {
       fetchJson(REPO_SCORE_URL),
       fetchJson(REPO_PRED_URL),
       fetchJson(REPO_FIXTURES_URL),
+      fetchJson(REPO_TEAMS_URL),
     ]);
     if (results[0].status === "fulfilled") SCOREBOARD = results[0].value;
     if (results[1].status === "fulfilled") PREDICTIONS = results[1].value;
     if (results[2].status === "fulfilled") FIXTURES = (results[2].value || {}).fixtures || [];
+    if (results[3].status === "fulfilled") TEAMS = results[3].value;
 
     const ts = SCOREBOARD && SCOREBOARD.last_updated ? SCOREBOARD.last_updated : null;
     document.getElementById("updated").textContent = ts ? `Actualizado: ${fmtDate(ts)}` : "Mundial aún no comenzado";
