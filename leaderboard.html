@@ -137,6 +137,7 @@
   .delta-badge { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green-dark); background: var(--green-light); border-radius: 10px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
   .delta-badge.live-delta { background: #fff3cd; color: #856404; animation: liveDotPulse 1.6s infinite; }
   .pick-card.is-live { border-color: #e8b4b0; background: #fff8f7; }
+  .pick-card.is-elim { opacity: 0.65; }
   .pick-live-pts { font-size: 11px; color: #c0392b; font-weight: 700; margin-top: 4px; }
   .live-badge {
     display: inline-flex; align-items: center; gap: 4px; margin-left: 6px;
@@ -331,6 +332,17 @@ function fmtDate(iso) {
 }
 function getTeam(name) { return TEAMS ? TEAMS.teams.find(t => t.name === name) : null; }
 
+function getEliminatedTeams() {
+  const elim = new Set();
+  const KO = new Set(["LAST_32","ROUND_OF_32","LAST_16","ROUND_OF_16","QUARTER_FINALS","SEMI_FINALS","THIRD_PLACE","FINAL"]);
+  for (const f of ALL_FIXTURES) {
+    if (!KO.has(f.stage) || f.status !== "FINISHED" || !f.winner) continue;
+    if (f.winner === f.home_team) elim.add(f.away_team);
+    else if (f.winner === f.away_team) elim.add(f.home_team);
+  }
+  return elim;
+}
+
 // Pool de "humillaciones simpáticas" para el ultimo del ranking.
 // Se asigna deterministicamente por nombre (hash) para que cada persona
 // tenga su emoji caracteristico mientras este la ultima.
@@ -494,6 +506,7 @@ window.showDetail = (name) => {
   const bk = p && p.breakdown ? p.breakdown : { goals: 0, match_results: 0, round_bonuses: 0, extras: 0 };
 
   let picksHtml = "";
+  const elim = getEliminatedTeams();
   const teamPts = p && p.team_points ? Object.fromEntries(p.team_points.map(x => [x.name, x])) : {};
   for (const g of ["A", "B", "C", "D", "E", "F"]) {
     const arr = (participant.selections && participant.selections[g]) || [];
@@ -502,15 +515,19 @@ window.showDetail = (name) => {
       const tp = teamPts[tname] || {};
       const d = tp.details || {};
       const live = liveTeamPts(tname);
+      const isElim = elim.has(tname);
       const liveHtml = live !== null
         ? `<div class="pick-live-pts">🔴 En directo (${live.score}) → +${fmtPts(live.pts)} pts</div>`
         : "";
       const displayPts = live !== null
         ? Math.round((tp.points || 0) * 10 + live.pts * 10) / 10
         : (tp.points || 0);
-      picksHtml += `<div class="pick-card${live !== null ? " is-live" : ""}">
+      const nameHtml = isElim
+        ? `<span style="color:#c0392b;text-decoration:line-through">${escapeHtml(tname)}</span>`
+        : escapeHtml(tname);
+      picksHtml += `<div class="pick-card${live !== null ? " is-live" : ""}${isElim ? " is-elim" : ""}">
         <div class="pc-top">
-          <div class="pc-name"><span class="pc-group">${g}</span>${escapeHtml(tname)}</div>
+          <div class="pc-name"><span class="pc-group">${g}</span>${nameHtml}</div>
           <div class="pc-pts">${fmtPts(displayPts)} pts</div>
         </div>
         <div class="pc-stats">

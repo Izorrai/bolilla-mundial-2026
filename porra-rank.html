@@ -239,11 +239,28 @@ function detailSection(title, body) {
   return `<div class="detail-section collapsed"><h3 onclick="this.parentElement.classList.toggle('collapsed')">${escapeHtml(title)}</h3><div class="detail-body">${body}</div></div>`;
 }
 
+function getEliminatedTeams() {
+  const elim = new Set();
+  const KO = new Set(["LAST_32","ROUND_OF_32","LAST_16","ROUND_OF_16","QUARTER_FINALS","SEMI_FINALS","THIRD_PLACE","FINAL"]);
+  for (const f of FIXTURES) {
+    if (!KO.has(f.stage) || f.status !== "FINISHED" || !f.winner) continue;
+    if (f.winner === f.home_team) elim.add(f.away_team);
+    else if (f.winner === f.away_team) elim.add(f.home_team);
+  }
+  return elim;
+}
+function elimSpan(name, elim) {
+  if (elim.has(name)) return `<span style="color:#c0392b;text-decoration:line-through">${escapeHtml(name)}</span>`;
+  return escapeHtml(name);
+}
+
 function renderInitialDetail(d) {
+  const elim = getEliminatedTeams();
   d = d || {};
   const rows = [];
   if (d.winner_pick) {
-    rows.push(`<tr class="ok"><td>Campeón: ${escapeHtml(d.winner_pick.pick)}</td><td>${escapeHtml(d.winner_pick.note || "")}</td><td class="pts">+${fmtPts(d.winner_pick.points)}</td></tr>`);
+    const pick = d.winner_pick.pick;
+    rows.push(`<tr class="${(d.winner_pick.points||0)>0?"ok":""}"><td>Campeón: ${elimSpan(pick, elim)}</td><td>${escapeHtml(d.winner_pick.note || "")}</td><td class="pts">${(d.winner_pick.points||0)>0?"+"+fmtPts(d.winner_pick.points):"–"}</td></tr>`);
   }
   if (d.top_scorer) rows.push(`<tr class="ok"><td>Máximo goleador (Pichichi)</td><td>Acertado</td><td class="pts">+${fmtPts(d.top_scorer)}</td></tr>`);
   if (d.best_player) rows.push(`<tr class="ok"><td>Mejor jugador (Balón de Oro)</td><td>Acertado</td><td class="pts">+${fmtPts(d.best_player)}</td></tr>`);
@@ -255,6 +272,7 @@ function renderInitialDetail(d) {
 }
 
 function renderSelectionsDetail(d) {
+  const elim = getEliminatedTeams();
   d = d || {};
   const teams = Object.keys(d);
   if (teams.length === 0) {
@@ -265,7 +283,7 @@ function renderSelectionsDetail(d) {
     const t = d[team] || {};
     const ok = (t.points || 0) > 0;
     return `<tr class="${ok ? "ok" : "fail"}">
-      <td>${escapeHtml(team)}</td>
+      <td>${elimSpan(team, elim)}</td>
       <td>${escapeHtml(t.predicted)}</td>
       <td>${escapeHtml(t.actual)}</td>
       <td class="pts">${ok ? "+" + fmtPts(t.points) : "0"}</td>
