@@ -242,23 +242,26 @@ function detailSection(title, body) {
 
 function getEliminatedTeams() {
   const KO = new Set(["LAST_32","ROUND_OF_32","LAST_16","ROUND_OF_16","QUARTER_FINALS","SEMI_FINALS","THIRD_PLACE","FINAL"]);
-  const stillAlive = new Set();
+  const elimInKO = new Set();
+  const inAnyKO  = new Set();
   let koStarted = false;
   for (const f of FIXTURES) {
     if (!KO.has(f.stage)) continue;
-    if (f.status === "FINISHED") { koStarted = true; continue; }
-    if (f.home_team) stillAlive.add(f.home_team);
-    if (f.away_team) stillAlive.add(f.away_team);
+    if (f.home_team) inAnyKO.add(f.home_team);
+    if (f.away_team) inAnyKO.add(f.away_team);
+    if (f.status !== "FINISHED" || !f.winner) continue;
+    koStarted = true;
+    const loser = f.winner === f.home_team ? f.away_team : f.home_team;
+    if (loser) elimInKO.add(loser);
   }
-  // Mapa nombre español → fd_name (API en inglés)
   const fdMap = {};
   if (TEAMS && TEAMS.teams) for (const t of TEAMS.teams) if (t.name && t.fd_name) fdMap[t.name] = t.fd_name;
-  return { stillAlive, koStarted, fdMap };
+  return { elimInKO, inAnyKO, koStarted, fdMap };
 }
 function elimSpan(name, eliminated) {
-  const { stillAlive, koStarted, fdMap } = eliminated;
+  const { elimInKO, inAnyKO, koStarted, fdMap } = eliminated;
   const fdName = fdMap[name] || name;
-  const isElim = koStarted && !stillAlive.has(fdName);
+  const isElim = koStarted && (elimInKO.has(fdName) || !inAnyKO.has(fdName));
   if (isElim) return `<span style="color:#c0392b;text-decoration:line-through;font-size:13px;font-weight:800">${escapeHtml(name)}</span>`;
   return escapeHtml(name);
 }

@@ -333,18 +333,21 @@ function fmtDate(iso) {
 function getTeam(name) { return TEAMS ? TEAMS.teams.find(t => t.name === name) : null; }
 
 function getEliminatedTeams() {
-  // Un equipo está eliminado si NO aparece en ningún partido KO pendiente.
-  // Usamos stillAlive para capturar tanto eliminados en grupos como en KO.
   const KO = new Set(["LAST_32","ROUND_OF_32","LAST_16","ROUND_OF_16","QUARTER_FINALS","SEMI_FINALS","THIRD_PLACE","FINAL"]);
-  const stillAlive = new Set();
+  const elimInKO = new Set(); // perdedores de partidos KO finalizados
+  const inAnyKO  = new Set(); // equipos que aparecen en ALGÚN partido KO (cualquier estado)
   let koStarted = false;
   for (const f of ALL_FIXTURES) {
     if (!KO.has(f.stage)) continue;
-    if (f.status === "FINISHED") { koStarted = true; continue; }
-    if (f.home_team) stillAlive.add(f.home_team);
-    if (f.away_team) stillAlive.add(f.away_team);
+    if (f.home_team) inAnyKO.add(f.home_team);
+    if (f.away_team) inAnyKO.add(f.away_team);
+    if (f.status !== "FINISHED" || !f.winner) continue;
+    koStarted = true;
+    const loser = f.winner === f.home_team ? f.away_team : f.home_team;
+    if (loser) elimInKO.add(loser);
   }
-  return { stillAlive, koStarted };
+  // Eliminado = perdió un KO, O nunca apareció en ningún KO (= cayó en grupos)
+  return { elimInKO, inAnyKO, koStarted };
 }
 
 // Pool de "humillaciones simpáticas" para el ultimo del ranking.
@@ -510,7 +513,7 @@ window.showDetail = (name) => {
   const bk = p && p.breakdown ? p.breakdown : { goals: 0, match_results: 0, round_bonuses: 0, extras: 0 };
 
   let picksHtml = "";
-  const { stillAlive, koStarted } = getEliminatedTeams();
+  const { elimInKO, inAnyKO, koStarted } = getEliminatedTeams();
   const teamPts = p && p.team_points ? Object.fromEntries(p.team_points.map(x => [x.name, x])) : {};
   for (const g of ["A", "B", "C", "D", "E", "F"]) {
     const arr = (participant.selections && participant.selections[g]) || [];
@@ -520,7 +523,7 @@ window.showDetail = (name) => {
       const d = tp.details || {};
       const live = liveTeamPts(tname);
       const fdName = t ? (t.fd_name || tname) : tname;
-      const isElim = koStarted && !stillAlive.has(fdName);
+      const isElim = koStarted && (elimInKO.has(fdName) || !inAnyKO.has(fdName));
       const liveHtml = live !== null
         ? `<div class="pick-live-pts">🔴 En directo (${live.score}) → +${fmtPts(live.pts)} pts</div>`
         : "";
