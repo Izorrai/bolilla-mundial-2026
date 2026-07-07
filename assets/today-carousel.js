@@ -9,7 +9,7 @@
   const TEAMS_URL = "data/teams.json";
   const MATCHES_URL = "data/matches.json";
   const REFRESH_MS = 30000;  // refresco cada 30s (antes 60s) para bajar el lag percibido
-  const LIVE_STATUSES = ["IN_PLAY", "PAUSED"];
+  const LIVE_STATUSES = ["IN_PLAY", "PAUSED", "LIVE"];
   const FINISHED_STATUSES = ["FINISHED"];
 
   // Heuristica para distinguir el "limbo" post-partido: football-data marca el
