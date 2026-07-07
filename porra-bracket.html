@@ -93,7 +93,7 @@ const ROUNDS = [
   { label:"Semifinal",keys:["SEMI_FINALS"],      ids:[537387,537388] },
   { label:"Final",    keys:["FINAL"],            ids:[537389] },
 ];
-const UNIT=74, FINISHED=["FINISHED"], LIVE=["IN_PLAY","PAUSED"];
+const UNIT=74, FINISHED=["FINISHED"], LIVE=["IN_PLAY","PAUSED","LIVE"];
 let NAMES={};
 function esc(s){ return (s||"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function tname(fd){ return NAMES[(fd||"").toLowerCase()]||fd||"?"; }
