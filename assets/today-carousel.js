@@ -111,7 +111,8 @@
       const now = new Date();
       const todayFixtures = (fixturesDoc.fixtures || []).filter(f => {
         if (scoredIds.has(f.id) && !FINISHED_STATUSES.includes(f.status)) f.status = "FINISHED";
-        return new Date(f.utcDate).toDateString() === now.toDateString();
+        return new Date(f.utcDate).toDateString() === now.toDateString()
+          || LIVE_STATUSES.includes(f.status);
       });
 
       if (todayFixtures.length === 0) {
