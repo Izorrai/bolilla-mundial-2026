@@ -266,22 +266,58 @@ function elimSpan(name, eliminated) {
   return escapeHtml(name);
 }
 
-function renderInitialDetail(d) {
+function renderInitialDetail(d, playerName) {
   const elim = getEliminatedTeams();
   d = d || {};
+  const pred = PREDICTIONS && PREDICTIONS.predictions ? PREDICTIONS.predictions[playerName] : null;
+  const ini = (pred && pred.initial) || {};
+
   const rows = [];
+
+  // Campeón
   if (d.winner_pick) {
     const pick = d.winner_pick.pick;
     const pts = d.winner_pick.points || 0;
-    rows.push(`<tr class="${pts>0?"ok":""}"><td>Campeón: ${elimSpan(pick, elim)}</td><td>${escapeHtml(d.winner_pick.note || "")}</td><td class="pts">${pts>0?"+"+fmtPts(pts):"–"}</td></tr>`);
+    rows.push(`<tr class="${pts>0?"ok":""}"><td>Campeón</td><td>${elimSpan(pick, elim)}</td><td>${escapeHtml(d.winner_pick.note || "")}</td><td class="pts">${pts>0?"+"+fmtPts(pts):"–"}</td></tr>`);
+  } else if (ini.first) {
+    rows.push(`<tr><td>Campeón</td><td>${elimSpan(ini.first, elim)}</td><td>Pendiente</td><td class="pts">–</td></tr>`);
   }
-  if (d.top_scorer) rows.push(`<tr class="ok"><td>Máximo goleador (Pichichi)</td><td>Acertado</td><td class="pts">+${fmtPts(d.top_scorer)}</td></tr>`);
-  if (d.best_player) rows.push(`<tr class="ok"><td>Mejor jugador (Balón de Oro)</td><td>Acertado</td><td class="pts">+${fmtPts(d.best_player)}</td></tr>`);
-  if (d.best_keeper) rows.push(`<tr class="ok"><td>Mejor portero (Guante de Oro)</td><td>Acertado</td><td class="pts">+${fmtPts(d.best_keeper)}</td></tr>`);
+
+  // Segundo
+  if (ini.second) {
+    rows.push(`<tr><td>Finalista (2º)</td><td>${elimSpan(ini.second, elim)}</td><td>Pendiente</td><td class="pts">–</td></tr>`);
+  }
+
+  // Tercero
+  if (ini.third) {
+    rows.push(`<tr><td>Tercer puesto</td><td>${elimSpan(ini.third, elim)}</td><td>Pendiente</td><td class="pts">–</td></tr>`);
+  }
+
+  // Pichichi
+  if (d.top_scorer) {
+    rows.push(`<tr class="ok"><td>Pichichi</td><td>${escapeHtml(ini.pichichi || "—")}</td><td>Acertado</td><td class="pts">+${fmtPts(d.top_scorer)}</td></tr>`);
+  } else if (ini.pichichi) {
+    rows.push(`<tr><td>Pichichi</td><td>${escapeHtml(ini.pichichi)}</td><td>Pendiente</td><td class="pts">–</td></tr>`);
+  }
+
+  // MVP / Balón de Oro
+  if (d.best_player) {
+    rows.push(`<tr class="ok"><td>Balón de Oro</td><td>${escapeHtml(ini.mvp || "—")}</td><td>Acertado</td><td class="pts">+${fmtPts(d.best_player)}</td></tr>`);
+  } else if (ini.mvp) {
+    rows.push(`<tr><td>Balón de Oro</td><td>${escapeHtml(ini.mvp)}</td><td>Pendiente</td><td class="pts">–</td></tr>`);
+  }
+
+  // Portero / Guante de Oro
+  if (d.best_keeper) {
+    rows.push(`<tr class="ok"><td>Guante de Oro</td><td>${escapeHtml(ini.gk || "—")}</td><td>Acertado</td><td class="pts">+${fmtPts(d.best_keeper)}</td></tr>`);
+  } else if (ini.gk) {
+    rows.push(`<tr><td>Guante de Oro</td><td>${escapeHtml(ini.gk)}</td><td>Pendiente</td><td class="pts">–</td></tr>`);
+  }
+
   if (rows.length === 0) {
-    return detailSection("Pronósticos iniciales", `<p class="muted-note">Todavía no hay resultados oficiales (campeón, pichichi, balón de oro, guante de oro) para puntuar esta categoría.</p>`);
+    return detailSection("Pronósticos iniciales", `<p class="muted-note">Sin pronósticos iniciales.</p>`);
   }
-  return detailSection("Pronósticos iniciales", `<table class="detail-table">${rows.join("")}</table>`);
+  return detailSection("Pronósticos iniciales", `<table class="detail-table"><tr class="head"><td>Categoría</td><td>Pronóstico</td><td>Estado</td><td class="pts">Pts</td></tr>${rows.join("")}</table>`);
 }
 
 function renderSelectionsDetail(d) {
@@ -413,7 +449,7 @@ window.showDetail = name => {
       <div class="bk"><div class="l">Grupos</div><div class="v">${fmtPts(bk.group_stage || 0)}</div></div>
       <div class="bk"><div class="l">Eliminatorias</div><div class="v">${fmtPts(bk.knockouts || 0)}</div></div>
     </div>
-    ${renderInitialDetail(det.initial)}
+    ${renderInitialDetail(det.initial, name)}
     ${renderSelectionsDetail(det.selections)}
     ${renderGroupStageDetail(det.group_stage)}
     ${renderKnockoutsDetail(det.knockouts, name)}
