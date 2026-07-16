@@ -142,9 +142,15 @@ def team_is_eliminated(team_name, matches, fixtures):
     """Devuelve True si el equipo ya ha sido eliminado del torneo."""
     tn = team_name.strip().lower()
 
-    # Si tiene algun partido pendiente (TIMED/SCHEDULED/IN_PLAY/PAUSED), sigue vivo
+    # Si tiene algun partido pendiente (TIMED/SCHEDULED/IN_PLAY/PAUSED), sigue vivo.
+    # El partido por el 3er/4o puesto (THIRD_PLACE) se ignora aqui: perder la
+    # semifinal ya fija el resultado a efectos de "hasta donde llego", el
+    # partido de consolacion no hace avanzar de ronda y no debe mantener al
+    # equipo colgado en "En juego" hasta que se dispute.
     for f in fixtures:
         if not _team_in_match(team_name, f):
+            continue
+        if f.get("stage") == "THIRD_PLACE":
             continue
         if f.get("status") not in ("FINISHED",):
             return False
@@ -154,7 +160,7 @@ def team_is_eliminated(team_name, matches, fixtures):
     if not team_matches:
         return False
 
-    # Tiene partidos y todos estan FINISHED (ningun pendiente) -> eliminado
+    # Tiene partidos y todos estan FINISHED (ningun pendiente, salvo 3er puesto) -> eliminado
     return True
 
 
