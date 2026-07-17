@@ -376,8 +376,8 @@ function renderGroupStage() {
 function renderKnockouts() {
   const c = document.getElementById("koList");
   c.innerHTML = "";
-  const stages = ["LAST_32", "LAST_16", "QUARTER_FINALS", "SEMI_FINALS", "FINAL"];
-  const stageNames = { LAST_32: "Dieciseisavos", LAST_16: "Octavos", QUARTER_FINALS: "Cuartos", SEMI_FINALS: "Semifinales", FINAL: "Final" };
+  const stages = ["LAST_32", "LAST_16", "QUARTER_FINALS", "SEMI_FINALS", "THIRD_PLACE", "FINAL"];
+  const stageNames = { LAST_32: "Dieciseisavos", LAST_16: "Octavos", QUARTER_FINALS: "Cuartos", SEMI_FINALS: "Semifinales", THIRD_PLACE: "3er y 4º puesto", FINAL: "Final" };
   for (const stage of stages) {
     const matches = fixturesByStage(stage).filter(m => m.home_team && m.away_team);
     const pending = fixturesByStage(stage).filter(m => !m.home_team || !m.away_team);
@@ -430,7 +430,7 @@ function updateScores() {
   const gsCount = Object.values(pred.group_stage).filter(Boolean).length;
   document.getElementById("scoreGS").textContent = `${gsCount} / 72 hechos`;
 
-  const koMatches = ["LAST_32","LAST_16","QUARTER_FINALS","SEMI_FINALS","FINAL"]
+  const koMatches = ["LAST_32","LAST_16","QUARTER_FINALS","SEMI_FINALS","THIRD_PLACE","FINAL"]
     .flatMap(s => fixturesByStage(s).filter(m => m.home_team && m.away_team));
   const koCount = koMatches.filter(m => {
     const k = pred.knockouts[m.id];
