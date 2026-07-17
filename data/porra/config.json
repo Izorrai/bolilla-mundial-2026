@@ -37,7 +37,8 @@
       "LAST_16":         { "result_1x2": 1, "exact_bonus": 3 },
       "QUARTER_FINALS":  { "result_1x2": 2, "exact_bonus": 4 },
       "SEMI_FINALS":     { "result_1x2": 3, "exact_bonus": 5 },
-      "FINAL":           { "result_1x2": 4, "exact_bonus": 6 }
+      "THIRD_PLACE":     { "result_1x2": 4, "exact_bonus": 6 },
+      "FINAL":           { "result_1x2": 6, "exact_bonus": 8 }
     }
   }
 }
