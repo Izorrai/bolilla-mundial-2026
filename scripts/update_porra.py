@@ -21,6 +21,7 @@ Categorias de puntuacion:
 
 import json
 import os
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -54,8 +55,31 @@ def save_json(path, data):
     tmp.replace(path)
 
 
+def _norm_name(s):
+    """Normaliza para comparar: strippea acentos, baja a minusculas, colapsa espacios.
+    'Unai Simón' -> 'unai simon'."""
+    if not s:
+        return ""
+    n = unicodedata.normalize("NFKD", str(s))
+    n = "".join(c for c in n if not unicodedata.combining(c))
+    return " ".join(n.strip().lower().split())
+
+
 def eq(a, b):
-    return bool(a and b and str(a).strip().lower() == str(b).strip().lower())
+    """Comparacion laxa de nombres para acertar premios (pichichi, mvp, portero).
+    Ignora acentos y acepta que el pick sea un subconjunto de palabras del real
+    (o viceversa), asi 'Mbappe' cuenta como acierto de 'Kylian Mbappé' y
+    'Unai Simon' cuenta como acierto de 'Unai Simón'. No confunde nombres
+    distintos: 'Kane' vs 'Rodrigo Hernández' sigue devolviendo False."""
+    na = _norm_name(a)
+    nb = _norm_name(b)
+    if not na or not nb:
+        return False
+    if na == nb:
+        return True
+    ta = set(na.split())
+    tb = set(nb.split())
+    return ta.issubset(tb) or tb.issubset(ta)
 
 
 # ---------- Rank-change annotations ----------
