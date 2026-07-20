@@ -181,6 +181,22 @@
     th, td { padding: 8px 8px; }
     .points { font-size: 14px; }
   }
+
+  /* --- Modal ganador (fin del torneo) --- */
+  .winner-btn { background: linear-gradient(135deg, #d4a017 0%, #f4c542 100%); color: #3a2a00; border: none; padding: 6px 12px; margin-left: 8px; font-size: 13px; font-weight: 800; border-radius: 16px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); animation: winnerPulse 2s ease-in-out infinite; vertical-align: middle; }
+  @keyframes winnerPulse { 0%, 100% { box-shadow: 0 2px 6px rgba(0,0,0,0.2); } 50% { box-shadow: 0 2px 14px rgba(212,160,23,0.9); } }
+  .winner-modal { background: #fff; border-radius: 16px; max-width: 480px; width: 100%; padding: 28px 24px 24px; text-align: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.5); animation: winnerIn 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+  @keyframes winnerIn { from { opacity: 0; transform: scale(0.85) translateY(20px); } to { opacity: 1; transform: none; } }
+  .winner-modal .prelude { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin: 4px 0 6px; }
+  .winner-modal .trophy { font-size: 44px; line-height: 1; margin: 4px 0 8px; display: block; animation: bounce 1.2s ease-in-out infinite; }
+  .winner-modal .winner-name { font-size: 34px; font-weight: 900; color: var(--green-dark); margin: 4px 0 6px; letter-spacing: -0.5px; }
+  .winner-modal .winner-total { font-size: 18px; font-weight: 700; color: var(--green); margin: 0 0 12px; }
+  .winner-modal .runners { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+  .winner-modal .runners .runner { display: flex; justify-content: space-between; padding: 3px 4px; }
+  .winner-modal .modal-close { background: none; border: none; font-size: 26px; cursor: pointer; color: var(--muted); position: absolute; top: 8px; right: 14px; line-height: 1; }
+  .winner-modal .modal-close:hover { color: var(--text); }
+  .confetti { position: absolute; top: -10px; font-size: 22px; animation: fall 3s linear infinite; pointer-events: none; }
+  @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
 </style>
 <link rel="stylesheet" href="assets/theme.css">
 </head>
@@ -189,7 +205,7 @@
 <header>
   <div class="row1">
     <div>
-      <h1><img class="room-logo" src="assets/agaleus-logo.png" alt="Grupo Agaleus"><span class="h1-text">Clasificación · Bolilla Mundial 2026</span></h1>
+      <h1><img class="room-logo" src="assets/agaleus-logo.png" alt="Grupo Agaleus"><span class="h1-text">Clasificación · Bolilla Mundial 2026</span><button id="winnerBtn" class="winner-btn" style="display:none;" onclick="openWinnerModal()">👑 Ver ganador</button></h1>
       <div class="sub" id="roomSub">Cargando…</div>
     </div>
   </div>
@@ -282,6 +298,10 @@
 
 <div class="modal-bg" id="detailBg">
   <div class="modal" id="detailModal"></div>
+</div>
+
+<div class="modal-bg" id="winnerBg">
+  <div class="winner-modal" id="winnerModal"></div>
 </div>
 
 <script>
@@ -613,6 +633,7 @@ async function loadRoomData(roomId) {
 
   renderRanking();
   renderTeams();
+  maybeShowWinner();
   loadFeed(roomId);
 }
 
@@ -840,6 +861,81 @@ function liveTeamPts(teamName) {
   return null;
 }
 
+// --- Modal ganador (fin del torneo) ---
+function isTournamentFinished() {
+  // El Mundial ha terminado cuando el partido de stage=FINAL esta FINISHED.
+  const finals = (ALL_FIXTURES || []).filter(f => f.stage === "FINAL");
+  if (finals.length === 0) return false;
+  return finals.every(f => f.status === "FINISHED");
+}
+
+function tournamentSignature() {
+  // Firma que cambia si cambian los datos: id de la final + ganador + total + sala.
+  // Asi si el organizador rehace algo, el modal reaparece una vez.
+  const finals = (ALL_FIXTURES || []).filter(f => f.stage === "FINAL");
+  const finalId = finals.length ? finals[0].id : "no-final";
+  const ranking = SCOREBOARD && SCOREBOARD.ranking ? SCOREBOARD.ranking : [];
+  const top = ranking[0] || {};
+  const room = CURRENT_ROOM ? CURRENT_ROOM.id : "";
+  return `${room}:${finalId}:${top.name || ""}:${top.total || 0}`;
+}
+
+function winnerSeenKey() {
+  return "bolilla_winner_seen_" + (CURRENT_ROOM ? CURRENT_ROOM.id : "default");
+}
+
+window.openWinnerModal = function () {
+  const ranking = (SCOREBOARD && SCOREBOARD.ranking) ? SCOREBOARD.ranking : [];
+  if (ranking.length === 0) return;
+  const winner = ranking[0];
+
+  const runners = ranking.slice(1, 3).map((p, i) => `
+    <div class="runner"><span>${TOP_MEDALS[i + 1]} ${escapeHtml(p.name)}</span><span>${fmtPts(p.total || 0)} pts</span></div>
+  `).join("");
+
+  // Confeti aleatorio en el fondo del modal
+  const confettiEmojis = ["🎉","🎊","⚽","🏆","🥇","✨"];
+  let confetti = "";
+  for (let i = 0; i < 14; i++) {
+    const e = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+    const left = Math.floor(Math.random() * 100);
+    const delay = (Math.random() * 3).toFixed(1);
+    confetti += `<span class="confetti" style="left:${left}%; animation-delay:${delay}s;">${e}</span>`;
+  }
+
+  document.getElementById("winnerModal").innerHTML = `
+    ${confetti}
+    <button class="modal-close" onclick="closeWinnerModal()" aria-label="Cerrar">×</button>
+    <div class="prelude">Ganador de la bolilla</div>
+    <span class="trophy">🏆</span>
+    <div class="winner-name">${escapeHtml(winner.name)}</div>
+    <div class="winner-total">${fmtPts(winner.total || 0)} puntos</div>
+    ${runners ? `<div class="runners">${runners}</div>` : ""}
+  `;
+  document.getElementById("winnerBg").classList.add("open");
+  // Marca esta firma como vista para no reabrirse solo al siguiente refresco
+  try { localStorage.setItem(winnerSeenKey(), tournamentSignature()); } catch (e) {}
+};
+
+window.closeWinnerModal = function () {
+  document.getElementById("winnerBg").classList.remove("open");
+};
+
+document.getElementById("winnerBg").addEventListener("click", e => {
+  if (e.target.id === "winnerBg") closeWinnerModal();
+});
+
+function maybeShowWinner() {
+  const btn = document.getElementById("winnerBtn");
+  if (!btn) return;
+  if (!isTournamentFinished()) { btn.style.display = "none"; return; }
+  btn.style.display = "inline-block";
+  // Abre automaticamente la primera vez que el usuario ve este estado (firma nueva).
+  let seen = null;
+  try { seen = localStorage.getItem(winnerSeenKey()); } catch (e) {}
+  if (seen !== tournamentSignature()) openWinnerModal();
+}
+
 (async function init() {
   try {
     const [teams] = await Promise.all([fetchJson(REPO_TEAMS_URL)]);
@@ -867,6 +963,7 @@ function liveTeamPts(teamName) {
       }
       renderRanking();
       renderTeams();
+      maybeShowWinner();
       if (OPEN_MODAL_NAME) showDetail(OPEN_MODAL_NAME);
     }
     setInterval(refreshAll, LIVE_REFRESH_MS);
