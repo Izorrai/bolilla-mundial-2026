@@ -36,6 +36,7 @@ import os
 import socket
 import sys
 import time
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -384,14 +385,40 @@ def compute_team_stats(team_name, matches, fd_lookup, is_champion, all_fixtures=
     }
 
 
+def _norm_name(s):
+    """Normaliza un nombre para comparar sin tildes ni mayusculas/espacios extra.
+    'Unai Simón' -> 'unai simon'."""
+    if not s:
+        return ""
+    n = unicodedata.normalize("NFKD", str(s))
+    n = "".join(c for c in n if not unicodedata.combining(c))
+    return " ".join(n.strip().lower().split())
+
+
+def _name_eq(a, b):
+    """Comparacion laxa de nombres para acertar premios (pichichi, mvp, portero).
+    Ignora acentos y acepta que el pick sea un subconjunto de palabras del real
+    (o viceversa), asi 'Mbappe' cuenta como acierto de 'Kylian Mbappé' y
+    'Unai Simon' cuenta como acierto de 'Unai Simón'. No confunde nombres
+    distintos: 'Kane' vs 'Rodrigo Hernández' sigue devolviendo False."""
+    na = _norm_name(a)
+    nb = _norm_name(b)
+    if not na or not nb:
+        return False
+    if na == nb:
+        return True
+    ta = set(na.split())
+    tb = set(nb.split())
+    return ta.issubset(tb) or tb.issubset(ta)
+
+
 def compute_extras_points(participant, extras_official):
     if not extras_official:
         return 0
     pts = 0
-    eq = lambda a, b: bool(a and b and a.strip().lower() == b.strip().lower())
-    if eq(participant.get("pichichi"), extras_official.get("pichichi")):  pts += 30
-    if eq(participant.get("mvp"), extras_official.get("mvp")):            pts += 30
-    if eq(participant.get("gk"), extras_official.get("best_gk")):         pts += 30
+    if _name_eq(participant.get("pichichi"), extras_official.get("pichichi")):  pts += 30
+    if _name_eq(participant.get("mvp"), extras_official.get("mvp")):            pts += 30
+    if _name_eq(participant.get("gk"), extras_official.get("best_gk")):         pts += 30
     return pts
 
 
@@ -651,4 +678,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
